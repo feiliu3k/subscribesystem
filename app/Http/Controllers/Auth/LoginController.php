@@ -36,4 +36,15 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function username(){
+        return 'manageraccount';
+    }
+
+    public function postLogin(Request $request) //这里是postlogin
+    {
+        if (Auht::attempt(['manageraccount' => $manageraccount, 'password' => $password, 'verify' => 1])) {
+            return redirect('/home');
+        }
+    } 
 }
