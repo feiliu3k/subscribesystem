@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 
 class CompanyController extends Controller
 {
@@ -11,6 +12,12 @@ class CompanyController extends Controller
         'companyname' => '',
         'id' => '',
     ];
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +26,7 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::all();
-        return view('admin.Company.index')->withCompanies($companies);
+        return view('admin.company.index')->withCompanies($companies);
     }
 
     /**
@@ -34,7 +41,7 @@ class CompanyController extends Controller
             $data[$field] = old($field, $default);
         }
 
-        return view('admin.Company.create', $data);
+        return view('admin.company.create', $data);
     }
 
     /**

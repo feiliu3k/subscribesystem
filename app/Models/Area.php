@@ -10,7 +10,7 @@ class Area extends Model
     protected $primaryKey='id';
 
     protected $fillable = [
-        'areaname'
+        'areaname', 'delflag'
     ];
 
     public function products()

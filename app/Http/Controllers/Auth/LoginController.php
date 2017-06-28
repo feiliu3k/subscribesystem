@@ -84,6 +84,6 @@ class LoginController extends Controller
     }
     protected function credentials(Request $request)
     {
-        return $request->only($this->username(), 'password');
+        return array_merge($request->only($this->username(), 'password'),['verifyflag'=>1]);
     } 
 }

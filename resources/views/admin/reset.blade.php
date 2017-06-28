@@ -1,30 +1,75 @@
 @extends('layouts.app')
 
 @section('content')
-  <form class="login-form" method="POST" action="{{ route('admin.reset') }}">
-    <h3 class="font-green">修改密码</h3>
-    @if($errors->first())
-      <div class="alert alert-danger display-hide" style="display: block;">
-        <button class="close" data-close="alert"></button>
-        <span>{{$errors}}  </span>
-      </div>
-    @endif
-    {!! csrf_field() !!}
+  <div class="container">
+      <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+              <div class="panel panel-default">
+                  <div class="panel-heading">修改密码</div>
 
-    <div class="form-group" >
-      <label class="control-label visible-ie8 visible-ie9">原始密码</label>
-      <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Old Password" name="oldpassword"> 
-    </div>
-    <div class="form-group">
-      <label class="control-label visible-ie8 visible-ie9">新密码</label>
-      <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="New password" name="password"> 
-    </div>
-    <div class="form-group">
-      <label class="control-label visible-ie8 visible-ie9">重复密码</label>
-      <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Repeat password" name="password_confirmation"> 
-    </div>
-    <div class="form-actions">
-      <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">确定</button>
-    </div>
-  </form>
+                  <div class="panel-body">
+                      @if (session('status'))
+                          <div class="alert alert-success">
+                              {{ session('status') }}
+                          </div>
+                      @endif
+
+                      <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.reset') }}">
+                          {{ csrf_field() }}
+
+                          <div class="form-group{{ $errors->has('oldpassword') ? ' has-error' : '' }}">
+                              <label for="password" class="col-md-4 control-label">原密码</label>
+
+                              <div class="col-md-6">
+                                  <input id="oldpassword" type="password" class="form-control" name="oldpassword" required>
+
+                                  @if ($errors->has('oldpassword'))
+                                      <span class="help-block">
+                                          <strong>{{ $errors->first('oldpassword') }}</strong>
+                                      </span>
+                                  @endif
+                              </div>
+                          </div>
+
+
+                          <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                              <label for="password" class="col-md-4 control-label">密码</label>
+
+                              <div class="col-md-6">
+                                  <input id="password" type="password" class="form-control" name="password" required>
+
+                                  @if ($errors->has('password'))
+                                      <span class="help-block">
+                                          <strong>{{ $errors->first('password') }}</strong>
+                                      </span>
+                                  @endif
+                              </div>
+                          </div>
+
+                          <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                              <label for="password-confirm" class="col-md-4 control-label">确认密码</label>
+                              <div class="col-md-6">
+                                  <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+
+                                  @if ($errors->has('password_confirmation'))
+                                      <span class="help-block">
+                                          <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                      </span>
+                                  @endif
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                              <div class="col-md-6 col-md-offset-4">
+                                  <button type="submit" class="btn btn-primary">
+                                      修改
+                                  </button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 @endsection
