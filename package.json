@@ -13,11 +13,13 @@
     "axios": "^0.15.3",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
-    "datatables": "^1.10.13",
+    "datatables.net": "^1.10.15",
+    "datatables.net-bs": "^1.10.15",
     "fontawesome": "^4.7.2",
     "jquery": "^3.1.1",
     "laravel-mix": "0.*",
     "lodash": "^4.17.4",
     "vue": "^2.1.10"
-  }
+  },
+  "dependencies": {}
 }
