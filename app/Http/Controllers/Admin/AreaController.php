@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 
 class AreaController extends Controller
 {
     protected $fields = [
         'areaname' => '',
-        'id' => '',
+        'id' => '',        
     ];
     /**
      * Display a listing of the resource.
@@ -18,7 +19,7 @@ class AreaController extends Controller
      */
     public function index()
     {
-        $areas = Area::all();
+        $areas = Area::where('delflag',0)->orderBy('id','desc')->get();        
         return view('admin.area.index')->withAreas($areas);
     }
 

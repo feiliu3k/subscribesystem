@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row page-title-row">
         <div class="col-md-12">
-            <h3>{{ config('subscribesystem.company') }} <small>» 编辑</small></h3>
+            <h3>{{ config('subscribesystem.productFunction') }} <small>» 编辑</small></h3>
         </div>
     </div>
 
@@ -12,20 +12,20 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">编辑{{ config('subscribesystem.company') }}窗口</h3>
+                    <h3 class="panel-title">编辑{{ config('subscribesystem.productFunction') }}窗口</h3>
                 </div>
                 <div class="panel-body">
 
                     @include('partials.errors')
                     @include('partials.success')
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('company.update', $id) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('productFunction.update', $id) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="id" value="{{ $id }}">
 
 
-                        @include('admin.company._form')
+                        @include('admin.productfunction._form')
 
                         <div class="form-group">
                             <div class="col-md-7 col-md-offset-3">
@@ -37,7 +37,7 @@
                                     <i class="fa fa-times-circle"></i>
                                     删除
                                 </button>
-                                <a type="button" class="btn btn-primary btn-md" href="{{ route('company.index') }}">
+                                <a type="button" class="btn btn-primary btn-md" href="{{ route('productFunction.index') }}">
                                     <i class="fa fa-reply"></i>
                                     返回
                                 </a>
@@ -65,11 +65,11 @@
             <div class="modal-body">
                 <p class="lead">
                     <i class="fa fa-question-circle fa-lg"></i>
-                    是否真的需要删除此{{ config('subscribesystem.company') }}？
+                    是否真的需要删除此{{ config('subscriptsystem.productFunction') }}？
                 </p>
             </div>
             <div class="modal-footer">
-                <form method="POST" action="{{ route('company.destroy', $id) }}">
+                <form method="POST" action="{{ route('productFunction.destroy', $id) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

@@ -27,6 +27,11 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
 
     Route::get('reset', 'ManagerController@getReset')->name('admin.reset');
     Route::post('reset', 'ManagerController@postReset');
+
+    Route::resource('area', 'AreaController',['except' => 'show']);
+    Route::resource('company', 'CompanyController',['except' => 'show']);
+    Route::resource('productType', 'ProductTypeController',['except' => 'show']);
+    Route::resource('productFunction', 'productFunctionController',['except' => 'show']);
 });
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

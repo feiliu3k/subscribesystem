@@ -4,11 +4,11 @@
     <div class="container">
         <div class="row page-title-row">
             <div class="col-md-6">
-                <h3>{{ config('subscribesystem.company') }} <small>» 列表</small></h3>
+                <h3>{{ config('subscribesystem.productFunction') }} <small>» 列表</small></h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="{{ route('company.create') }}" class="btn btn-success btn-md">
-                    <i class="fa fa-plus-circle"></i> 新建{{ config('subscribesystem.company') }}
+                <a href="{{ route('productFunction.create') }}" class="btn btn-success btn-md">
+                    <i class="fa fa-plus-circle"></i> 新建{{ config('subscribesystem.productFunction') }}
                 </a>
             </div>
         </div>
@@ -19,22 +19,22 @@
                 @include('partials.errors')
                 @include('partials.success')
 
-                <table id="companies-table" class="table table-striped table-bordered">
+                <table id="productFunctions-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>编号</th>
-                            <th>{{ config('subscribesystem.company') }}名称</th>                            
+                            <th>{{ config('subscribesystem.productFunction') }}名称</th>                            
                             <th data-sortable="false">操作</th>
                         </tr>
                      </thead>
                     <tbody>
-                    @foreach ($companies as $company)
+                    @foreach ($product_functions as $productFunction)
                         <tr>
-                            <td>{{ $company->id }}</td>
-                            <td>{{ $company->companyname }}</td>
-                            
+                            <td>{{ $productFunction->id }}</td>
+                            <td>{{ $productFunction->functionname }}</td>                          
+
                             <td>
-                                <a href="{{ route('company.edit', $company->id) }}" class="btn btn-xs btn-info">
+                                <a href="{{ route('productFunction.edit', $productFunction->id) }}" class="btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
                             </td>
@@ -50,7 +50,7 @@
 @section('scripts')
     <script>
         $(function() {
-            $("#companies-table").DataTable({
+            $("#productfunctions-table").DataTable({
             });
         });
     </script>

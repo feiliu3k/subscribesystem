@@ -25,7 +25,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::all();
+        $companies = Company::orderBy('id','desc')->get();
         return view('admin.company.index')->withCompanies($companies);
     }
 

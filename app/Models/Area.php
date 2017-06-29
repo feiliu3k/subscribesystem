@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Area extends Model
 {
     protected $table = 'areaname';
-    protected $primaryKey='id';
-
+    protected $primaryKey = 'id';
+    public $timestamps = false;
     protected $fillable = [
         'areaname', 'delflag'
     ];
