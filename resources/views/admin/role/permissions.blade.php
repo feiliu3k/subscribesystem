@@ -9,7 +9,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">编辑角色权限窗口</h3>
@@ -59,7 +59,7 @@
                                     <i class="fa fa-save"></i>
                                     保存
                                 </button>
-                                <a type="button" class="btn btn-primary btn-md" href="{{ route('admin.role.index') }}">
+                                <a type="button" class="btn btn-primary btn-md" href="{{ route('role.index') }}">
                                     <i class="fa fa-reply"></i>
                                     返回
                                 </a>
@@ -73,6 +73,4 @@
         </div>
     </div>
 </div>
-
-
 @stop

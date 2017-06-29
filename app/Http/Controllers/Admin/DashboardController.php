@@ -7,7 +7,8 @@ use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
-    public function index(){
-        dd('aa');
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 }

@@ -15,11 +15,12 @@ class Company extends Model
 
     public function managers()
     {
-        return $this->belongsToMany(Manager::class);
+        return $this->hasMany('App\Models\User','company_id','id');
     }
 
     public function products()
     {
-        return $this->belongsToMany(product::class);
+        return $this->hasMany('App\Models\Product','company_id','id');
     }
+
 }

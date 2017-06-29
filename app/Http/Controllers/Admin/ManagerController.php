@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 
 use Validator, Auth, Redirect;
 
+use App\Models\User;
+use App\Models\Role;
+
 class ManagerController extends Controller
 {
     public function __construct()
@@ -53,4 +56,157 @@ class ManagerController extends Controller
 
         return Redirect::route('admin.dash');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $managers = User::where('delflag',0)->orderBy('id','desc')->get();
+        return view('admin.manager.index')->withManagers($managers);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $companies=Company::all();
+        $manager=new User();
+        return view('admin.manager.create',compact('manager','companies'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $manager = new User();
+        $manager->managername=$request->managername;
+        $manager->manageraccount=$request->manageraccount;
+        $manager->email=$request->email;
+        $manager->company_id= $request->company_id;
+        $manager->cellphone= $request->cellphone;
+        $manager->IDCard= $request->IDCard;
+        $manager->application_note= $request->application_note;
+        $manager->verifyflag= $request->verifyflag;
+        $manager->password= bcrypt($password);
+        $manager->save();
+
+        return redirect('/admin/manager')
+                        ->withSuccess("用户 '$manager->managername' 新建成功.");
+    }
+
+
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {   
+        $companies=Company::all();       
+        $manager = User::findOrFail($id);
+        return view('admin.manager.edit', compact('manager','companies'));
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $manager = User::findOrFail($id);
+        $manager->managername=$request->managername;        
+        $manager->email=$request->email;
+        $manager->company_id= $request->company_id;
+        $manager->cellphone= $request->cellphone;
+        $manager->IDCard= $request->IDCard;
+        $manager->application_note= $request->application_note;
+        $manager->verifyflag= $request->verifyflag;
+        $manager->password= bcrypt($password);
+        $manager->save();        
+
+        return redirect("/admin/manager/$id/edit")
+                        ->withSuccess("用户 '$manager->managername' 更新成功.");
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $manager = User::findOrFail($id);
+        $manager->delflag=1;
+        $manager->save();
+
+        return redirect('/admin/manager')
+                        ->withSuccess("用户 '$manager->managername' 已经被删除.");
+    }
+
+
+    
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editRole($id)
+    {
+        $manager = User::findOrFail($id);
+        $mr=$manager->roles;
+        $managerRoles=array();
+        foreach ($mr as $role){
+            $rid=$role->id;
+            array_push($managerRoles,$rid);
+        }
+
+        $roles = Role::all();
+
+        return view('admin.manager.roles', ['manager'=>$manager,'managerRoles'=>$managerRoles,'roles'=>$roles]);
+    }
+
+
+    public function updateRole(Request $request,$id)
+    {
+        //dd($request->permissions);
+        $manager = User::findOrFail($id);
+        $roleids=$request->roles;
+
+        $userRoleids=array();
+        $manager->roles()->detach();
+
+        if (count($roleids)>0){
+            foreach ($roleids as $roleid){
+                $manager->assignRole(Role::findOrFail($roleid)->name);
+            }
+        }
+        return redirect('/admin/manager')
+                        ->withSuccess("用户 '$manager->managername' .角色更改成功！");
+
+    }
+
+
+   
+
+
+   
 }

@@ -7,5 +7,8 @@ use App\Http\Controllers\Controller;
 
 class ProductAddressController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 }

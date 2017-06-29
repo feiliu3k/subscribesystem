@@ -20,6 +20,12 @@ class User extends Authenticatable
         'password', 'remember_token'
     ];
 
+    
+    public function company()
+    {
+       return $this->belongsTo('App\Models\Company','company_id','id');
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);
