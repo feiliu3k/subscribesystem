@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('layouts.app')
 
 @section('content')
 <div class="container-fluid">
@@ -16,10 +16,10 @@
                 </div>
                 <div class="panel-body">
 
-                    @include('admin.partials.errors')
-                    @include('admin.partials.success')
+                    @include('partials.errors')
+                    @include('partials.success')
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.role.update', $role->id) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('role.update', $role->id) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="id" value="{{ $role->id }}">
@@ -37,7 +37,7 @@
                                     <i class="fa fa-times-circle"></i>
                                     删除
                                 </button>
-                                <a type="button" class="btn btn-primary btn-md" href="{{ route('admin.role.index') }}">
+                                <a type="button" class="btn btn-primary btn-md" href="{{ route('role.index') }}">
                                     <i class="fa fa-reply"></i>
                                     返回
                                 </a>
@@ -69,7 +69,7 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <form method="POST" action="{{ route('admin.role.destroy', $role->id) }}">
+                <form method="POST" action="{{ route('role.destroy', $role->id) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

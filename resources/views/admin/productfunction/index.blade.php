@@ -19,7 +19,7 @@
                 @include('partials.errors')
                 @include('partials.success')
 
-                <table id="productFunctions-table" class="table table-striped table-bordered">
+                <table id="producttypes-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>编号</th>
@@ -50,7 +50,7 @@
 @section('scripts')
     <script>
         $(function() {
-            $("#productfunctions-table").DataTable({
+            $("#producttypes-table").DataTable({
             });
         });
     </script>

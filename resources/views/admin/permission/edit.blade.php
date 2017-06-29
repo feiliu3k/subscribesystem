@@ -1,7 +1,7 @@
-@extends('admin.layout')
+@extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row page-title-row">
         <div class="col-md-12">
             <h3>权限 <small>» 编辑</small></h3>
@@ -16,10 +16,10 @@
                 </div>
                 <div class="panel-body">
 
-                    @include('admin.partials.errors')
-                    @include('admin.partials.success')
+                    @include('partials.errors')
+                    @include('partials.success')
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.permission.update', $permission->id) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('permission.update', $permission->id) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="id" value="{{ $permission->id }}">
@@ -37,7 +37,7 @@
                                     <i class="fa fa-times-circle"></i>
                                     删除
                                 </button>
-                                <a type="button" class="btn btn-primary btn-md" href="{{ route('admin.permission.index') }}">
+                                <a type="button" class="btn btn-primary btn-md" href="{{ route('permission.index') }}">
                                     <i class="fa fa-reply"></i>
                                     返回
                                 </a>
@@ -69,7 +69,7 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <form method="POST" action="{{ route('admin.permission.destroy', $permission->id) }}">
+                <form method="POST" action="{{ route('permission.destroy', $permission->id) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

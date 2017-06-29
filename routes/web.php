@@ -31,7 +31,13 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::resource('area', 'AreaController',['except' => 'show']);
     Route::resource('company', 'CompanyController',['except' => 'show']);
     Route::resource('productType', 'ProductTypeController',['except' => 'show']);
-    Route::resource('productFunction', 'productFunctionController',['except' => 'show']);
+    Route::resource('productFunction', 'ProductFunctionController',['except' => 'show']);
+
+    Route::get('role/editPermission/{id}',['uses' => 'RoleController@editPermission', 'as' => 'role.editPermission']);
+    Route::post('role/updatePermission/{id}',['uses' => 'RoleController@updatePermission', 'as' => 'role.updatePermission']);
+    Route::resource('permission', 'PermissionController',['except' => 'show']);
+    Route::resource('role', 'RoleController',['except' => 'show']);
+    Route::resource('manager', 'ManagerController',['except' => 'show']);
 });
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

@@ -1,17 +1,17 @@
 <div class="form-group">
-    <label for="name" class="col-md-3 control-label">
+    <label for="permissionname" class="col-md-3 control-label">
         名称
     </label>
     <div class="col-md-8">
-        <input type="text" class="form-control" name="name" id="name" value="{{ $permission->name }}">
+        <input type="text" class="form-control" name="permissionname" id="permissionname" value="{{ $permission->permissionname }}">
     </div>
 </div>
 <div class="form-group">
-    <label for="label" class="col-md-3 control-label">
+    <label for="permissionlabel" class="col-md-3 control-label">
         标签
     </label>
     <div class="col-md-8">
-        <input type="text" class="form-control" name="label" id="label" value="{{ $permission->label }}">
+        <input type="text" class="form-control" name="permissionlabel" id="permissionlabel" value="{{ $permission->permissionlabel }}">
     </div>
 </div>
 <div class="form-group">

@@ -1,7 +1,7 @@
-@extends('admin.layout')
+@extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row page-title-row">
         <div class="col-md-12">
             <h3>角色 <small>» 权限编辑</small></h3>
@@ -16,8 +16,8 @@
                 </div>
                 <div class="panel-body">
 
-                    @include('admin.partials.errors')
-                    @include('admin.partials.success')
+                    @include('partials.errors')
+                    @include('partials.success')
 
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('admin/role/updatePermission', $role->id) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -44,8 +44,8 @@
                                         @endif
                                     </td>
                                     <td>{{ $permission->id }}</td>
-                                    <td>{{ $permission->name }}</td>
-                                    <td>{{ $permission->label }}</td>
+                                    <td>{{ $permission->permissionname }}</td>
+                                    <td>{{ $permission->permissionlabel }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

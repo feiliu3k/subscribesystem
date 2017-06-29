@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('layouts.app')
 
 @section('content')
 <div class="container-fluid">
@@ -16,9 +16,9 @@
                 </div>
                 <div class="panel-body">
 
-                    @include('admin.partials.errors')
+                    @include('partials.errors')
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.permission.store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('permission.store') }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         @include('admin.permission._form')
