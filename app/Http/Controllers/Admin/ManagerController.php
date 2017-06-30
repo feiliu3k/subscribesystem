@@ -9,6 +9,7 @@ use Validator, Auth, Redirect;
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Company;
 
 class ManagerController extends Controller
 {
@@ -88,20 +89,24 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
-        $manager = new User();
-        $manager->managername=$request->managername;
-        $manager->manageraccount=$request->manageraccount;
-        $manager->email=$request->email;
-        $manager->company_id= $request->company_id;
-        $manager->cellphone= $request->cellphone;
-        $manager->IDCard= $request->IDCard;
-        $manager->application_note= $request->application_note;
-        $manager->verifyflag= $request->verifyflag;
-        $manager->password= bcrypt($password);
-        $manager->save();
-
-        return redirect('/admin/manager')
-                        ->withSuccess("用户 '$manager->managername' 新建成功.");
+        if ($request->newpassword==$request->password_confirmation){
+            $manager = new User();
+            $manager->managername=$request->managername;
+            $manager->manageraccount=$request->manageraccount;
+            $manager->email=$request->email;
+            $manager->company_id= $request->company_id;
+            $manager->cellphone= $request->cellphone;
+            $manager->IDCard= $request->IDCard;
+            $manager->application_note= $request->application_note;
+            $manager->verifyflag= $request->verifyflag;
+            $manager->password= bcrypt($request->newpassword);
+            $manager->save();            
+            return redirect('/admin/manager')
+                            ->withSuccess("用户 '$manager->managername' 新建成功.");
+        }else{
+            return redirect("/admin/manager/$id/edit")
+                        ->withSuccess("用户添加失败，密码不一致.");
+        }
     }
 
 
@@ -137,7 +142,7 @@ class ManagerController extends Controller
         $manager->IDCard= $request->IDCard;
         $manager->application_note= $request->application_note;
         $manager->verifyflag= $request->verifyflag;
-        $manager->password= bcrypt($password);
+        $manager->password= bcrypt($request->newpassword);
         $manager->save();        
 
         return redirect("/admin/manager/$id/edit")
@@ -159,9 +164,6 @@ class ManagerController extends Controller
         return redirect('/admin/manager')
                         ->withSuccess("用户 '$manager->managername' 已经被删除.");
     }
-
-
-    
 
     /**
      * Remove the specified resource from storage.
@@ -187,7 +189,7 @@ class ManagerController extends Controller
 
     public function updateRole(Request $request,$id)
     {
-        //dd($request->permissions);
+       // dd($request);
         $manager = User::findOrFail($id);
         $roleids=$request->roles;
 
@@ -196,7 +198,7 @@ class ManagerController extends Controller
 
         if (count($roleids)>0){
             foreach ($roleids as $roleid){
-                $manager->assignRole(Role::findOrFail($roleid)->name);
+                $manager->assignRole(Role::findOrFail($roleid)->rolename);
             }
         }
         return redirect('/admin/manager')
@@ -205,7 +207,21 @@ class ManagerController extends Controller
     }
 
 
-   
+    public function changePassword(Request $request)
+    {
+        $id=$request->id;
+        $manager = User::findOrFail($id);
+
+        if ($request->newpassword==$request->password_confirmation){
+            $manager->password=bcrypt($request->newpassword);
+            $manager->save();
+            return redirect("/admin/manager/$id/edit")
+                        ->withSuccess("密码成功.");
+        }else{
+            return redirect("/admin/manager/$id/edit")
+                        ->withSuccess("密码不一致.");
+        }
+    }
 
 
    

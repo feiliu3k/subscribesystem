@@ -15,11 +15,16 @@ class Role extends Model
 
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class);
+        return $this->belongsToMany(Permission::class,'role_permission');
     }
     //给角色添加权限
     public function givePermissionTo($permission)
     {
         return $this->permissions()->save($permission);
+    }
+
+    public function managers()
+    {
+        return $$this->belongsToMany(User::class,'manager_role','manager_id','role_id');
     }
 }

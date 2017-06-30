@@ -1,27 +1,27 @@
-@extends('admin.layout')
+@extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row page-title-row">
         <div class="col-md-12">
-            <h3>用户 <small>» 角色编辑</small></h3>
+            <h3>管理员 <small>» 角色编辑</small></h3>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">用户角色窗口</h3>
+                    <h3 class="panel-title">管理员角色窗口</h3>
                 </div>
                 <div class="panel-body">
 
-                    @include('admin.partials.errors')
-                    @include('admin.partials.success')
+                    @include('partials.errors')
+                    @include('partials.success')
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('admin/user/updateRole', $user->id) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('admin/manager/updateRole', $manager->id) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="id" value="{{ $user->id }}">
+                        <input type="hidden" name="id" value="{{ $manager->id }}">
                         <table id="roles-table" class="table table-striped">
                         <thead>
                             <tr>
@@ -35,15 +35,15 @@
                                 @foreach ($roles as $role)
                                 <tr>
                                     <td>
-                                        @if(in_array($role['id'],array_values($userRoles)))
+                                        @if(in_array($role['id'],array_values($managerRoles)))
                                             <input type="checkbox" name="roles[]" value="{{ $role->id }}" checked />
                                         @else
                                             <input type="checkbox" name="roles[]" value="{{ $role->id }}" />
                                         @endif
                                     </td>
                                     <td>{{ $role->id }}</td>
-                                    <td>{{ $role->name }}</td>
-                                    <td>{{ $role->label }}</td>
+                                    <td>{{ $role->rolename }}</td>
+                                    <td>{{ $role->rolelabel }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -57,7 +57,7 @@
                                     <i class="fa fa-save"></i>
                                     保存
                                 </button>
-                                <a type="button" class="btn btn-primary btn-md" href="{{ route('admin.user.index') }}">
+                                <a type="button" class="btn btn-primary btn-md" href="{{ route('manager.index') }}">
                                     <i class="fa fa-reply"></i>
                                     返回
                                 </a>
@@ -71,16 +71,4 @@
         </div>
     </div>
 </div>
-
-
-@stop
-
-@section('scripts')
-<script>
-    // $(function() {
-    //     $("#roles-table").DataTable({
-    //         order: [[0, "desc"]]
-    //     });
-    // });
-</script>
 @stop

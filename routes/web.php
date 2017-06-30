@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::post('role/updatePermission/{id}',['uses' => 'RoleController@updatePermission', 'as' => 'role.updatePermission']);
     Route::get('manager/editRole/{id}',['uses' => 'ManagerController@editRole', 'as' => 'manager.editRole']);
     Route::post('manager/updateRole/{id}',['uses' => 'ManagerController@updateRole', 'as' => 'manager.updateRole']);
+    Route::post('manager/changePassword',['uses' => 'ManagerController@changePassword', 'as' => 'manager.changePassword']);
     Route::resource('permission', 'PermissionController',['except' => 'show']);
     Route::resource('role', 'RoleController',['except' => 'show']);
     Route::resource('manager', 'ManagerController',['except' => 'show']);

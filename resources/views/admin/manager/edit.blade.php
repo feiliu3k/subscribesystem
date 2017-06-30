@@ -1,30 +1,30 @@
-@extends('admin.layout')
+@extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row page-title-row">
         <div class="col-md-12">
-            <h3>用户 <small>» 编辑</small></h3>
+            <h3>管理员 <small>» 编辑</small></h3>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">编辑用户窗口</h3>
+                    <h3 class="panel-title">编辑管理员窗口</h3>
                 </div>
                 <div class="panel-body">
 
-                    @include('admin.partials.errors')
-                    @include('admin.partials.success')
+                    @include('partials.errors')
+                    @include('partials.success')
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.user.update', $user->id) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('manager.update', $manager->id) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="id" value="{{ $user->id }}">
+                        <input type="hidden" name="id" value="{{ $manager->id }}">
 
 
-                        @include('admin.user._form')
+                        @include('admin.manager._form')
 
                         <div class="form-group">
                             <div class="col-md-7 col-md-offset-3">
@@ -40,7 +40,7 @@
                                     <i class="fa fa-times-circle"></i>
                                     修改密码
                                 </button>
-                                <a type="button" class="btn btn-primary btn-md" href="{{ route('admin.user.index') }}">
+                                <a type="button" class="btn btn-primary btn-md" href="{{ route('manager.index') }}">
                                     <i class="fa fa-reply"></i>
                                     返回
                                 </a>
@@ -68,11 +68,11 @@
             <div class="modal-body">
                 <p class="lead">
                     <i class="fa fa-question-circle fa-lg"></i>
-                    是否真的需要删除此用户？
+                    是否真的需要删除此管理员？
                 </p>
             </div>
             <div class="modal-footer">
-                <form method="POST" action="{{ route('admin.user.destroy', $user->id) }}">
+                <form method="POST" action="{{ route('manager.destroy', $manager->id) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -97,9 +97,9 @@
                     <h4 class="modal-title">请确认修改</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{ route('admin.user.change') }}">
+                    <form method="POST" action="{{ route('manager.changePassword') }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="userid" value="{{ $user->id }}">
+                        <input type="hidden" name="id" value="{{ $manager->id }}">
                         <div class="form-group">
                             <label for="newpassword" class="control-label">
                                 新密码

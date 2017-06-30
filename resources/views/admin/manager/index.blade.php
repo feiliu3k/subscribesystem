@@ -4,11 +4,11 @@
     <div class="container">
         <div class="row page-title-row">
             <div class="col-md-6">
-                <h3>用户 <small>» 列表</small></h3>
+                <h3>管理员 <small>» 列表</small></h3>
             </div>
             <div class="col-md-6 text-right">
                 <a href="{{ route('manager.create') }}" class="btn btn-success btn-md">
-                    <i class="fa fa-plus-circle"></i> 新建用户
+                    <i class="fa fa-plus-circle"></i> 新建管理员
                 </a>
             </div>
         </div>
@@ -44,7 +44,11 @@
                             <td>{{ $manager->email }}</td>
                             <td>{{ $manager->IDCard }}</td>
                             <td>{{ $manager->application_note }}</td>
-                            <td>{{ $manager->company->companyname }}</td>
+                            <td>
+                             @if ($manager->company)
+                                {{ $manager->company->companyname }}
+                             @endif   
+                            </td>
                             <td>
                                 @if ($manager->verifyflag)
                                     已审核
@@ -57,10 +61,7 @@
                                 </a>
                                 <a href="{{ url('admin/manager/editRole', $manager->id) }}" class="btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i> 角色
-                                </a>
-                                <a href="{{ url('admin/manager/editPro', $manager->id) }}" class="btn btn-xs btn-info">
-                                    <i class="fa fa-edit"></i> 栏目
-                                </a>
+                                </a>                               
                             </td>
                         </tr>
                     @endforeach

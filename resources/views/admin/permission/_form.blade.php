@@ -3,7 +3,7 @@
         名称
     </label>
     <div class="col-md-8">
-        <input type="text" class="form-control" name="permissionname" id="permissionname" value="{{ $permission->permissionname }}">
+        <input type="text" class="form-control" name="permissionname" id="permissionname" value="{{ $permission->permissionname }}" required autofocus>
     </div>
 </div>
 <div class="form-group">

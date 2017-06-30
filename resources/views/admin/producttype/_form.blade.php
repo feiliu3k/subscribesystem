@@ -4,6 +4,6 @@
         {{ config('subscribesystem.productType') }}名称
     </label>
     <div class="col-md-8">
-        <input type="text" class="form-control" id="typename" name="typename" value="{{ $typename }}">
+        <input type="text" class="form-control" id="typename" name="typename" value="{{ $typename }}" required autofocus>
     </div>
 </div>

@@ -28,7 +28,7 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class,'manager_role','role_id','manager_id');
     }
     // 判断用户是否具有某个角色
     public function hasRole($role)
@@ -48,7 +48,7 @@ class User extends Authenticatable
     public function assignRole($role)
     {
         return $this->roles()->save(
-            Role::whereName($role)->firstOrFail()
+            Role::whereRolename($role)->firstOrFail()
         );
     }
 }
