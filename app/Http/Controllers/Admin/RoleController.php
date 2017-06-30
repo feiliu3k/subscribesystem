@@ -46,7 +46,12 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $this->validate($request, [
+            'rolename' => 'required|string|max:255|unique:role',
+            'rolelabel' => 'required|string|max:255',                        
+        ]);
+
         $role = new Role();
         $role->rolename=$request->rolename;
         $role->rolelabel=$request->rolelabel;
@@ -80,6 +85,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'rolename' => 'required|string|max:255|unique:role',
+            'rolelabel' => 'required|string|max:255',                        
+        ]);
         $role = Role::findOrFail($id);
         $role->rolename=$request->rolename;
         $role->rolelabel=$request->rolelabel;

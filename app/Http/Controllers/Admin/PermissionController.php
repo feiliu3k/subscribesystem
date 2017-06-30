@@ -45,6 +45,10 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [            
+            'permissionlabel' => 'required|string|max:255',
+            'permissionname' => 'required|string|max:255|unique:permission',                       
+        ]);
         $permission = new Permission();
         $permission->permissionname=$request->permissionname;
         $permission->permissionlabel=$request->permissionlabel;
@@ -78,6 +82,10 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [            
+            'permissionlabel' => 'required|string|max:255',
+            'permissionname' => 'required|string|max:255|unique:permission',                       
+        ]);
         $permission = Permission::findOrFail($id);
         $permission->permissionname=$request->permissionname;
         $permission->permissionlabel=$request->permissionlabel;

@@ -53,6 +53,10 @@ class ProductTypeController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'typename' => 'required|string|max:255|unique:producttype',                       
+        ]);
+
         $productType = new ProductType();
         foreach (array_keys($this->fields) as $field) {
             $productType->$field = $request->get($field);
@@ -91,6 +95,9 @@ class ProductTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'typename' => 'required|string|max:255|unique:producttype',                       
+        ]);
         $productType = ProductType::findOrFail($id);
 
         foreach (array_keys($this->fields) as $field) {

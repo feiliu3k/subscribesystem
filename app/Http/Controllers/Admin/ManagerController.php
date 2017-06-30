@@ -89,6 +89,11 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [            
+            'managername' => 'required|string|max:255',
+            'manageraccount' => 'required|string|max:255|unique:manager',
+            'password' => 'required|string|min:6|confirmed',                  
+        ]);
         if ($request->newpassword==$request->password_confirmation){
             $manager = new User();
             $manager->managername=$request->managername;
@@ -134,6 +139,11 @@ class ManagerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [            
+            'managername' => 'required|string|max:255',
+            'manageraccount' => 'required|string|max:255|unique:manager',
+            'password' => 'required|string|min:6|confirmed',                  
+        ]);
         $manager = User::findOrFail($id);
         $manager->managername=$request->managername;        
         $manager->email=$request->email;

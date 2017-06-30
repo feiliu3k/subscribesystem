@@ -52,6 +52,10 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'companyname' => 'required|unique:company|max:255'           
+        ]);
+
         $company = new Company();
         foreach (array_keys($this->fields) as $field) {
             $company->$field = $request->get($field);
@@ -90,6 +94,9 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'companyname' => 'required|unique:company|max:255'           
+        ]);
         $company = Company::findOrFail($id);
 
         foreach (array_keys($this->fields) as $field) {

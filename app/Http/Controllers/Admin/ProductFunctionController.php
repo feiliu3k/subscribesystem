@@ -53,6 +53,9 @@ class ProductFunctionController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'functionname' => 'required|string|max:255|unique:productfunction'                       
+        ]);
         $productFunction = new ProductFunction();
         foreach (array_keys($this->fields) as $field) {
             $productFunction->$field = $request->get($field);
@@ -91,6 +94,9 @@ class ProductFunctionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'functionname' => 'required|string|max:255|unique:productfunction',                       
+        ]);
         $productFunction = ProductFunction::findOrFail($id);
 
         foreach (array_keys($this->fields) as $field) {
