@@ -12,6 +12,12 @@ class AreaController extends Controller
         'areaname' => '',
         'id' => '',        
     ];
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *

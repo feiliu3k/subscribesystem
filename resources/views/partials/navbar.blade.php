@@ -4,6 +4,7 @@
     <li><a href="# }}">项目1</a></li>
     <li><a href="# }}">项目1</a></li>    
 </ul>
+
 <ul class="nav navbar-nav nav-tabs">   
     <li role="presentation" class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -20,14 +21,7 @@
     </li> 
 </ul>
 
-
-            <!-- Right Side Of Navbar -->
-<ul class="nav navbar-nav">
-    &nbsp;
-</ul>
-
 <ul class="nav navbar-nav navbar-right">
-
     <!-- Authentication Links -->
     @if (Auth::guest())
         <li><a href="{{ route('login') }}">登录</a></li>
