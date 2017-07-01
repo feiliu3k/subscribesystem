@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::resource('role', 'RoleController',['except' => 'show']);
     Route::resource('manager', 'ManagerController',['except' => 'show']);
 
+    Route::get('product/{id}/address',['uses' => 'ProductController@getProductAddress', 'as' => 'product.getProductAddress']);
+    Route::post('product/{id}/address',['uses' => 'ProductController@postProductAddress', 'as' => 'product.postProductAddress']);
     Route::resource('product', 'ProductController');
 });
 

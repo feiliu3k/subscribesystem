@@ -33,8 +33,8 @@ class Product extends Model
         return $this->belongsTo(ProductType::class,'producttype_id');
     }
 
-    public function productAddress()
+    public function address()
     {
-        return $this->hasOne(ProductAddress::class,'productifo_id');
+        return $this->hasOne(ProductAddress::class,'productifo_id','id');
     }
 }

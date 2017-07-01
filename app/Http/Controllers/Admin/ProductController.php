@@ -11,6 +11,7 @@ use App\Models\Company;
 use App\Models\Area;
 use App\Models\ProductType;
 use App\Models\ProductFunction;
+use App\Models\ProductAddress;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -85,9 +86,10 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
-            
-        $product = Product::findOrFail($id);
+    {             
+        $product = Product::where('delflag', 0)
+                        ->where('id', $id)
+                        ->first();
         $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
         $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
         $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
@@ -105,11 +107,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $this->validate($request, [            
+        $this->validate($request, [            
             'productname' => 'required|string|max:255',             
         ]);        
         
-        $product = Product::findOrFail($id);
+        $product = Product::where('delflag', 0)
+                        ->where('id', $id)
+                        ->first();
         $product->productname=$request->productname;
         $product->productimg=$request->productimg;
         $product->areaname_id=$request->area_id;
@@ -131,7 +135,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::where('delflag', 0)
+                        ->where('id', $id)
+                        ->first();
         $product->delflag=1;
         $product->save();
 
@@ -139,6 +145,34 @@ class ProductController extends Controller
                         ->withSuccess("场地 '$product->productname' 已经被删除.");
     }
 
+    public function getProductAddress($id)
+    {
+        $product = Product::where('delflag', 0)
+                        ->with('address')
+                        ->where('id', $id)
+                        ->first();
+        
+        return view('admin.product.address',compact('product'));     
+    }
+
+    public function postProductAddress(Request $request)
+    {
+        $this->validate($request, [            
+            'productaddress' => 'required|string|max:255',             
+        ]);        
+        
+        $productAddress = new ProductAddress();
+        $productAddress->productifo_id=$request->id;
+        $productAddress->productaddress=$request->productaddress;
+        $productAddress->longitude=$request->longitude;
+        $productAddress->latitude=$request->latitude;
+        $productAddress->save();
+        $product = Product::where('delflag', 0)
+                        ->where('id', $request->id)
+                        ->first();
+        return redirect('/admin/product')
+                        ->withSuccess("场地 '$product->productname' 的地址修改成功.");
+    }
    
 
 }

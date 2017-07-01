@@ -42,6 +42,10 @@
                                 <a href="{{ route('product.edit', $product->id) }}" class="btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
+
+                                <a href="{{ route('product.getProductAddress', $product->id) }}" class="btn btn-xs btn-info">
+                                    <i class="fa fa-edit"></i> 地址
+                                </a>
                             </td>
                         </tr>
                     @endforeach

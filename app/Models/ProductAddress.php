@@ -14,9 +14,9 @@ class ProductAddress extends Model
         'productaddress', 'longitude' ,'latitude'
     ];
 
-    public function products()
+    public function product()
     {
-        return $this->belongToMany(Product::class,'productifo_id');
+        return $this->belongsTo(Product::class,'productifo_id','productifo_id');
     }
   
 }
