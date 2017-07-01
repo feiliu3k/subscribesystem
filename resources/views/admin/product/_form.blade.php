@@ -16,6 +16,14 @@
         <div class="col-md-2 thumb-wrap">
             <div class="img-upload btn btn-block btn-info btn-flat" title="点击上传">点击上传</div>
         </div>
+    </div>
+    <div class="form-group">
+        <label for="companyname" class="col-md-3 control-label">
+            {{ config('subscribesystem.company') }}名称
+        </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" id="companyname" name="companyname" value="{{ Auth::user()->company->companyname }}" readonly>
+        </div>
     </div>    
     <div class="form-group">
         <label for="area_id" class="col-md-3 control-label">

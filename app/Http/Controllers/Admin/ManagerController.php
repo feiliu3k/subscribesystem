@@ -141,8 +141,7 @@ class ManagerController extends Controller
     {
         $this->validate($request, [            
             'managername' => 'required|string|max:255',
-            'manageraccount' => 'required|string|max:255|unique:manager',
-            'password' => 'required|string|min:6|confirmed',                  
+            'manageraccount' => 'required|string|max:255'                   
         ]);
         $manager = User::findOrFail($id);
         $manager->managername=$request->managername;        

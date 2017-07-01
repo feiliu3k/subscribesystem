@@ -9,7 +9,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">编辑{{ config('subscribesystem.product') }}窗口</h3>
@@ -19,10 +19,19 @@
                     @include('partials.errors')
                     @include('partials.success')
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('product.update', $id) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('product.update', $product->id) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="_method" value="PUT">                        
-
+                        <input type="hidden" name="_method" value="PUT">
+                        <input type="hidden" name="id" value="{{ $product->id }}">                        
+                        
+                        <div class="form-group">
+                            <label for="managername" class="col-md-3 control-label">
+                                管理员
+                            </label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="managername" name="managername" value="{{ $product->manager->managername }}" readonly>
+                            </div>
+                        </div>
                         @include('admin.product._form')
 
                         <div class="form-group">
@@ -63,11 +72,11 @@
             <div class="modal-body">
                 <p class="lead">
                     <i class="fa fa-question-circle fa-lg"></i>
-                    是否真的需要删除此{{ config('subscribesystem.company') }}？
+                    是否真的需要删除此{{ config('subscribesystem.product') }}？
                 </p>
             </div>
             <div class="modal-footer">
-                <form method="POST" action="{{ route('company.destroy', $id) }}">
+                <form method="POST" action="{{ route('product.destroy', $product->id) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

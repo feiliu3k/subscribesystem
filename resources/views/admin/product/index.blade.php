@@ -37,7 +37,7 @@
                             <td>{{ $product->productname }}</td>
                             <td>{{ $product->company->companyname }}</td>
                             <td>{{ $product->productType->typename }}</td>
-                            <td>{{ $product->area->id }}</td>
+                            <td>{{ $product->area->areaname }}</td>
                             <td>
                                 <a href="{{ route('product.edit', $product->id) }}" class="btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i> 编辑
