@@ -83,11 +83,9 @@ class PermissionController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [            
-            'permissionlabel' => 'required|string|max:255',
-            'permissionname' => 'required|string|max:255|unique:permission',                       
+            'permissionlabel' => 'required|string|max:255',                                  
         ]);
-        $permission = Permission::findOrFail($id);
-        $permission->permissionname=$request->permissionname;
+        $permission = Permission::findOrFail($id);       
         $permission->permissionlabel=$request->permissionlabel;
         $permission->description= $request->description;
 
