@@ -15,22 +15,22 @@ class Product extends Model
 
     public function area()
     {
-        return $this->belongTo(Area::class,'areaname_id');
+        return $this->belongsTo(Area::class,'areaname_id');
     }
 
     public function manager()
     {
-        return $this->belongTo(User::class,'manager_id');
+        return $this->belongsTo(User::class,'manager_id');
     }
 
     public function company()
     {
-        return $this->belongTo(Company::class,'company_id');
+        return $this->belongsTo(Company::class,'company_id');
     }
 
     public function productType()
     {
-        return $this->belongTo(ProductType::class,'producttype_id');
+        return $this->belongsTo(ProductType::class,'producttype_id');
     }
 
     public function productAddress()

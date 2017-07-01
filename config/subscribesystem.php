@@ -7,8 +7,14 @@ return [
     'productType' => '产品类别',
     'productFunction' => '产品功能',            
     'company' => '单位',
-    'per_page' => 20,        
-    
+    'product' => '场地',
+    'per_page' => 20, 
+
+    'uploads' => [
+            'storage' => 'local',
+            'webpath' => '/uploads',
+    ],
+
     'image_path'=>'../../uploads/ss/',
     'video_path'=>'../../uploads/ss/',        
 ];

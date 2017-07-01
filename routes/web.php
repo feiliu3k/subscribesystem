@@ -41,6 +41,8 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::resource('permission', 'PermissionController',['except' => 'show']);
     Route::resource('role', 'RoleController',['except' => 'show']);
     Route::resource('manager', 'ManagerController',['except' => 'show']);
+
+    Route::resource('product', 'ProductController');
 });
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
