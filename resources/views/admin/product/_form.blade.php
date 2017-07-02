@@ -32,14 +32,14 @@
         <div class="col-md-8">
             <select name="area_id" id="area_id" class="form-control" >
                 @foreach ($areas as $area)
-                    @if ($product->area_id==$area->id)
-                    <option value="{{ $area->id }} " selected="selected">
-                        {{ $area->areaname }}
-                    </option>
+                    @if ($product->areaname_id==$area->id)
+                        <option value="{{ $area->id }} " selected="selected">
+                            {{ $area->areaname }}
+                        </option>
                     @else
-                    <option value="{{ $area->id }} ">
-                        {{ $area->areaname }}
-                    </option>
+                        <option value="{{ $area->id }} ">
+                            {{ $area->areaname }}
+                        </option>
                     @endif
                 @endforeach
             </select>
@@ -52,7 +52,7 @@
         <div class="col-md-8">
             <select name="producttype_id" id="producttype_id" class="form-control" >
                 @foreach ($productTypes as $productType)
-                    @if ($product->producttype_id==$productType->producttype_id)
+                    @if ($product->producttype_id==$productType->id)
                     <option value="{{ $productType->id }} " selected="selected">
                         {{ $productType->typename }}
                     </option>
@@ -70,9 +70,18 @@
             功能
         </label>
         <div class="col-md-8">
-            <select id="product-function-select" multiple="multiple"  class="form-control" >
-                <option value="AL">Alabama</option>                
-                <option value="WY">Wyoming</option>
+            <select id="product-function" name="productFunction_ids[]" multiple="multiple"  class="form-control" >
+                @foreach ($productFunctions as $productFunction)
+                    @if (($product->functions) && ($product->functions->contains($productFunction)))
+                    <option value="{{ $productFunction->id }} " selected="selected">
+                        {{ $productFunction->functionname }}
+                    </option>
+                    @else
+                    <option value="{{ $productFunction->id }} ">
+                        {{ $productFunction->functionname }}
+                    </option>
+                    @endif
+                @endforeach               
             </select>
         </div>
     </div>

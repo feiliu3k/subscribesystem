@@ -46,7 +46,6 @@ class ProductController extends Controller
         $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
         $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
         $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
-        
         $product = new Product();
         return view('admin.product.create',compact('product','areas', 'productTypes', 'productFunctions'));
     }
@@ -62,7 +61,7 @@ class ProductController extends Controller
         $this->validate($request, [            
             'productname' => 'required|string|max:255',             
         ]);
-        
+       
         $product = new Product();
         $product->productname=$request->productname;
         $product->productimg=$request->productimg;
@@ -70,7 +69,8 @@ class ProductController extends Controller
         $product->producttype_id= $request->producttype_id;
         $product->productexplain= $request->productexplain;
         $product->manager_id= Auth::user()->id;
-        $product->company_id= Auth::user()->company_id;        
+        $product->company_id= Auth::user()->company_id;
+        $product->functions()->attach($request->productFunction_ids);        
         $product->save();            
         return redirect('/admin/product')
                         ->withSuccess("场地 '$product->productname' 创建成功.");
@@ -93,7 +93,7 @@ class ProductController extends Controller
         $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
         $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
         $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
-        
+
         return view('admin.product.edit', compact('product','areas', 'productTypes', 'productFunctions'));
     }
 
@@ -109,8 +109,7 @@ class ProductController extends Controller
     {
         $this->validate($request, [            
             'productname' => 'required|string|max:255',             
-        ]);        
-        
+        ]);  
         $product = Product::where('delflag', 0)
                         ->where('id', $id)
                         ->first();
@@ -120,7 +119,9 @@ class ProductController extends Controller
         $product->producttype_id= $request->producttype_id;
         $product->productexplain= $request->productexplain;
         $product->manager_id= Auth::user()->id;
-        $product->company_id= Auth::user()->company_id;        
+        $product->company_id= Auth::user()->company_id;
+        $product->functions()->detach();        
+        $product->functions()->attach($request->productFunction_ids);       
         $product->save();    
         
         return redirect("/admin/product/$id/edit")

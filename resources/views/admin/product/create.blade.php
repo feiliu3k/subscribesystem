@@ -48,7 +48,7 @@
     <script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/ueditor.all.js') }}"></script>
     <script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/lang/zh-cn/zh-cn.js') }}"></script>
 	
-    <script src="{{ URL::asset('vendor/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ URL::asset('vendor/select2/js/select2.min.js') }}"></script>
     <script src="{{ URL::asset('vendor/select2/js/i18n/zh-CN.js') }}"></script>
 
     <script type="text/javascript">
@@ -67,7 +67,9 @@
 
 
 
-        $("#product-function-select").select2();
+        $("#product-function").select2({
+            tags: true,
+        });
 
     </script>
 
