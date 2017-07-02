@@ -46,6 +46,10 @@
                                 <a href="{{ route('product.getProductAddress', $product->id) }}" class="btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i> 地址
                                 </a>
+
+                                <a href="{{ route('detail.index', $product->id) }}" class="btn btn-xs btn-info">
+                                    <i class="fa fa-edit"></i> 细节
+                                </a>
                             </td>
                         </tr>
                     @endforeach

@@ -42,4 +42,9 @@ class Product extends Model
     {
         return $this->belongsToMany(ProductFunction::class,'productifo_function','productifo_id','productfunction_id');
     }
+
+    public function details()
+    {
+        return $this->hasMany(ProductDetail::class, 'productifo_id');
+    }
 }

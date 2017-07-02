@@ -8,6 +8,7 @@ return [
     'productFunction' => '产品功能',            
     'company' => '单位',
     'product' => '场地',
+    'detail' => '场地细节',
     'per_page' => 20, 
 
     'uploads' => [

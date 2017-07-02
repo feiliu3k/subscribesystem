@@ -11,4 +11,13 @@ class ProductDetailController extends Controller
     {
         $this->middleware('auth');
     }
+
+    public function index($id){
+        $details = ProductDetail::where('productifo_id',$id)
+                                ->where('delflag',0)
+                                ->orderBy('usedate','desc')
+                                ->get();
+       
+        return view('admin.productdetail.index',compact('details'));
+    }
 }
