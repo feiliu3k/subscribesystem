@@ -66,6 +66,17 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="productfunction_id" class="col-md-3 control-label">
+            功能
+        </label>
+        <div class="col-md-8">
+            <select id="product-function-select" multiple="multiple"  class="form-control" >
+                <option value="AL">Alabama</option>                
+                <option value="WY">Wyoming</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="productAddress" class="col-md-3 control-label">
             地址
         </label>

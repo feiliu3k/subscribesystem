@@ -15,6 +15,6 @@ class ProductFunction extends Model
 
     public function products()
     {
-        return $this->belongsToMany(product::class);
+        return $this->belongsToMany(product::class,'productifo_function','productfunction_id','productifo_id');
     }
 }

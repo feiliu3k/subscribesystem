@@ -15,6 +15,7 @@
     @yield('styles')
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">    
     <link href="{{ asset('vendor/dataTables/css/dataTables.bootstrap.css') }}" rel="stylesheet">
 </head>
 <body>

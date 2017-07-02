@@ -160,19 +160,42 @@ class ProductController extends Controller
         $this->validate($request, [            
             'productaddress' => 'required|string|max:255',             
         ]);        
+        $product = Product::where('delflag', 0)
+                        ->where('id', $request->id)
+                        ->first();
         
-        $productAddress = new ProductAddress();
+        $productAddress = null;
+        if ($product->address){
+            $productAddress=$product->address;
+        }else{
+            $productAddress=new ProductAddress();
+        }
         $productAddress->productifo_id=$request->id;
         $productAddress->productaddress=$request->productaddress;
         $productAddress->longitude=$request->longitude;
         $productAddress->latitude=$request->latitude;
         $productAddress->save();
-        $product = Product::where('delflag', 0)
-                        ->where('id', $request->id)
-                        ->first();
         return redirect('/admin/product')
                         ->withSuccess("场地 '$product->productname' 的地址修改成功.");
     }
    
+   public function destoryProductAddress($id)
+    {
+     
+        $product = Product::where('delflag', 0)
+                        ->where('id', $id)
+                        ->first();
+        $address=$product->address;
+        if ($address) 
+        {
+            $address->delete();
+            return redirect('/admin/product')
+                            ->withSuccess("场地 '$product->productname' 的地址删除成功.");
+        }else
+        {
+            return redirect('/admin/product')
+                            ->withSuccess("场地 '$product->productname' 的地址删除失败.");
+        }
+    }
 
 }

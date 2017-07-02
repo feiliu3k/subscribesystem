@@ -37,4 +37,9 @@ class Product extends Model
     {
         return $this->hasOne(ProductAddress::class,'productifo_id','id');
     }
+
+    public function functions()
+    {
+        return $this->belongsToMany(ProductFunction::class,'productifo_function','productifo_id','productfunction_id');
+    }
 }

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ URL::asset('vendor/select2/css/select2.min.css')}}" rel="stylesheet" />
+@stop
+
 @section('content')
 <div class="container">
     <div class="row page-title-row">
@@ -96,6 +100,9 @@
     <script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/ueditor.all.js') }}"></script>
     <script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/lang/zh-cn/zh-cn.js') }}"></script>
 	
+    <script src="{{ URL::asset('vendor/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ URL::asset('vendor/select2/js/i18n/zh-CN.js') }}"></script>
+
     <script type="text/javascript">
         try{
             if (editor) {editor.destroy();}
@@ -107,5 +114,8 @@
             });
             editor.render("productexplain");
         }
+
+         $("#product-function-select").select2();
+         
     </script>
 @stop

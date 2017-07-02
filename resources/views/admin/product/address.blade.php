@@ -55,7 +55,10 @@
                                     <i class="fa fa-save"></i>
                                     保存
                                 </button>
-
+                                <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-target="#modal-delete">
+                                    <i class="fa fa-times-circle"></i>
+                                    删除
+                                </button>    
                                 <a type="button" class="btn btn-primary btn-md" href="{{ route('product.index') }}">
                                     <i class="fa fa-reply"></i>
                                     返回
@@ -66,6 +69,35 @@
                     </form>
 
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- 确认删除 --}}
+<div class="modal fade" id="modal-delete" tabIndex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    ×
+                </button>
+                <h4 class="modal-title">请确认修改</h4>
+            </div>
+            <div class="modal-body">
+                <p class="lead">
+                    <i class="fa fa-question-circle fa-lg"></i>
+                    是否真的需要删除此地址？
+                </p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="{{ route('product.destoryProductAddress', $product->id) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">                    
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-times-circle"></i> 确认
+                    </button>
+                </form>
             </div>
         </div>
     </div>

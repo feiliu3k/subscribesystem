@@ -44,6 +44,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
 
     Route::get('product/{id}/address',['uses' => 'ProductController@getProductAddress', 'as' => 'product.getProductAddress']);
     Route::post('product/{id}/address',['uses' => 'ProductController@postProductAddress', 'as' => 'product.postProductAddress']);
+    Route::post('product/{id}/deleteAddress',['uses' => 'ProductController@destoryProductAddress', 'as' => 'product.destoryProductAddress']);
     Route::resource('product', 'ProductController');
 });
 
