@@ -7,7 +7,7 @@
                 <h3>{{ config('subscribesystem.detail') }} <small>» 列表</small></h3>
             </div>
             <div class="col-md-6 text-right">
-                <a href="{{ route('detail.create') }}" class="btn btn-success btn-md">
+                <a href="{{ route('detail.create', $product->id) }}" class="btn btn-success btn-md">
                     <i class="fa fa-plus-circle"></i> 新建{{ config('subscribesystem.detail') }}
                 </a>
             </div>
