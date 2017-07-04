@@ -50,6 +50,8 @@
 
     <script type="text/javascript">
         $('#usedate').datetimepicker();
+        $('#usebegintime').datetimepicker();
+        $('#useendtime').datetimepicker();
     </script>
 
 @stop
