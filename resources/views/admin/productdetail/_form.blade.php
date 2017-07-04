@@ -12,12 +12,11 @@
         <label for="usedate" class="col-md-3 control-label">
             使用日期
         </label>
-        <div class="col-md-8 input-append date" id="usedate">
-            <div class="input-group">
-                <input type="text" data-format="yyyy-MM-dd" class="form-control" name="usedate"   value="{{ $detail->usedate }}" >
-                <span class="input-group-addon add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="fa fa-calendar">
-                    </i>
+        <div class="col-md-8" >
+            <div class='input-group date' id='usedate'>
+                <input type='text' class="form-control" name='usedate'/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
         </div>        
@@ -26,12 +25,11 @@
         <label for="usebegintime" class="col-md-3 control-label">
             使用开始时间
         </label>
-        <div class="col-md-8 input-append date" id="usebegintime">
-            <div class="input-group">
-                <input type="text" data-format="hh:mm:ss" class="form-control" name="usebegintime"   value="{{ $detail->usebegintime }}" >
-                <span class="input-group-addon add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="fa fa-clock-o">
-                    </i>
+        <div class="col-md-8">
+            <div class='input-group date' id='usebegintime'>
+                <input type='text' class="form-control" name='usebegintime'/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
                 </span>
             </div>
         </div>        
@@ -40,12 +38,11 @@
         <label for="useendtime" class="col-md-3 control-label">
             使用结束时间
         </label>
-        <div class="col-md-8 input-append date" id="useendtime">
-            <div class="input-group">
-                <input type="text" data-format="hh:mm:ss" class="form-control" name="useendtime"   value="{{ $detail->useendtime }}" >
-                <span class="input-group-addon add-on">
-                    <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="fa fa-clock-o">
-                    </i>
+        <div class="col-md-8">
+            <div class='input-group date' id='useendtime'>
+                <input type='text' class="form-control" name='useendtime'/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
                 </span>
             </div>
         </div> 

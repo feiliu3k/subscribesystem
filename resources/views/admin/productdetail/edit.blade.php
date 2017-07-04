@@ -97,28 +97,28 @@
 @stop
 
 @section('scripts')
-	<script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/ueditor.config.js') }}"></script>
-    <script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/ueditor.all.js') }}"></script>
-    <script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/lang/zh-cn/zh-cn.js') }}"></script>
-	
-    <script src="{{ URL::asset('vendor/select2/js/select2.min.js') }}"></script>
-    <script src="{{ URL::asset('vendor/select2/js/i18n/zh-CN.js') }}"></script>
+	 <script type="text/javascript"
+     src="{{ URL::asset('vendor/datetimepicker/moment-with-locales.js')  }}">
+    </script>
+	<script type="text/javascript"
+     src="{{ URL::asset('vendor/datetimepicker/bootstrap-datetimepicker.min.js')  }}">
+    </script>
 
     <script type="text/javascript">
-        try{
-            if (editor) {editor.destroy();}
-        }
-        finally {
-            var editor = new UE.ui.Editor();
-            editor.ready(function() {
-                editor.execCommand( 'fontfamily', '微软雅黑' );
-            });
-            editor.render("productexplain");
-        }
-
-         $("#product-function").select2({
-             tags: true,
-         });
+     $(function () {
+        $('#usedate').datetimepicker({
+                    locale: 'zh-CN',
+                    format: 'YYYY-MM-DD'
+                });
+        $('#usebegintime').datetimepicker({
+                    locale: 'zh-CN',
+                    format: 'HH:mm:ss'
+                });
+        $('#useendtime').datetimepicker({
+                    locale: 'zh-CN',
+                    format: 'HH:mm:ss'
+                });
+     });
                   
     </script>
 @stop

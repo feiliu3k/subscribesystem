@@ -44,14 +44,28 @@
 
 @stop
 @section('scripts')
+    <script type="text/javascript"
+     src="{{ URL::asset('vendor/datetimepicker/moment-with-locales.js')  }}">
+    </script>
 	<script type="text/javascript"
      src="{{ URL::asset('vendor/datetimepicker/bootstrap-datetimepicker.min.js')  }}">
     </script>
 
     <script type="text/javascript">
-        $('#usedate').datetimepicker();
-        $('#usebegintime').datetimepicker();
-        $('#useendtime').datetimepicker();
+     $(function () {
+        $('#usedate').datetimepicker({
+                    locale: 'zh-CN',
+                    format: 'YYYY-MM-DD'
+                });
+        $('#usebegintime').datetimepicker({
+                    locale: 'zh-CN',
+                    format: 'HH:mm:ss'
+                });
+        $('#useendtime').datetimepicker({
+                    locale: 'zh-CN',
+                    format: 'HH:mm:ss'
+                });
+     });
     </script>
 
 @stop
