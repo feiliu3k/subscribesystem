@@ -1,3 +1,5 @@
+
+    <input type="hidden" name="id"  id="id" value="{{ $product->id }}" >
     <div class="form-group">
         <label for="productname" class="col-md-3 control-label">
             {{ config('subscribesystem.product') }}名称
@@ -7,103 +9,84 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="productimg" class="col-md-3 control-label">
-            封面
+        <label for="usedate" class="col-md-3 control-label">
+            使用日期
         </label>
-        <div class="col-md-6">
-            <input type="text" class="form-control" name="productimg"  id="productimg" value="{{ $product->productimg }}" >
-        </div>
-        <div class="col-md-2 thumb-wrap">
-            <div class="img-upload btn btn-block btn-info btn-flat" title="点击上传">点击上传</div>
-        </div>
+        <div class="col-md-8 input-append date" id="usedate">
+            <div class="input-group">
+                <input type="text" data-format="yyyy-MM-dd" class="form-control" name="usedate"   value="{{ $detail->usedate }}" >
+                <span class="input-group-addon add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="fa fa-calendar">
+                    </i>
+                </span>
+            </div>
+        </div>        
     </div>
     <div class="form-group">
-        <label for="companyname" class="col-md-3 control-label">
-            {{ config('subscribesystem.company') }}名称
+        <label for="usebegintime" class="col-md-3 control-label">
+            使用开始时间
         </label>
-        <div class="col-md-8">
-            <input type="text" class="form-control" id="companyname" name="companyname" value="{{ Auth::user()->company->companyname }}" readonly>
-        </div>
-    </div>    
-    <div class="form-group">
-        <label for="area_id" class="col-md-3 control-label">
-            区域
-        </label>
-        <div class="col-md-8">
-            <select name="area_id" id="area_id" class="form-control" >
-                @foreach ($areas as $area)
-                    @if ($product->areaname_id==$area->id)
-                        <option value="{{ $area->id }} " selected="selected">
-                            {{ $area->areaname }}
-                        </option>
-                    @else
-                        <option value="{{ $area->id }} ">
-                            {{ $area->areaname }}
-                        </option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
+        <div class="col-md-8 input-append date" id="usebegintime">
+            <div class="input-group">
+                <input type="text" data-format="hh:mm:ss" class="form-control" name="usebegintime"   value="{{ $detail->usebegintime }}" >
+                <span class="input-group-addon add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="fa fa-clock-o">
+                    </i>
+                </span>
+            </div>
+        </div>        
     </div>
     <div class="form-group">
-        <label for="producttype_id" class="col-md-3 control-label">
-            类型
+        <label for="useendtime" class="col-md-3 control-label">
+            使用结束时间
         </label>
-        <div class="col-md-8">
-            <select name="producttype_id" id="producttype_id" class="form-control" >
-                @foreach ($productTypes as $productType)
-                    @if ($product->producttype_id==$productType->id)
-                    <option value="{{ $productType->id }} " selected="selected">
-                        {{ $productType->typename }}
-                    </option>
-                    @else
-                    <option value="{{ $productType->id }} ">
-                        {{ $productType->typename }}
-                    </option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
+        <div class="col-md-8 input-append date" id="useendtime">
+            <div class="input-group">
+                <input type="text" data-format="hh:mm:ss" class="form-control" name="useendtime"   value="{{ $detail->useendtime }}" >
+                <span class="input-group-addon add-on">
+                    <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="fa fa-clock-o">
+                    </i>
+                </span>
+            </div>
+        </div> 
     </div>
     <div class="form-group">
-        <label for="productfunction_id" class="col-md-3 control-label">
-            功能
+        <label for="productprice" class="col-md-3 control-label">
+            价格
         </label>
         <div class="col-md-8">
-            <select id="product-function" name="productFunction_ids[]" multiple="multiple"  class="form-control" >
-                @foreach ($productFunctions as $productFunction)
-                    @if (($product->functions) && ($product->functions->contains($productFunction)))
-                    <option value="{{ $productFunction->id }} " selected="selected">
-                        {{ $productFunction->functionname }}
-                    </option>
-                    @else
-                    <option value="{{ $productFunction->id }} ">
-                        {{ $productFunction->functionname }}
-                    </option>
-                    @endif
-                @endforeach               
-            </select>
-        </div>
+            <input type="text" class="form-control" name="productprice"  id="productprice" value="{{ $detail->productprice }}" >
+        </div>        
     </div>
     <div class="form-group">
-        <label for="productAddress" class="col-md-3 control-label">
-            地址
+        <label for="productnum" class="col-md-3 control-label">
+            总数量
         </label>
         <div class="col-md-8">
-            @if ($product->productAddress)
-                <input type="text" class="form-control" id="productAddress" name="productAddress" value="{{ $product->productAddress->productaddress }}">
-            @else
-                <input type="text" class="form-control" id="productAddress" name="productAddress">
-            @endif
-        </div>
+            <input type="text" class="form-control" name="productnum"  id="productnum" value="{{ $detail->productnum }}" >
+        </div>        
     </div>
     <div class="form-group">
-        <label for="productexplain" class="col-md-3 control-label">
-            内容简介
+        <label for="ordernum" class="col-md-3 control-label">
+            已预定数量
         </label>
         <div class="col-md-8">
-            <script id="productexplain" name="productexplain" type="text/plain" style="width:100%;height:300px;">{!! $product->productexplain !!}</script>
-        </div>
+            <input type="text" class="form-control" name="ordernum"  id="ordernum" value="{{ $detail->ordernum }}" >
+        </div>        
     </div>
-
-
+    <div class="form-group">
+        <label for="paynum" class="col-md-3 control-label">
+            已消费数量
+        </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" name="paynum"  id="paynum" value="{{ $detail->paynum }}" >
+        </div>        
+    </div>
+    <div class="form-group">
+        <label for="maxordernum" class="col-md-3 control-label">
+            可预定的最大数量
+        </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" name="maxordernum"  id="maxordernum" value="{{ $detail->maxordernum }}" >
+        </div>        
+    </div>
