@@ -9,6 +9,8 @@ return [
     'company' => '单位',
     'product' => '场地',
     'detail' => '场地细节',
+    'buyrecord'=> '预定记录',
+    'badrecord'=> '不良记录',
     'per_page' => 20, 
 
     'uploads' => [
