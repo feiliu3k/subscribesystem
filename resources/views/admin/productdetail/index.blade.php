@@ -36,20 +36,20 @@
                         </tr>
                      </thead>
                     <tbody>
-                    @foreach ($details as $details)
+                    @foreach ($details as $detail)
                         <tr>
-                            <th>{{ $details->id }}</th>
-                            <th>{{ $details->product->productname }}</th>
-                            <th>{{ $details->usedate }}</th>
-                            <th>{{ $details->usebegintime }}</th>   
-                            <th>{{ $details->useendtime }}</th>
-                            <th>{{ $details->productprice }}</th>
-                            <th>{{ $details->productnum }}</th>
-                            <th>{{ $details->ordernum }}</th>
-                            <th>{{ $details->paynum }}</th>
-                            <th>{{ $details->maxordernum }}</th>
+                            <th>{{ $detail->id }}</th>
+                            <th>{{ $detail->product->productname }}</th>
+                            <th>{{ $detail->usedate }}</th>
+                            <th>{{ $detail->usebegintime }}</th>   
+                            <th>{{ $detail->useendtime }}</th>
+                            <th>{{ $detail->productprice }}</th>
+                            <th>{{ $detail->productnum }}</th>
+                            <th>{{ $detail->ordernum }}</th>
+                            <th>{{ $detail->paynum }}</th>
+                            <th>{{ $detail->maxordernum }}</th>
                             <td>
-                                <a href="{{ route('detail.edit', $detail->productifo_id,$detail->id) }}" class="btn btn-xs btn-info">
+                                <a href="{{ route('detail.edit', [$detail->productifo_id, $detail->id]) }}" class="btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>                               
                             </td>

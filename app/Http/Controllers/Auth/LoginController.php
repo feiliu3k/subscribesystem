@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\Managerloginlog;
+
 
 class LoginController extends Controller
 {
@@ -52,6 +54,9 @@ class LoginController extends Controller
         // }else{
         //    return back();
         // }
+        $log=new Managerloginlog();
+        $log->loginaccount=$request->manageraccount;
+        $log->ipaddress=$request->getClientIp();
 
         $this->validateLogin($request);
 
@@ -65,6 +70,8 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
+            $log->successflag=1;
+            $log->save();
             return $this->sendLoginResponse($request);
         }
 
@@ -72,7 +79,8 @@ class LoginController extends Controller
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
-
+        $log->successflag=0;
+        $log->save();
         return $this->sendFailedLoginResponse($request);
     }
 
