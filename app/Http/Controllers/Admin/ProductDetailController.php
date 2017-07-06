@@ -24,6 +24,7 @@ class ProductDetailController extends Controller
 
         $product = Product::where('delflag', 0)
                         ->where('id', $id)
+                        ->where('company_id', Auth::user()->company_id)
                         ->first();
 
         $details = ProductDetail::where('productifo_id',$id)
@@ -41,6 +42,7 @@ class ProductDetailController extends Controller
     {
         $product = Product::where('delflag', 0)
                         ->where('id', $id)
+                        ->where('company_id', Auth::user()->company_id)
                         ->first();
         $detail = new ProductDetail();
 
@@ -60,6 +62,7 @@ class ProductDetailController extends Controller
         ]);
 
         $product = Product::where('delflag', 0)
+                        ->where('company_id', Auth::user()->company_id)
                         ->where('id', $id)
                         ->first();
         
@@ -90,6 +93,7 @@ class ProductDetailController extends Controller
     public function edit($id, $did)
     {             
         $product = Product::where('delflag', 0)
+                        ->where('company_id', Auth::user()->company_id)
                         ->where('id', $id)
                         ->first();
         
@@ -115,6 +119,7 @@ class ProductDetailController extends Controller
         ]); 
 
         $product = Product::where('delflag', 0)
+                        ->where('company_id', Auth::user()->company_id)
                         ->where('id', $id)
                         ->first();
 
@@ -146,6 +151,7 @@ class ProductDetailController extends Controller
     public function destroy($id, $did)
     {
         $detail = ProductDetail::where('delflag',0)
+                                ->where('company_id', Auth::user()->company_id)
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
         $detail->delflag=1;

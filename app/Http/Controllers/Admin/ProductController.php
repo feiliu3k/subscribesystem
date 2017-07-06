@@ -88,6 +88,7 @@ class ProductController extends Controller
     public function edit($id)
     {             
         $product = Product::where('delflag', 0)
+                        ->where('company_id', Auth::user()->company_id)
                         ->where('id', $id)
                         ->first();
         $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
@@ -112,6 +113,7 @@ class ProductController extends Controller
         ]);  
         $product = Product::where('delflag', 0)
                         ->where('id', $id)
+                        ->where('company_id', Auth::user()->company_id)
                         ->first();
         $product->productname=$request->productname;
         $product->productimg=$request->productimg;
@@ -138,6 +140,7 @@ class ProductController extends Controller
     {
         $product = Product::where('delflag', 0)
                         ->where('id', $id)
+                        ->where('company_id', Auth::user()->company_id)
                         ->first();
         $product->delflag=1;
         $product->save();
@@ -149,6 +152,7 @@ class ProductController extends Controller
     public function getProductAddress($id)
     {
         $product = Product::where('delflag', 0)
+                        ->where('company_id', Auth::user()->company_id)
                         ->with('address')
                         ->where('id', $id)
                         ->first();
@@ -162,6 +166,7 @@ class ProductController extends Controller
             'productaddress' => 'required|string|max:255',             
         ]);        
         $product = Product::where('delflag', 0)
+                        ->where('company_id', Auth::user()->company_id)
                         ->where('id', $request->id)
                         ->first();
         
@@ -184,6 +189,7 @@ class ProductController extends Controller
     {
      
         $product = Product::where('delflag', 0)
+                        ->where('company_id', Auth::user()->company_id)
                         ->where('id', $id)
                         ->first();
         $address=$product->address;
