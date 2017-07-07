@@ -228,7 +228,7 @@ class ProductController extends Controller
                             ->where('producttype_id', $searchCondition['producttype_id']);
        
         if ($searchCondition['productname']){
-            $products=$products->where('productname','like', "'%".$searchCondition['productname']."%'");
+            $products=$products->where('productname','like', '%'.$searchCondition['productname'].'%');
         }
 
         $products =$products->orderBy('id', 'desc')
