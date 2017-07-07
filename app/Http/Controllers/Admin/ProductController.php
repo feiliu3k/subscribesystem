@@ -16,6 +16,13 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
+
+    protected $_searchCondition = [
+        'productname'=>'',
+        'areaname_id'=>'',
+        'producttype_id'=>'',       
+    ];
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -28,12 +35,15 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
+        $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
+        $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
         $products = Product::where('company_id', Auth::user()->company_id)
                             ->with('area', 'productType', 'company')
                             ->where('delflag', 0)
                             ->orderBy('created_at','desc')
                             ->paginate(config('subscribesystem.per_page'));
-        return view('admin.product.index')->withproducts($products);
+        return view('admin.product.index',compact('products','areas', 'productTypes', 'productFunctions'));
     }
 
     /**
@@ -69,9 +79,9 @@ class ProductController extends Controller
         $product->producttype_id= $request->producttype_id;
         $product->productexplain= $request->productexplain;
         $product->manager_id= Auth::user()->id;
-        $product->company_id= Auth::user()->company_id;
-        $product->functions()->attach($request->productFunction_ids);        
-        $product->save();            
+        $product->company_id= Auth::user()->company_id;        
+        $product->save(); 
+        $product->functions()->attach($request->productFunction_ids); 
         return redirect('/admin/product')
                         ->withSuccess("场地 '$product->productname' 创建成功.");
        
@@ -185,7 +195,7 @@ class ProductController extends Controller
                         ->withSuccess("场地 '$product->productname' 的地址修改成功.");
     }
    
-   public function destoryProductAddress($id)
+    public function destoryProductAddress($id)
     {
      
         $product = Product::where('delflag', 0)
@@ -205,4 +215,25 @@ class ProductController extends Controller
         }
     }
 
+    public function search(Request $request)
+    {
+        $searchCondition=$this->_searchCondition;
+
+        foreach (array_keys($this->_searchCondition) as $field) {
+            $searchCondition[$field] = $request->get($field);
+        }
+
+        $products = Product::where('company_id',Auth::user()->company_id)
+                            ->where('areaname_id', $searchCondition['areaname_id'])
+                            ->where('producttype_id', $searchCondition['producttype_id']);
+       
+        if ($searchCondition['productname']){
+            $products=$products->where('productname','like', "'%".$searchCondition['productname']."%'");
+        }
+
+        $products =$products->orderBy('id', 'desc')
+                            ->paginate(config('subscribesystem.per_page'));
+
+        return view('admin.product.search',compact('products','searchCondition'));
+    }
 }

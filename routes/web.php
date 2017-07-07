@@ -45,8 +45,9 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::get('product/{id}/address',['uses' => 'ProductController@getProductAddress', 'as' => 'product.getProductAddress']);
     Route::post('product/{id}/address',['uses' => 'ProductController@postProductAddress', 'as' => 'product.postProductAddress']);
     Route::post('product/{id}/deleteAddress',['uses' => 'ProductController@destoryProductAddress', 'as' => 'product.destoryProductAddress']);
-    Route::resource('product', 'ProductController');
-    Route::resource('product/{id}/detail', 'ProductDetailController');
+    Route::any('product/search',['uses' => 'ProductController@search','as' => 'product.search']);
+    Route::resource('product', 'ProductController', ['except' => 'show']);
+    Route::resource('product/{id}/detail', 'ProductDetailController', ['except' => 'show']);
 });
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

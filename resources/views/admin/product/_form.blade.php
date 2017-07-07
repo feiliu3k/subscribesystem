@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="productfunction_id" class="col-md-3 control-label">
+        <label for="productfunction" class="col-md-3 control-label">
             功能
         </label>
         <div class="col-md-8">

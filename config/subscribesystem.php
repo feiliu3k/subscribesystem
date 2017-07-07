@@ -11,7 +11,7 @@ return [
     'detail' => '场地细节',
     'buyrecord'=> '预定记录',
     'badrecord'=> '不良记录',
-    'per_page' => 20, 
+    'per_page' => 2, 
 
     'uploads' => [
             'storage' => 'local',
