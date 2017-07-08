@@ -162,4 +162,26 @@ class ProductDetailController extends Controller
                         ->withSuccess("场地细节 '$did' 已经被删除.");        
     }
 
+    public function search(Request $request, $id)
+    {
+        $searchCondition=$this->_searchCondition;
+
+        foreach (array_keys($this->_searchCondition) as $field) {
+            $searchCondition[$field] = $request->get($field);
+        }
+
+        $products = Product::where('company_id',Auth::user()->company_id)
+                            ->where('areaname_id', $searchCondition['areaname_id'])
+                            ->where('producttype_id', $searchCondition['producttype_id']);
+       
+        if ($searchCondition['productname']){
+            $products=$products->where('productname','like', '%'.$searchCondition['productname'].'%');
+        }
+
+        $products =$products->orderBy('id', 'desc')
+                            ->paginate(config('subscribesystem.per_page'));
+
+        return view('admin.product.search',compact('products','searchCondition'));
+    }
+
 }

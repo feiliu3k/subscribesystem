@@ -13,8 +13,7 @@
                 
                 <button class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-search">
                     <i class="fa fa-plus-circle"></i> 搜索{{ config('subscribesystem.product') }}
-                </button>
-            
+                </button>            
             </div>
         </div>
         <div class="row">
@@ -65,6 +64,7 @@
         </div>
 
     </div>
+
     {{-- 搜索框 --}}
     <div class="modal fade" id="modal-search" tabIndex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
