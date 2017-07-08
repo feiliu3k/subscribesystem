@@ -98,7 +98,7 @@
 @stop
 
 @section('scripts')
-	 <script type="text/javascript"
+	<script type="text/javascript"
      src="{{ URL::asset('vendor/datetimepicker/moment-with-locales.js')  }}">
     </script>
 	<script type="text/javascript"

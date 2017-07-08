@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ URL::asset('vendor/datetimepicker/bootstrap-datetimepicker.min.css')  }}" rel="stylesheet" />
+@stop
+
 @section('content')
     <div class="container">
         <div class="row page-title-row">
@@ -65,7 +69,7 @@
             </div>
         </div>
     </div>
-        {{-- 搜索框 --}}
+    {{-- 搜索框 --}}
     <div class="modal fade" id="modal-search" tabIndex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -76,7 +80,7 @@
                     <h4 class="modal-title">请输入查询条件</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('product.search') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('detail.search',$product->id) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
                             <label for="productname" class="col-md-3 control-label">
@@ -86,34 +90,19 @@
                                 <input type="text" class="form-control" id="productname" name="productname">
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label for="areaname_id" class="col-md-3 control-label">
-                                区域
+                            <label for="usebegindate" class="col-md-3 control-label">
+                                日期范围
                             </label>
-                            <div class="col-md-8">
-                                <select name="areaname_id" id="areaname_id" class="form-control" >
-                                    @foreach ($areas as $area)
-                                        <option value="{{ $area->id }} ">
-                                            {{ $area->areaname }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="usebegindate" name="usebegindate">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="useenddate" name="useenddate">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="producttype_id" class="col-md-3 control-label">
-                                类型
-                            </label>
-                            <div class="col-md-8">
-                                <select name="producttype_id" id="producttype_id" class="form-control" >
-                                    @foreach ($productTypes as $productType)                   
-                                    <option value="{{ $productType->id }} ">
-                                        {{ $productType->typename }}
-                                    </option>                    
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>                        
+                        
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-3 ">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -132,10 +121,27 @@
 @stop
 
 @section('scripts')
-    <script>
-        $(function() {
-            $("#details-table").DataTable({
-            });
+	<script type="text/javascript"
+     src="{{ URL::asset('vendor/datetimepicker/moment-with-locales.js')  }}">
+    </script>
+	<script type="text/javascript"
+     src="{{ URL::asset('vendor/datetimepicker/bootstrap-datetimepicker.min.js')  }}">
+    </script>
+    
+    <script type="text/javascript">
+    $(function () {
+        $("#details-table").DataTable({
         });
+
+        $('#usebegindate').datetimepicker({
+            locale: 'zh-CN',
+            format: 'YYYY-MM-DD'
+        });
+        
+        $('#useenddate').datetimepicker({
+            locale: 'zh-CN',
+            format: 'YYYY-MM-DD'
+        });
+     });
     </script>
 @stop

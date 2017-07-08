@@ -10,6 +10,12 @@ use App\Models\ProductDetail;
 
 class ProductDetailController extends Controller
 {
+    protected $_searchCondition = [
+        'productname'=>'',
+        'usebegindate'=>'',
+        'useenddate'=>'',
+    ];
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -169,7 +175,11 @@ class ProductDetailController extends Controller
         foreach (array_keys($this->_searchCondition) as $field) {
             $searchCondition[$field] = $request->get($field);
         }
-
+        
+        $product = Product::where('delflag', 0)
+                        ->where('company_id', Auth::user()->company_id)
+                        ->where('id', $id)
+                        ->first();
         $products = Product::where('company_id',Auth::user()->company_id)
                             ->where('areaname_id', $searchCondition['areaname_id'])
                             ->where('producttype_id', $searchCondition['producttype_id']);
