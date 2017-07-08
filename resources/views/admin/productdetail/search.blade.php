@@ -28,52 +28,44 @@
                 @include('partials.errors')
                 @include('partials.success')
 
-                <table id="products-table" class="table table-striped table-bordered">
+                <table id="details-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>编号</th>
                             <th>{{ config('subscribesystem.product') }}名称</th>
-                            <th>单位</th>
-                            <th>类型</th>   
-                            <th>区域</th>               
+                            <th>使用日期</th>
+                            <th>使用开始时间</th>   
+                            <th>使用结束时间</th>
+                            <th>价格</th>
+                            <th>总数量</th>
+                            <th>已预定数量</th>
+                            <th>已消费数量</th>
+                            <th>可已预定最大数量</th>    
                             <th data-sortable="false">操作</th>
                         </tr>
                      </thead>
                     <tbody>
-                    @if ($products) 
-                      @foreach ($products as $product)
-                          <tr>
-                              <td>{{ $product->id }}</td>
-                              <td>{{ $product->productname }}</td>
-                              <td>{{ $product->company->companyname }}</td>
-                              <td>{{ $product->productType->typename }}</td>
-                              <td>{{ $product->area->areaname }}</td>
-                              <td>
-                                  <a href="{{ route('product.edit', $product->id) }}" class="btn btn-xs btn-info">
-                                      <i class="fa fa-edit"></i> 编辑
-                                  </a>
-
-                                  <a href="{{ route('product.getProductAddress', $product->id) }}" class="btn btn-xs btn-info">
-                                      <i class="fa fa-edit"></i> 地址
-                                  </a>
-
-                                  <a href="{{ route('detail.index', $product->id) }}" class="btn btn-xs btn-info">
-                                      <i class="fa fa-edit"></i> 细节
-                                  </a>
-                              </td>
-                          </tr>
-                      @endforeach
-                    @endif 
+                    @foreach ($details as $detail)
+                        <tr>
+                            <th>{{ $detail->id }}</th>
+                            <th>{{ $detail->product->productname }}</th>
+                            <th>{{ $detail->usedate }}</th>
+                            <th>{{ $detail->usebegintime }}</th>   
+                            <th>{{ $detail->useendtime }}</th>
+                            <th>{{ $detail->productprice }}</th>
+                            <th>{{ $detail->productnum }}</th>
+                            <th>{{ $detail->ordernum }}</th>
+                            <th>{{ $detail->paynum }}</th>
+                            <th>{{ $detail->maxordernum }}</th>
+                            <td>
+                                <a href="{{ route('detail.edit', [$detail->productifo_id, $detail->id]) }}" class="btn btn-xs btn-info">
+                                    <i class="fa fa-edit"></i> 编辑
+                                </a>                               
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
-                <div class="pull-right">
-                   {!! $products->appends([
-                        'productname' => $searchCondition['productname'],
-                        'areaname_id' => $searchCondition['areaname_id'],
-                        'producttype_id' => $searchCondition['producttype_id'],
-                        ])->render() 
-                    !!}
-                </div>
             </div>
         </div>
     </div>
@@ -89,16 +81,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('detail.search',$product->id) }}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <div class="form-group">
-                            <label for="productname" class="col-md-3 control-label">
-                                {{ config('subscribesystem.product') }}名称
-                            </label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="productname" name="productname">
-                            </div>
-                        </div>
-
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
                         <div class="form-group">
                             <label for="usebegindate" class="col-md-3 control-label">
                                 日期范围

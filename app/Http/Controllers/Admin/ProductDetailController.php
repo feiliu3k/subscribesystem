@@ -10,8 +10,7 @@ use App\Models\ProductDetail;
 
 class ProductDetailController extends Controller
 {
-    protected $_searchCondition = [
-        'productname'=>'',
+    protected $_searchCondition = [        
         'usebegindate'=>'',
         'useenddate'=>'',
     ];
@@ -180,18 +179,14 @@ class ProductDetailController extends Controller
                         ->where('company_id', Auth::user()->company_id)
                         ->where('id', $id)
                         ->first();
-        $products = Product::where('company_id',Auth::user()->company_id)
-                            ->where('areaname_id', $searchCondition['areaname_id'])
-                            ->where('producttype_id', $searchCondition['producttype_id']);
-       
-        if ($searchCondition['productname']){
-            $products=$products->where('productname','like', '%'.$searchCondition['productname'].'%');
-        }
 
-        $products =$products->orderBy('id', 'desc')
+        $details = ProductDetail::where('productifo_id',$id)
+                            ->whereBetween('usedate',[$searchCondition['usebegindate'],$searchCondition['useenddate']])                            
+                            ->where('delflag',0)
+                            ->orderBy('usedate','desc') 
                             ->paginate(config('subscribesystem.per_page'));
 
-        return view('admin.product.search',compact('products','searchCondition'));
+        return view('admin.detail.search',compact('details','searchCondition'));
     }
 
 }

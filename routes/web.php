@@ -49,6 +49,8 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::resource('product', 'ProductController', ['except' => 'show']);
     Route::any('product/{id}/detail/search',['uses' => 'ProductDetailController@search','as' => 'detail.search']);
     Route::resource('product/{id}/detail', 'ProductDetailController', ['except' => 'show']);
+
+    Route::resource('buyrecord', 'BuyrecordController', ['except' => 'show']);
 });
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
