@@ -13,7 +13,7 @@ class Customer extends Authenticatable
     protected $primaryKey='id';
    
     protected $fillable = [
-        'customeraccount','customername', 'email', 'cellphone', 'IDCard', 'sex', 'credit', 'delflag'
+        'customeraccount','customername', 'password', 'email', 'cellphone', 'IDCard', 'sex', 'credit', 'delflag'
     ];
 
     protected $hidden =[

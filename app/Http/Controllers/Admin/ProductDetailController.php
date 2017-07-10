@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductDetail;
 
+use Auth;
 class ProductDetailController extends Controller
 {
     protected $_searchCondition = [        
@@ -35,7 +36,7 @@ class ProductDetailController extends Controller
         $details = ProductDetail::where('productifo_id',$id)
                                 ->where('delflag',0)
                                 ->orderBy('usedate','desc')
-                                ->get();
+                                ->paginate(config('subscribesystem.per_page'));;
         return view('admin.productdetail.index',compact('product','details'));
     }
     /**
@@ -83,7 +84,7 @@ class ProductDetailController extends Controller
         $detail->paynum = $request->paynum;
         $detail->maxordernum = $request->maxordernum;
         
-        $productDetail->save();            
+        $detail->save();            
         return redirect('/admin/product/'.$product->id.'/detail')
                         ->withSuccess("场地细节 '$product->productname' 创建成功.");
        

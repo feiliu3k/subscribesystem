@@ -66,6 +66,9 @@
                     @endforeach
                     </tbody>
                 </table>
+                <div class="pull-right">
+                    {!! $details->render()  !!}
+                </div>
             </div>
         </div>
     </div>

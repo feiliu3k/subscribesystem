@@ -5,7 +5,7 @@
             {{ config('subscribesystem.product') }}名称
         </label>
         <div class="col-md-8">
-            <input type="text" class="form-control" id="productname" name="productname" value="{{ $product->productname }}">
+            <input type="text" class="form-control" id="productname" name="productname" value="{{ $product->productname }}" readonly>
         </div>
     </div>
     <div class="form-group">

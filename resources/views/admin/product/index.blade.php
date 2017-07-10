@@ -60,6 +60,9 @@
                     @endif    
                     </tbody>
                 </table>
+                <div class="pull-right">
+                    {!! $products->render()  !!}
+                </div>
             </div>
         </div>
 
