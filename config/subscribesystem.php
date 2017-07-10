@@ -9,8 +9,9 @@ return [
     'company' => '单位',
     'product' => '场地',
     'detail' => '场地细节',
-    'buyrecord'=> '预定记录',
-    'badrecord'=> '不良记录',
+    'buyrecord' => '预定记录',
+    'badrecord' => '不良记录',
+    'customer' => '客户',
     'per_page' => 2, 
 
     'uploads' => [
@@ -19,5 +20,5 @@ return [
     ],
 
     'image_path'=>'../../uploads/ss/',
-    'video_path'=>'../../uploads/ss/',        
+    'video_path'=>'../../uploads/ss/',
 ];

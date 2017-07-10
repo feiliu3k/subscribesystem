@@ -1,109 +1,99 @@
     <div class="form-group">
+        <label for="customername" class="col-md-3 control-label">
+            {{ config('subscribesystem.customer') }}名称
+        </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" id="customer" name="customer" value="{{ $buyrecord->customer->customername }}" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="customeraccount" class="col-md-3 control-label">
+            {{ config('subscribesystem.customer') }}账号
+        </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" id="customeraccount" name="customeraccount" value="{{ $buyrecord->customer->customeraccount }}" readonly>
+        </div>
+    </div>    
+    <div class="form-group">
         <label for="productname" class="col-md-3 control-label">
             {{ config('subscribesystem.product') }}名称
         </label>
         <div class="col-md-8">
-            <input type="text" class="form-control" id="productname" name="productname" value="{{ $product->productname }}">
+            <input type="text" class="form-control" id="productname" name="productname" value="{{ $buyrecord->product->productname }}" readonly>
         </div>
     </div>
     <div class="form-group">
-        <label for="productimg" class="col-md-3 control-label">
-            封面
-        </label>
-        <div class="col-md-6">
-            <input type="text" class="form-control" name="productimg"  id="productimg" value="{{ $product->productimg }}" >
-        </div>
-        <div class="col-md-2 thumb-wrap">
-            <div class="img-upload btn btn-block btn-info btn-flat" title="点击上传">点击上传</div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="companyname" class="col-md-3 control-label">
-            {{ config('subscribesystem.company') }}名称
+        <label for="usedate" class="col-md-3 control-label">
+            预订日期
         </label>
         <div class="col-md-8">
-            <input type="text" class="form-control" id="companyname" name="companyname" value="{{ Auth::user()->company->companyname }}" readonly>
-        </div>
-    </div>    
-    <div class="form-group">
-        <label for="area_id" class="col-md-3 control-label">
-            区域
-        </label>
-        <div class="col-md-8">
-            <select name="area_id" id="area_id" class="form-control" >
-                @foreach ($areas as $area)
-                    @if ($product->areaname_id==$area->id)
-                        <option value="{{ $area->id }} " selected="selected">
-                            {{ $area->areaname }}
-                        </option>
-                    @else
-                        <option value="{{ $area->id }} ">
-                            {{ $area->areaname }}
-                        </option>
-                    @endif
-                @endforeach
-            </select>
+            <input type="text" class="form-control" id="usedate" name="usedate" value="{{ $buyrecord->detail->usedate }}" readonly>
         </div>
     </div>
     <div class="form-group">
-        <label for="producttype_id" class="col-md-3 control-label">
-            类型
+        <label for="usebegintime" class="col-md-3 control-label">
+            预订开始时间
         </label>
         <div class="col-md-8">
-            <select name="producttype_id" id="producttype_id" class="form-control" >
-                @foreach ($productTypes as $productType)
-                    @if ($product->producttype_id==$productType->id)
-                    <option value="{{ $productType->id }} " selected="selected">
-                        {{ $productType->typename }}
-                    </option>
-                    @else
-                    <option value="{{ $productType->id }} ">
-                        {{ $productType->typename }}
-                    </option>
-                    @endif
-                @endforeach
-            </select>
+            <input type="text" class="form-control" id="usebegintime" name="usebegintime" value="{{ $buyrecord->detail->usebegintime }}" readonly>
         </div>
     </div>
     <div class="form-group">
-        <label for="productfunction_id" class="col-md-3 control-label">
-            功能
+        <label for="useendtime" class="col-md-3 control-label">
+            预订结束时间
         </label>
         <div class="col-md-8">
-            <select id="product-function" name="productFunction_ids[]" multiple="multiple"  class="form-control" >
-                @foreach ($productFunctions as $productFunction)
-                    @if (($product->functions) && ($product->functions->contains($productFunction)))
-                    <option value="{{ $productFunction->id }} " selected="selected">
-                        {{ $productFunction->functionname }}
-                    </option>
-                    @else
-                    <option value="{{ $productFunction->id }} ">
-                        {{ $productFunction->functionname }}
-                    </option>
-                    @endif
-                @endforeach               
-            </select>
+            <input type="text" class="form-control" id="useendtime" name="useendtime" value="{{ $buyrecord->detail->useendtime }}" readonly>
         </div>
     </div>
     <div class="form-group">
-        <label for="productAddress" class="col-md-3 control-label">
-            地址
+        <label for="buytime" class="col-md-3 control-label">
+            下单日期
         </label>
         <div class="col-md-8">
-            @if ($product->productAddress)
-                <input type="text" class="form-control" id="productAddress" name="productAddress" value="{{ $product->productAddress->productaddress }}">
-            @else
-                <input type="text" class="form-control" id="productAddress" name="productAddress">
-            @endif
+            <input type="text" class="form-control" id="buytime" name="buytime" value="{{ $buyrecord->buytime }}" readonly>
         </div>
     </div>
     <div class="form-group">
-        <label for="productexplain" class="col-md-3 control-label">
-            内容简介
+        <label for="buyproductnum" class="col-md-3 control-label">
+            预订数量
         </label>
         <div class="col-md-8">
-            <script id="productexplain" name="productexplain" type="text/plain" style="width:100%;height:300px;">{!! $product->productexplain !!}</script>
+            <input type="text" class="form-control" id="buyproductnum" name="buyproductnum" value="{{ $buyrecord->buyproductnum }}" readonly>
         </div>
     </div>
-
-
+    <div class="form-group">
+        <label for="buytoken" class="col-md-3 control-label">
+            预订token
+        </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" id="buytoken" name="buytoken" value="{{ $buyrecord->buytoken }}" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-6 col-md-offset-4">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="cancelflag" {{ $buyrecord->cancelflag ? 'checked' : '' }}> 取消预订
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-6 col-md-offset-4">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="consumptionflag" {{ $buyrecord->consumptionflag ? 'checked' : '' }}> 消费标志
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-6 col-md-offset-4">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="overdueflag" {{ $buyrecord->overdueflag ? 'checked' : '' }}> 过期标志
+                </label>
+            </div>
+        </div>
+    </div>
