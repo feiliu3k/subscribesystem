@@ -50,7 +50,12 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::any('product/{id}/detail/search',['uses' => 'ProductDetailController@search','as' => 'detail.search']);
     Route::resource('product/{id}/detail', 'ProductDetailController', ['except' => 'show']);
 
-    Route::resource('buyrecord', 'BuyrecordController', ['except' => 'show']);
+    Route::get('buyrecord', ['uses' => 'BuyrecordController@index','as' => 'buyrecord.index']);
+    Route::any('buyrecord/search', ['uses' => 'BuyrecordController@search','as' => 'buyrecord.search']);
+    Route::post('buyrecord/{id}/consumpt', ['uses' => 'BuyrecordController@consumpt','as' => 'buyrecord.consumpt']);
+    Route::post('buyrecord/{id}/overdue', ['uses' => 'BuyrecordController@overdue','as' => 'buyrecord.overdue']);
+    Route::post('buyrecord/{id}/cancel', ['uses' => 'BuyrecordController@cancel','as' => 'buyrecord.cancel']);
+
     Route::resource('customer', 'CustomerController', ['except' => 'show']);
 });
 
