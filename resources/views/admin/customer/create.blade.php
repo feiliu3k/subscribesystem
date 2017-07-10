@@ -32,11 +32,11 @@
                         </div>    
  
                         <div class="form-group">
-                            <label for="password_confirmation" class="col-md-3 control-label">
+                            <label for="newpassword_confirmation" class="col-md-3 control-label">
                                 确认新密码
                             </label>
                             <div class="col-md-8">
-                                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" >
+                                <input type="password" class="form-control" name="newpassword_confirmation" id="newpassword_confirmation" >
                             </div>
                         </div>
 

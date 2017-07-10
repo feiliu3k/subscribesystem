@@ -92,9 +92,9 @@ class ManagerController extends Controller
         $this->validate($request, [            
             'managername' => 'required|string|max:255',
             'manageraccount' => 'required|string|max:255|unique:manager',
-            'password' => 'required|string|min:6|confirmed',                  
+            'newpassword' => 'required|string|min:6|confirmed',                  
         ]);
-        if ($request->newpassword==$request->password_confirmation){
+        if ($request->newpassword==$request->newpassword_confirmation){
             $manager = new User();
             $manager->managername=$request->managername;
             $manager->manageraccount=$request->manageraccount;

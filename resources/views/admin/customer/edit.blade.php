@@ -64,7 +64,7 @@
             <div class="modal-body">
                 <p class="lead">
                     <i class="fa fa-question-circle fa-lg"></i>
-                    是否真的需要删除此管理员？
+                    是否真的需要删除此客户？
                 </p>
             </div>
             <div class="modal-footer">

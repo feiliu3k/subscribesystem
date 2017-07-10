@@ -53,19 +53,15 @@
 </div>
 
 <div class="form-group">
-    <div class="col-md-8 col-md-offset-3">
-        <div class="radio">
-        <label>
-            <input type="radio" name="sex" id="frmale" value="1" {{ $customer->sex==1 ? 'checked' : '' }}>
-            女
+    <label for="frmale" class="col-md-3 control-label">
+        性别
+    </label>
+    <div class="col-md-8"> 
+        <label class="radio-inline">
+            <input type="radio" name="sex" id="frmale" value="1" @if ($customer->sex==1) checked="checked" @endif > 女
         </label>
-        </div>
-        <div class="radio">
-        <label>
-            <input type="radio" name="sex" id="male" value="2" {{ $customer->sex==2 ? 'checked' : '' }}>
-            男
+        <label class="radio-inline">
+            <input type="radio" name="sex" id="male" value="2"  @if ($customer->sex==2) checked="checked" @endif> 男
         </label>
-        </div>        
     </div>
 </div>
-

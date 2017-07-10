@@ -53,10 +53,10 @@ class CustomerController extends Controller
         
         $this->validate($request, [            
             'customername' => 'required|string|max:255',
-            'customeraccount' => 'required|string|max:255|unique:manager',
-            'password' => 'required|string|min:6|confirmed',                  
+            'customeraccount' => 'required|string|max:255|unique:customer',
+            'newpassword' => 'required|string|min:6|confirmed',                  
         ]);
-        if ($request->newpassword==$request->password_confirmation){
+        if ($request->newpassword==$request->newpassword_confirmation){
             $customer = new Customer();
             $customer->customername=$request->customername;
             $customer->customeraccount=$request->customeraccount;
@@ -70,8 +70,7 @@ class CustomerController extends Controller
             return redirect('/admin/customer')
                             ->withSuccess("客户 '$customer->customername' 新建成功.");
         }else{
-            return redirect("/admin/customer/$id/edit")
-                        ->withSuccess("用户添加失败，密码不一致.");
+            return back()->withSuccess("用户添加失败，密码不一致.");
         }
     }
 
@@ -100,8 +99,7 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [            
-            'Customername' => 'required|string|max:255',
-            'Customeraccount' => 'required|string|max:255'                   
+            'customername' => 'required|string|max:255',                              
         ]);
 
         $customer = Customer::findOrFail($id); 
@@ -110,8 +108,7 @@ class CustomerController extends Controller
         $customer->sex= $request->sex;
         $customer->cellphone= $request->cellphone;
         $customer->IDCard= $request->IDCard;            
-        $customer->credit= $request->credit;
-        $customer->password= bcrypt($request->newpassword);
+        $customer->credit= $request->credit;       
         $customer->save();               
 
         return redirect("/admin/customer/$id/edit")

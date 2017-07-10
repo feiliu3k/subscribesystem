@@ -48,7 +48,7 @@
                                     未知
                                 @elseif ($customer->sex==1)
                                     女
-                                else
+                                @else
                                     男
                                 @endif                            
                             <td>
