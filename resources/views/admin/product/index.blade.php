@@ -59,10 +59,7 @@
                         @endforeach
                     @endif    
                     </tbody>
-                </table>
-                <div class="pull-right">
-                    {!! $products->render()  !!}
-                </div>
+                </table>                
             </div>
         </div>
 

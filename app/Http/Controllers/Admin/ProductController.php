@@ -35,14 +35,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
+        $areas = Area::where('delflag',0)->orderBy('id','desc')->get();
         $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
         $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
         $products = Product::where('company_id', Auth::user()->company_id)
                             ->with('area', 'productType', 'company')
                             ->where('delflag', 0)
                             ->orderBy('created_at','desc')
-                            ->paginate(config('subscribesystem.per_page'));
+                            ->get();
         return view('admin.product.index',compact('products','areas', 'productTypes', 'productFunctions'));
     }
 
@@ -222,6 +222,9 @@ class ProductController extends Controller
         foreach (array_keys($this->_searchCondition) as $field) {
             $searchCondition[$field] = $request->get($field);
         }
+        $areas = Area::where('delflag',0)->orderBy('id','desc')->get();
+        $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
+        $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
 
         $products = Product::where('company_id',Auth::user()->company_id)
                             ->where('areaname_id', $searchCondition['areaname_id'])
@@ -232,8 +235,8 @@ class ProductController extends Controller
         }
 
         $products =$products->orderBy('id', 'desc')
-                            ->paginate(config('subscribesystem.per_page'));
-
-        return view('admin.product.search',compact('products','searchCondition'));
+                            ->get();
+                            
+        return view('admin.product.search',compact('products','areas', 'productTypes', 'productFunctions', 'searchCondition'));
     }
 }

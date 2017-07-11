@@ -196,4 +196,26 @@ class ProductDetailController extends Controller
         return view('admin.detail.search',compact('details','searchCondition'));
     }
 
+    public function order($customer_id, $did)
+    {
+        $searchCondition=$this->_searchCondition;
+
+        foreach (array_keys($this->_searchCondition) as $field) {
+            $searchCondition[$field] = $request->get($field);
+        }
+        
+        $product = Product::where('delflag', 0)
+                        ->where('company_id', Auth::user()->company_id)
+                        ->where('id', $id)
+                        ->first();
+
+        $details = ProductDetail::where('productifo_id',$id)
+                            ->whereBetween('usedate',[$searchCondition['usebegindate'],$searchCondition['useenddate']])                            
+                            ->where('delflag',0)
+                            ->orderBy('usedate','desc') 
+                            ->paginate(config('subscribesystem.per_page'));
+
+        return view('admin.detail.search',compact('details','searchCondition'));
+    }
+
 }

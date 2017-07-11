@@ -26,7 +26,7 @@ class ProductFunctionController extends Controller
      */
     public function index()
     {
-        $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();        
+        $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
         return view('admin.productfunction.index')->withProductFunctions($productFunctions);
     }
 

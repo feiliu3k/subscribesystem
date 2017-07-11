@@ -27,7 +27,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::where('delflag',0)->orderBy('id','desc')->paginate(config('subscribesystem.per_page'));;
+        $customers = Customer::where('delflag',0)->orderBy('id','desc')->get();
         return view('admin.customer.index')->withCustomers($customers);
     }
 

@@ -69,14 +69,6 @@
                     @endif 
                     </tbody>
                 </table>
-                <div class="pull-right">
-                   {!! $products->appends([
-                        'productname' => $searchCondition['productname'],
-                        'areaname_id' => $searchCondition['areaname_id'],
-                        'producttype_id' => $searchCondition['producttype_id'],
-                        ])->render() 
-                    !!}
-                </div>
             </div>
         </div>        
     </div>

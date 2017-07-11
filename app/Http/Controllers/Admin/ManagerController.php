@@ -65,7 +65,7 @@ class ManagerController extends Controller
      */
     public function index()
     {
-        $managers = User::where('delflag',0)->orderBy('id','desc')->paginate(config('subscribesystem.per_page'));;
+        $managers = User::where('delflag',0)->orderBy('id','desc')->get();
         return view('admin.manager.index')->withManagers($managers);
     }
 

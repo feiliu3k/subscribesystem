@@ -26,7 +26,7 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-        $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();        
+        $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
         return view('admin.producttype.index')->withProductTypes($productTypes);
     }
 

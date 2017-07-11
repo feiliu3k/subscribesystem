@@ -133,10 +133,7 @@
     
     <script type="text/javascript">
     $(function () {
-        $("#details-table").DataTable({
-        });
-
-        $('#usebegindate').datetimepicker({
+         $('#usebegindate').datetimepicker({
             locale: 'zh-CN',
             format: 'YYYY-MM-DD'
         });
