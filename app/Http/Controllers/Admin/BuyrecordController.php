@@ -16,8 +16,8 @@ class BuyrecordController extends Controller
         'customername'=>'',
         'usedate'=>'',
         'usebegintime'=>'',
-        'useendtime'=>'', 
-        'buytime'=>'',      
+        'useendtime'=>'',
+        'buytime'=>''
     ];
 
     public function __construct()

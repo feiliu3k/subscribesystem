@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row page-title-row">
         <div class="col-md-12">
-            <h3>{{ config('subscribesystem.buyrecord') }} <small>» 编辑</small></h3>
+            <h3>{{ config('subscribesystem.badrecord') }} <small>» 编辑</small></h3>
         </div>
     </div>
 
@@ -12,17 +12,17 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">编辑{{ config('subscribesystem.buyrecord') }}窗口</h3>
+                    <h3 class="panel-title">编辑{{ config('subscribesystem.badrecord') }}窗口</h3>
                 </div>
                 <div class="panel-body">
 
                     @include('partials.errors')
                     @include('partials.success')
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('buyrecord.update', $buyrecord->id) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('badrecord.update', $badrecord->id) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="id" value="{{ $buyrecord->id }}">                        
+                        <input type="hidden" name="id" value="{{ $badrecord->id }}">                        
                         
                         <div class="form-group">
                             <label for="managername" class="col-md-3 control-label">
@@ -33,7 +33,7 @@
                             </div>
                         </div>
 
-                        @include('admin.buyrecord._form')
+                        @include('admin.badrecord._form')
 
                         <div class="form-group">
                             <div class="col-md-7 col-md-offset-3">
@@ -45,7 +45,7 @@
                                     <i class="fa fa-times-circle"></i>
                                     删除
                                 </button>
-                                <a type="button" class="btn btn-primary btn-md" href="{{ route('buyrecord.index') }}">
+                                <a type="button" class="btn btn-primary btn-md" href="{{ route('badrecord.index') }}">
                                     <i class="fa fa-reply"></i>
                                     返回
                                 </a>
@@ -73,11 +73,11 @@
             <div class="modal-body">
                 <p class="lead">
                     <i class="fa fa-question-circle fa-lg"></i>
-                    是否真的需要删除此{{ config('subscribesystem.buyrecord') }}？
+                    是否真的需要删除此{{ config('subscribesystem.badrecord') }}？
                 </p>
             </div>
             <div class="modal-footer">
-                <form method="POST" action="{{ route('buyrecord.destroy', $buyrecord->id) }}">
+                <form method="POST" action="{{ route('badrecord.destroy', $badrecord->id) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -89,12 +89,5 @@
         </div>
     </div>
 </div>
-
-@stop
-
-@section('scripts')
-
-    <script type="text/javascript"> 
-    </script>
 
 @stop

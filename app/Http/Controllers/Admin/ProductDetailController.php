@@ -7,11 +7,13 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Buyrecord;
 
 use Auth;
+
 class ProductDetailController extends Controller
 {
-    protected $_searchCondition = [        
+    protected $_searchCondition = [
         'usebegindate'=>'',
         'useenddate'=>'',
     ];
@@ -133,6 +135,11 @@ class ProductDetailController extends Controller
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
 
+        if ($detail->buyrecords){
+            return redirect('/admin/product/'.$product->id.'/detail')
+                        ->withSuccess("场地细节 '$product->productname' 创建成功.");
+        }
+
         $detail->productifo_id=$product->id;
         $detail->usedate = $request->usedate;
         $detail->usebegintime = $request->usebegintime;
@@ -141,11 +148,11 @@ class ProductDetailController extends Controller
         $detail->productnum = $request->productnum;
         $detail->ordernum = $request->ordernum;
         $detail->paynum = $request->paynum;
-        $detail->maxordernum = $request->maxordernum;     
+        $detail->maxordernum = $request->maxordernum;
         $detail->save();    
         
         return redirect("/admin/product/$product->id/detail/$detail->id/edit")
-                        ->withSuccess("场地细节 '$product->productname' 更新成功.");        
+                        ->withSuccess("场地细节 '$product->productname' 更新成功.");
     }
 
     /**
@@ -162,10 +169,9 @@ class ProductDetailController extends Controller
                                 ->orderBy('id','desc')->first();
         $detail->delflag=1;
         $detail->save();
-        
 
         return redirect("/admin/product/$detail->productifo_id/detail")
-                        ->withSuccess("场地细节 '$did' 已经被删除.");        
+                        ->withSuccess("场地细节 '$did' 已经被删除.");
     }
 
     public function search(Request $request, $id)

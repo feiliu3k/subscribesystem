@@ -18,4 +18,14 @@ class ProductDetail extends Model
     {
         return $this->belongsTo(product::class,'productifo_id');
     }
+
+    public function buyrecords()
+    {
+        return $this->hasMany(Buyrecord::class, 'buyrecord', 'ifodetail_id');
+    }
+
+    public function badrecords()
+    {
+        return $this->hasMany(Badrecord::class, 'badrecord', 'ifodetail_id');
+    }
 }
