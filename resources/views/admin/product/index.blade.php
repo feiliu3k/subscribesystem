@@ -139,6 +139,5 @@
             $("#products-table").DataTable({
             });
         });
-    </script>
-    </script>
+    </script>    
 @stop

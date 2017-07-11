@@ -9,7 +9,7 @@ class Customer extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'Customer';
+    protected $table = 'customer';
     protected $primaryKey='id';
    
     protected $fillable = [
@@ -22,11 +22,11 @@ class Customer extends Authenticatable
 
     public function buyrecords()
     {
-        return $this->hasMany(Customer::class,'customer_id');
+        return $this->hasMany(Buyrecord::class,'buyrecord', 'id', 'customer_id');
     }
 
     public function badrecords()
     {
-        return $this->hasMany(Customer::class,'customer_id');
+        return $this->hasMany(Badrecord::class,'badrecord', 'id', 'customer_id');
     }
 }

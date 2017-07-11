@@ -47,4 +47,14 @@ class Product extends Model
     {
         return $this->hasMany(ProductDetail::class, 'productifo_id');
     }
+
+    public function buyrecords()
+    {
+        return $this->hasMany(Buyrecord::class, 'productifo_id');
+    }
+
+    public function badrecords()
+    {
+        return $this->hasMany(Badrecord::class, 'productifo_id');
+    }
 }
