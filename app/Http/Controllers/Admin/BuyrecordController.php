@@ -29,10 +29,12 @@ class BuyrecordController extends Controller
     }
 
     public function index()
-    {
-        $buyrecords = Buyrecord::where('company_id', Auth::user()->company_id)
-                            ->with('customer','product', 'detail','company')
-                            ->orderBy('buytime','desc')
+    {   
+        $buyrecords = Buyrecord::with('customer','product', 'detail','company'); 
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $buyrecords = $buyrecords->where('company_id', Auth::user()->company_id);
+        }
+        $buyrecords = $buyrecords->orderBy('buytime','desc')
                             ->paginate(config('subscribesystem.per_page'));
         
         return view('admin.buyrecord.index', compact('buyrecords'));
@@ -40,11 +42,12 @@ class BuyrecordController extends Controller
 
     public function edit($id)
     {             
-        $buyrecord = Buyrecord::where('company_id', Auth::user()->company_id)
-                        ->with('customer','product', 'detail','company')
-                        ->where('id',$id)
-                        ->first();     
-
+        $buyrecord = Buyrecord::with('customer','product', 'detail','company')
+                                ->where('id',$id); 
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
+        }      
+        $buyrecord =$buyrecord->first();   
         return view('admin.buyrecord.edit', compact('buyrecord'));
     }
 
@@ -61,7 +64,11 @@ class BuyrecordController extends Controller
             $searchCondition[$field] = $request->get($field);
         }
 
-        $buyrecords = Buyrecord::where('buyrecord.company_id', Auth::user()->company_id);
+        $buyrecords = Buyrecord::orderBy('buyrecord.id', 'desc');
+
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $buyrecords = $buyrecords->where('company_id', Auth::user()->company_id);
+        }
        
         if ($searchCondition['productname']){
             $buyrecords=$buyrecords->join('productifo', 'buyrecord.productifo_id', '=', 'productifo.id')                                    
@@ -91,8 +98,7 @@ class BuyrecordController extends Controller
             $buyrecords=$buyrecords->where('ifodetail.useendtime','<=', $searchCondition['useendtime']);            
         }
         //dd($buyrecords->toSql());
-        $buyrecords =$buyrecords->orderBy('buyrecord.id', 'desc')
-                            ->paginate(config('subscribesystem.per_page'));
+        $buyrecords =$buyrecords->paginate(config('subscribesystem.per_page'));
 
 
         return view('admin.buyrecord.search',compact('buyrecords','searchCondition'));
@@ -100,10 +106,12 @@ class BuyrecordController extends Controller
 
     public function consumpt(Request $request)
     {
-       $buyrecord = Buyrecord::where('buytoken', $request->buytoken)
-                        ->where('id', $request->buyid)
-                        ->where('company_id', Auth::user()->company_id)
-                        ->first();
+        $buyrecord = Buyrecord::with('customer','product', 'detail','company')
+                                ->where('id',$id); 
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
+        }      
+        $buyrecord =$buyrecord->first(); 
         $buyrecord->consumptionflag=1;
         $buyrecord->save();
 
@@ -113,10 +121,12 @@ class BuyrecordController extends Controller
 
     public function overdue(Request $request)
     {
-        $buyrecord = Buyrecord::where('buytoken', $request->buytoken)
-                        ->where('id', $request->buyid)
-                        ->where('company_id', Auth::user()->company_id)
-                        ->first();
+        $buyrecord = Buyrecord::with('customer','product', 'detail','company')
+                                ->where('id',$id); 
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
+        }      
+        $buyrecord =$buyrecord->first(); 
         $buyrecord->overdueflag=1;
         $buyrecord->save();
 
@@ -127,10 +137,12 @@ class BuyrecordController extends Controller
 
     public function cancel(Request $request)
     {
-        $buyrecord = Buyrecord::where('buytoken', $request->buytoken)
-                        ->where('id', $request->id)
-                        ->where('company_id', Auth::user()->company_id)
-                        ->first();
+        $buyrecord = Buyrecord::with('customer','product', 'detail','company')
+                                ->where('id',$id); 
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
+        }      
+        $buyrecord =$buyrecord->first(); 
         $buyrecord->cancelflag=1;
         $buyrecord->save();
 

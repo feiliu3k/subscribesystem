@@ -32,10 +32,12 @@ class ProductDetailController extends Controller
      */
     public function index($id){
 
-        $product = Product::where('delflag', 0)
-                        ->where('id', $id)
-                        ->where('company_id', Auth::user()->company_id)
-                        ->first();
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
 
         $details = ProductDetail::where('productifo_id',$id)
                                 ->where('delflag',0)
@@ -51,10 +53,13 @@ class ProductDetailController extends Controller
      */
     public function create($id)
     {
-        $product = Product::where('delflag', 0)
-                        ->where('id', $id)
-                        ->where('company_id', Auth::user()->company_id)
-                        ->first();
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
+
         $detail = new ProductDetail();
 
         return view('admin.productdetail.create',compact('product','detail'));
@@ -72,10 +77,12 @@ class ProductDetailController extends Controller
             'usedate' => 'required|string|max:255',
         ]);
 
-        $product = Product::where('delflag', 0)
-                        ->where('company_id', Auth::user()->company_id)
-                        ->where('id', $id)
-                        ->first();
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
         
         $detail = new ProductDetail();
 
@@ -103,11 +110,13 @@ class ProductDetailController extends Controller
      */
     public function edit($id, $did)
     {             
-        $product = Product::where('delflag', 0)
-                        ->where('company_id', Auth::user()->company_id)
-                        ->where('id', $id)
-                        ->first();
-        
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
+
         $detail = ProductDetail::where('delflag',0)
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
@@ -129,10 +138,12 @@ class ProductDetailController extends Controller
             'usedate' => 'required|string|max:255',
         ]); 
 
-        $product = Product::where('delflag', 0)
-                        ->where('company_id', Auth::user()->company_id)
-                        ->where('id', $id)
-                        ->first();
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
 
         $detail = ProductDetail::where('delflag',0)
                                 ->where('id', $did)
@@ -165,8 +176,7 @@ class ProductDetailController extends Controller
      */
     public function destroy($id, $did)
     {
-        $detail = ProductDetail::where('delflag',0)
-                                ->where('company_id', Auth::user()->company_id)
+        $detail = ProductDetail::where('delflag',0)                                
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
         $detail->delflag=1;
@@ -189,10 +199,12 @@ class ProductDetailController extends Controller
             $searchCondition[$field] = $request->get($field);
         }
         
-        $product = Product::where('delflag', 0)
-                        ->where('company_id', Auth::user()->company_id)
-                        ->where('id', $id)
-                        ->first();
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
 
         $details = ProductDetail::where('productifo_id',$id)
                             ->whereBetween('usedate',[$searchCondition['usebegindate'],$searchCondition['useenddate']])                           

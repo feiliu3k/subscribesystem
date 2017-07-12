@@ -30,20 +30,24 @@ class BadrecordController extends Controller
 
     public function index()
     {
-        $badrecords = Badrecord::where('company_id', Auth::user()->company_id)
-                            ->with('customer','product', 'detail','company')
-                            ->orderBy('buytime','desc')
+        $badrecords = Badrecord::with('customer','product', 'detail','company'); 
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $badrecords = $badrecords->where('company_id', Auth::user()->company_id);
+        }
+        $badrecords = $badrecords->orderBy('buytime','desc')
                             ->paginate(config('subscribesystem.per_page'));
-        
+
         return view('admin.badrecord.index', compact('badrecords'));
     }
 
     public function edit($id)
-    {             
-        $badrecord = Badrecord::where('company_id', Auth::user()->company_id)
-                        ->with('customer','product', 'detail','company')
-                        ->where('id',$id)
-                        ->first();     
+    {   
+        $badrecord = Badrecord::with('customer','product', 'detail','company')
+                                ->where('id',$id); 
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $badrecord = $badrecord->where('company_id', Auth::user()->company_id);
+        }      
+        $badrecord =$badrecord->first();     
 
         return view('admin.badrecord.edit', compact('badrecord'));
     }
@@ -61,8 +65,12 @@ class BadrecordController extends Controller
             $searchCondition[$field] = $request->get($field);
         }
 
-        $badrecords = Badrecord::where('badrecord.company_id', Auth::user()->company_id);
-       
+        $badrecords = Badrecord::orderBy('badrecord.id', 'desc');
+
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $badrecord = $badrecord->where('company_id', Auth::user()->company_id);
+        }
+
         if ($searchCondition['productname']){
             $badrecords=$badrecords->join('productifo', 'badrecord.productifo_id', '=', 'productifo.id')                                    
                                 ->where('productifo.productname','like', '%'.$searchCondition['productname'].'%');            
@@ -91,8 +99,7 @@ class BadrecordController extends Controller
             $badrecords=$badrecords->where('ifodetail.useendtime','<=', $searchCondition['useendtime']);            
         }
  
-        $badrecords =$badrecords->orderBy('badrecord.id', 'desc')
-                            ->paginate(config('subscribesystem.per_page'));
+        $badrecords =$badrecords->paginate(config('subscribesystem.per_page'));
 
 
         return view('admin.badrecord.search',compact('badrecords','searchCondition'));

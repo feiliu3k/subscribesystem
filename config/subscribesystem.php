@@ -13,7 +13,7 @@ return [
     'badrecord' => '不良记录',
     'customer' => '客户',
     'per_page' => 20, 
-
+    'admin'=>'admin',
     'uploads' => [
             'storage' => 'local',
             'webpath' => '/uploads',
