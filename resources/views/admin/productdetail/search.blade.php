@@ -69,6 +69,7 @@
             </div>
         </div>
     </div>
+    
     {{-- 搜索框 --}}
     <div class="modal fade" id="modal-search" tabIndex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
@@ -81,16 +82,57 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('detail.search',$product->id) }}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="form-group">
+                            <label for="productname" class="col-md-3 control-label">
+                                {{ config('subscribesystem.product') }}名称
+                            </label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="productname" name="productname">
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="usebegindate" class="col-md-3 control-label">
                                 日期范围
                             </label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" id="usebegindate" name="usebegindate">
+                                <div class="input-group date" id="usebegindate">
+                                    <input type="text" class="form-control" name="usebegindate">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" id="useenddate" name="useenddate">
+                                <div class="input-group date" id="useenddate">
+                                    <input type="text" class="form-control" name="useenddate">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="usebegintime" class="col-md-3 control-label">
+                                时间范围
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-group date" id="usebegintime">
+                                    <input type="text" class="form-control" name="usebegintime">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group date" id="useendtime">
+                                    <input type="text" class="form-control" name="useendtime">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         
@@ -115,6 +157,26 @@
     <script>
         $(function() {
             $("#products-table").DataTable({
+            });
+
+            $('#usebegindate').datetimepicker({
+                locale: 'zh-CN',
+                format: 'YYYY-MM-DD'
+            });
+            
+            $('#useenddate').datetimepicker({
+                locale: 'zh-CN',
+                format: 'YYYY-MM-DD'
+            });
+
+            $('#usebegintime').datetimepicker({
+                locale: 'zh-CN',
+                format: 'HH:mm:ss'
+            });
+            
+            $('#useendtime').datetimepicker({
+                locale: 'zh-CN',
+                format: 'HH:mm:ss'
             });
         });
     </script>

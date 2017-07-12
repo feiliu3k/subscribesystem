@@ -12,7 +12,7 @@ return [
     'buyrecord' => '预定记录',
     'badrecord' => '不良记录',
     'customer' => '客户',
-    'per_page' => 2, 
+    'per_page' => 20, 
 
     'uploads' => [
             'storage' => 'local',

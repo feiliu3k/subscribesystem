@@ -16,6 +16,8 @@ class ProductDetailController extends Controller
     protected $_searchCondition = [
         'usebegindate'=>'',
         'useenddate'=>'',
+        'usebegintime'=>'',
+        'useendtime'=>'',
     ];
 
     public function __construct()
@@ -37,8 +39,9 @@ class ProductDetailController extends Controller
 
         $details = ProductDetail::where('productifo_id',$id)
                                 ->where('delflag',0)
-                                ->orderBy('usedate','desc')
-                                ->paginate(config('subscribesystem.per_page'));;
+                                ->orderBy('id','desc')
+                                ->paginate(config('subscribesystem.per_page'));
+                                
         return view('admin.productdetail.index',compact('product','details'));
     }
     /**
@@ -122,8 +125,8 @@ class ProductDetailController extends Controller
      */
     public function update(Request $request, $id, $did)
     {
-        $this->validate($request, [            
-            'usedate' => 'required|string|max:255',             
+        $this->validate($request, [
+            'usedate' => 'required|string|max:255',
         ]); 
 
         $product = Product::where('delflag', 0)
@@ -136,8 +139,7 @@ class ProductDetailController extends Controller
                                 ->orderBy('id','desc')->first();
 
         if ($detail->buyrecords){
-            return redirect('/admin/product/'.$product->id.'/detail')
-                        ->withSuccess("场地细节 '$product->productname' 创建成功.");
+            return back()->withErrors("已有预订，场地细节不能修改.");
         }
 
         $detail->productifo_id=$product->id;
@@ -175,7 +177,13 @@ class ProductDetailController extends Controller
     }
 
     public function search(Request $request, $id)
-    {
+    {   
+        $this->validate($request, [
+            'usebegindate' => 'required|string|max:255',
+            'useenddate' => 'required|string|max:255',
+            'usebegintime' => 'required|string|max:255',
+            'useendtime' => 'required|string|max:255',
+        ]);
         $searchCondition=$this->_searchCondition;
 
         foreach (array_keys($this->_searchCondition) as $field) {
@@ -189,6 +197,8 @@ class ProductDetailController extends Controller
 
         $details = ProductDetail::where('productifo_id',$id)
                             ->whereBetween('usedate',[$searchCondition['usebegindate'],$searchCondition['useenddate']])                            
+                            ->whereBetween('usebegintime',[$searchCondition['usebegindate'],$searchCondition['useenddate']])
+                            ->whereBetween('useendtime',[$searchCondition['usebegindate'],$searchCondition['useenddate']])
                             ->where('delflag',0)
                             ->orderBy('usedate','desc') 
                             ->paginate(config('subscribesystem.per_page'));

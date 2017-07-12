@@ -12,24 +12,23 @@ use Auth;
 
 class BuyrecordController extends Controller
 {
+    
     protected $_searchCondition = [
         'productname'=>'',
+        'customeraccount'=>'',
         'customername'=>'',
-        'usedate'=>'',
+        'usebegindate'=>'',
+        'useenddate'=>'',
         'usebegintime'=>'',
-        'useendtime'=>'',
-        'buytime'=>''
+        'useendtime'=>''
+        
     ];
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $buyrecords = Buyrecord::where('company_id', Auth::user()->company_id)
@@ -40,12 +39,6 @@ class BuyrecordController extends Controller
         return view('admin.buyrecord.index', compact('buyrecords'));
     }
 
-        /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {             
         $buyrecord = Buyrecord::where('company_id', Auth::user()->company_id)
@@ -58,24 +51,65 @@ class BuyrecordController extends Controller
 
     public function search(Request $request)
     {
+       $this->validate($request, [
+            'usebegindate' => 'required|string|max:255',
+            'useenddate' => 'required|string|max:255',
+            'usebegintime' => 'required|string|max:255',
+            'useendtime' => 'required|string|max:255',
+        ]);
+
         $searchCondition=$this->_searchCondition;
 
         foreach (array_keys($this->_searchCondition) as $field) {
             $searchCondition[$field] = $request->get($field);
         }
 
-        $products = Product::where('company_id',Auth::user()->company_id)
-                            ->where('areaname_id', $searchCondition['areaname_id'])
-                            ->where('producttype_id', $searchCondition['producttype_id']);
+        $buyrecords = Buyrecord::where('company_id', Auth::user()->company_id);
        
         if ($searchCondition['productname']){
-            $products=$products->where('productname','like', '%'.$searchCondition['productname'].'%');
+            $buyrecords=$buyrecords->whereHas('product', function ($query) use($searchCondition){
+                $query->where('productname','like', '%'.$searchCondition['productname'].'%');
+            });
         }
 
-        $products =$products->orderBy('id', 'desc')
-                            ->paginate(config('subscribesystem.per_page'));
+        if ($searchCondition['customeraccount']){
+            $buyrecords=$buyrecords->whereHas('customer', function ($query)use($searchCondition) {
+                $query->where('customeraccount','like', '%'.$searchCondition['customeraccount'].'%');
+            });
+        }
+       if ($searchCondition['customername']){
+            $buyrecords=$buyrecords->whereHas('customer', function ($query)use($searchCondition) {
+                $query->where('customername','like', '%'.$searchCondition['customername'].'%');
+            });
+        }
 
-        return view('admin.product.search',compact('products','searchCondition'));
+        if ($searchCondition['usebegindate']){
+            $buyrecords=$buyrecords->whereHas('detail', function ($query) use($searchCondition) {
+                $query->where('usedate', '>=', $searchCondition['usebegindate']);
+            });
+        }
+
+        if ($searchCondition['useenddate']){
+            $buyrecords=$buyrecords->whereHas('detail', function ($query) use($searchCondition) {
+                $query->where('usedate', '<=', $searchCondition['useenddate']);
+            });
+        }
+
+         if ($searchCondition['usebegintime']){
+            $buyrecords=$buyrecords->whereHas('detail', function ($query) use($searchCondition) {
+                $query->where('usebegintime', '>=', $searchCondition['usebegintime']);
+            });
+        }
+
+        if ($searchCondition['useendtime']){
+            $buyrecords=$buyrecords->whereHas('detail', function ($query) use($searchCondition) {
+                $query->where('useendtime', '<=', $searchCondition['useenddate']);
+            });
+        }
+
+        $buyrecords =$buyrecords->orderBy('id', 'desc')
+                            ->paginate(config('subscribesystem.per_page'));
+        return view('admin.buyrecord.search',compact('buyrecords','searchCondition'));
     }
 
     public function consumpt(Request $request)
@@ -117,6 +151,5 @@ class BuyrecordController extends Controller
         return redirect('/admin/buyrecord')
                         ->withSuccess("客户 ".$buyrecord->customer->customername."  的预定记录已经取消.");
     }
-
 
 }

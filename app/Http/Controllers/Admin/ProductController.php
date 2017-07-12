@@ -69,18 +69,22 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [            
-            'productname' => 'required|string|max:255',             
+            'productname' => 'required|string|max:255',
+            'productFunction_ids' =>'required'
         ]);
-       
+        
         $product = new Product();
-        $product->productname=$request->productname;
-        $product->productimg=$request->productimg;
-        $product->areaname_id=$request->area_id;
-        $product->producttype_id= $request->producttype_id;
-        $product->productexplain= $request->productexplain;
-        $product->manager_id= Auth::user()->id;
-        $product->company_id= Auth::user()->company_id;        
-        $product->save(); 
+        $address = new ProductAddress();
+        $product->productname= $request->productname;
+        $product->productimg = $request->productimg;
+        $product->areaname_id = $request->area_id;
+        $product->producttype_id = $request->producttype_id;
+        $product->productexplain = $request->productexplain;
+        $product->manager_id = Auth::user()->id;
+        $product->company_id = Auth::user()->company_id;
+        $address->productaddress = $request->productAddress;
+        $product->save();
+        $product->address()->save($address);
         $product->functions()->attach($request->productFunction_ids); 
         return redirect('/admin/product')
                         ->withSuccess("场地 '$product->productname' 创建成功.");
@@ -119,12 +123,15 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [            
-            'productname' => 'required|string|max:255',             
-        ]);  
+            'productname' => 'required|string|max:255',
+            'productFunction_ids' =>'required'
+        ]);
+
         $product = Product::where('delflag', 0)
                         ->where('id', $id)
                         ->where('company_id', Auth::user()->company_id)
                         ->first();
+                        
         $product->productname=$request->productname;
         $product->productimg=$request->productimg;
         $product->areaname_id=$request->area_id;
@@ -132,8 +139,8 @@ class ProductController extends Controller
         $product->productexplain= $request->productexplain;
         $product->manager_id= Auth::user()->id;
         $product->company_id= Auth::user()->company_id;
-        $product->functions()->detach();        
-        $product->functions()->attach($request->productFunction_ids);       
+        $product->functions()->detach();
+        $product->functions()->attach($request->productFunction_ids);
         $product->save();    
         
         return redirect("/admin/product/$id/edit")

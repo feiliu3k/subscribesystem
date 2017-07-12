@@ -21,11 +21,11 @@ class ProductDetail extends Model
 
     public function buyrecords()
     {
-        return $this->hasMany(Buyrecord::class, 'buyrecord', 'ifodetail_id');
+        return $this->hasMany(Buyrecord::class, 'ifodetail_id');
     }
 
     public function badrecords()
     {
-        return $this->hasMany(Badrecord::class, 'badrecord', 'ifodetail_id');
+        return $this->hasMany(Badrecord::class, 'ifodetail_id');
     }
 }

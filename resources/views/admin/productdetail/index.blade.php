@@ -99,10 +99,42 @@
                                 日期范围
                             </label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" id="usebegindate" name="usebegindate">
+                                <div class="input-group date" id="usebegindate">
+                                    <input type="text" class="form-control" name="usebegindate">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" id="useenddate" name="useenddate">
+                                <div class="input-group date" id="useenddate">
+                                    <input type="text" class="form-control" name="useenddate">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="usebegintime" class="col-md-3 control-label">
+                                时间范围
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-group date" id="usebegintime">
+                                    <input type="text" class="form-control" name="usebegintime">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group date" id="useendtime">
+                                    <input type="text" class="form-control" name="useendtime">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         
@@ -133,14 +165,26 @@
     
     <script type="text/javascript">
     $(function () {
-         $('#usebegindate').datetimepicker({
+        $('#usebegindate').datetimepicker({
             locale: 'zh-CN',
-            format: 'YYYY-MM-DD'
+            format: 'YYYY-MM-DD',            
         });
         
         $('#useenddate').datetimepicker({
             locale: 'zh-CN',
-            format: 'YYYY-MM-DD'
+            format: 'YYYY-MM-DD',            
+        });
+
+        $('#usebegintime').datetimepicker({
+            locale: 'zh-CN',
+            format: 'HH:mm:ss',
+            
+        });
+        
+        $('#useendtime').datetimepicker({
+            locale: 'zh-CN',
+            format: 'HH:mm:ss',
+            
         });
      });
     </script>
