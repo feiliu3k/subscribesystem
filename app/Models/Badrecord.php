@@ -13,23 +13,23 @@ class Badrecord extends Model
         'cancelflag', 'buyproductnum', 'buytoken', 'consumptionflag', 'overdueflag'
     ];
 
-    public function company()
+     public function company()
     {
-        return $this->belongsTo(company::class,'company','company_id');
+        return $this->belongsTo(company::class,'company_id');
     }
 
     public function product()
     {
-        return $this->belongsTo(Product::class,'productifo','productifo_id');
+        return $this->belongsTo(Product::class,'productifo_id');
     }
 
     public function detail()
     {
-        return $this->belongsTo(ProductDetail::class,'ifodetail','ifodetail_id');
+        return $this->belongsTo(ProductDetail::class,'ifodetail_id');
     }
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class,'customer','customer_id');
+        return $this->belongsTo(Customer::class,'customer_id');
     }
 }

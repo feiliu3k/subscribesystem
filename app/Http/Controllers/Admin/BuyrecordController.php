@@ -15,8 +15,7 @@ class BuyrecordController extends Controller
     
     protected $_searchCondition = [
         'productname'=>'',
-        'customeraccount'=>'',
-        'customername'=>'',
+        'customeraccount'=>'',        
         'usebegindate'=>'',
         'useenddate'=>'',
         'usebegintime'=>'',
@@ -51,11 +50,9 @@ class BuyrecordController extends Controller
 
     public function search(Request $request)
     {
-       $this->validate($request, [
+        $this->validate($request, [
             'usebegindate' => 'required|string|max:255',
-            'useenddate' => 'required|string|max:255',
-            'usebegintime' => 'required|string|max:255',
-            'useendtime' => 'required|string|max:255',
+            'useenddate' => 'required|string|max:255',            
         ]);
 
         $searchCondition=$this->_searchCondition;
@@ -64,51 +61,40 @@ class BuyrecordController extends Controller
             $searchCondition[$field] = $request->get($field);
         }
 
-        $buyrecords = Buyrecord::where('company_id', Auth::user()->company_id);
+        $buyrecords = Buyrecord::where('buyrecord.company_id', Auth::user()->company_id);
        
         if ($searchCondition['productname']){
-            $buyrecords=$buyrecords->whereHas('product', function ($query) use($searchCondition){
-                $query->where('productname','like', '%'.$searchCondition['productname'].'%');
-            });
+            $buyrecords=$buyrecords->join('productifo', 'buyrecord.productifo_id', '=', 'productifo.id')                                    
+                                ->where('productifo.productname','like', '%'.$searchCondition['productname'].'%');            
         }
 
         if ($searchCondition['customeraccount']){
-            $buyrecords=$buyrecords->whereHas('customer', function ($query)use($searchCondition) {
-                $query->where('customeraccount','like', '%'.$searchCondition['customeraccount'].'%');
-            });
-        }
-       if ($searchCondition['customername']){
-            $buyrecords=$buyrecords->whereHas('customer', function ($query)use($searchCondition) {
-                $query->where('customername','like', '%'.$searchCondition['customername'].'%');
-            });
+            $buyrecords=$buyrecords->join('customer', 'buyrecord.customer_id', '=', 'customer.id')
+                                    ->where('customer.customeraccount','like', '%'.$searchCondition['customeraccount'].'%');           
         }
 
+        $buyrecords=$buyrecords->join('ifodetail', 'buyrecord.ifodetail_id', '=', 'ifodetail.id');
+
         if ($searchCondition['usebegindate']){
-            $buyrecords=$buyrecords->whereHas('detail', function ($query) use($searchCondition) {
-                $query->where('usedate', '>=', $searchCondition['usebegindate']);
-            });
+            $buyrecords=$buyrecords->where('ifodetail.usedate','>=', $searchCondition['usebegindate']);
         }
 
         if ($searchCondition['useenddate']){
-            $buyrecords=$buyrecords->whereHas('detail', function ($query) use($searchCondition) {
-                $query->where('usedate', '<=', $searchCondition['useenddate']);
-            });
+            $buyrecords=$buyrecords->where('ifodetail.usedate','<=', $searchCondition['useenddate']);            
         }
 
-         if ($searchCondition['usebegintime']){
-            $buyrecords=$buyrecords->whereHas('detail', function ($query) use($searchCondition) {
-                $query->where('usebegintime', '>=', $searchCondition['usebegintime']);
-            });
+        if ($searchCondition['usebegintime']){
+            $buyrecords=$buyrecords->where('ifodetail.usebegintime','>=', $searchCondition['usebegintime']);            
         }
 
         if ($searchCondition['useendtime']){
-            $buyrecords=$buyrecords->whereHas('detail', function ($query) use($searchCondition) {
-                $query->where('useendtime', '<=', $searchCondition['useenddate']);
-            });
+            $buyrecords=$buyrecords->where('ifodetail.useendtime','<=', $searchCondition['useendtime']);            
         }
-
-        $buyrecords =$buyrecords->orderBy('id', 'desc')
+        //dd($buyrecords->toSql());
+        $buyrecords =$buyrecords->orderBy('buyrecord.id', 'desc')
                             ->paginate(config('subscribesystem.per_page'));
+
+
         return view('admin.buyrecord.search',compact('buyrecords','searchCondition'));
     }
 

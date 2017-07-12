@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ URL::asset('vendor/datetimepicker/bootstrap-datetimepicker.min.css')  }}" rel="stylesheet" />
+@stop
+
 @section('content')
     <div class="container">
         <div class="row page-title-row">
@@ -88,7 +92,7 @@
                                 {{ config('subscribesystem.product') }}名称
                             </label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="productname" name="productname">
+                                <input type="text" class="form-control" id="productname" name="productname" value="{{ $product->productname }}" readonly>
                             </div>
                         </div>
 
@@ -154,30 +158,36 @@
 @stop
 
 @section('scripts')
-    <script>
-        $(function() {
-            $("#products-table").DataTable({
-            });
-
-            $('#usebegindate').datetimepicker({
-                locale: 'zh-CN',
-                format: 'YYYY-MM-DD'
-            });
-            
-            $('#useenddate').datetimepicker({
-                locale: 'zh-CN',
-                format: 'YYYY-MM-DD'
-            });
-
-            $('#usebegintime').datetimepicker({
-                locale: 'zh-CN',
-                format: 'HH:mm:ss'
-            });
-            
-            $('#useendtime').datetimepicker({
-                locale: 'zh-CN',
-                format: 'HH:mm:ss'
-            });
+	<script type="text/javascript"
+     src="{{ URL::asset('vendor/datetimepicker/moment-with-locales.js')  }}">
+    </script>
+	<script type="text/javascript"
+     src="{{ URL::asset('vendor/datetimepicker/bootstrap-datetimepicker.min.js')  }}">
+    </script>
+    
+    <script type="text/javascript">
+    $(function () {
+        $('#usebegindate').datetimepicker({
+            locale: 'zh-CN',
+            format: 'YYYY-MM-DD',            
         });
+        
+        $('#useenddate').datetimepicker({
+            locale: 'zh-CN',
+            format: 'YYYY-MM-DD',            
+        });
+
+        $('#usebegintime').datetimepicker({
+            locale: 'zh-CN',
+            format: 'HH:mm:ss',
+            
+        });
+        
+        $('#useendtime').datetimepicker({
+            locale: 'zh-CN',
+            format: 'HH:mm:ss',
+            
+        });
+     });
     </script>
 @stop

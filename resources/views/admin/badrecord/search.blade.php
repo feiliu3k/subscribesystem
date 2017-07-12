@@ -8,11 +8,14 @@
     <div class="container">
         <div class="row page-title-row">
             <div class="col-md-6">
-                <h3>{{ config('subscribesystem.buyrecord') }} <small>» 列表</small></h3>
+                <h3>{{ config('subscribesystem.badrecord') }} <small>» 列表</small></h3>
             </div>
-            <div class="col-md-6 text-right">                
+            <div class="col-md-6 text-right">
+                <a href="{{ route('badrecord.index') }}" class="btn btn-info btn-md">
+                    <i class="fa fa-plus-circle"></i> {{ config('subscribesystem.badrecord') }}首页
+                </a>                 
                 <button class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-search">
-                    <i class="fa fa-plus-circle"></i> 搜索{{ config('subscribesystem.buyrecord') }}
+                    <i class="fa fa-plus-circle"></i> 搜索{{ config('subscribesystem.badrecord') }}
                 </button>
             </div>
         </div>
@@ -38,29 +41,20 @@
                         </tr>
                      </thead>
                     <tbody>
-                    @foreach ($buyrecords as $buyrecord)
+                    @foreach ($badrecords as $badrecord)
                         <tr>                                                       
-                            <td>{{ $buyrecord->customer->customeraccount }}</td>
-                            <td>{{ $buyrecord->product->productname }}</td>
-                            <td>{{ $buyrecord->detail->usedate }}</td>
-                            <td>{{ $buyrecord->detail->usebegintime }}</td>                            
-                            <td>{{ $buyrecord->detail->useendtime }}</td>                            
-                            <td>{{ $buyrecord->buyproductnum }}</td>                           
-                            <td>{{ $buyrecord->buytoken }}</td>                           
-                            <td>{{ $buyrecord->buytime }}</td>                           
+                            <td>{{ $badrecord->customer->customeraccount }}</td>
+                            <td>{{ $badrecord->product->productname }}</td>
+                            <td>{{ $badrecord->detail->usedate }}</td>
+                            <td>{{ $badrecord->detail->usebegintime }}</td>                            
+                            <td>{{ $badrecord->detail->useendtime }}</td>                            
+                            <td>{{ $badrecord->buyproductnum }}</td>                           
+                            <td>{{ $badrecord->buytoken }}</td>                           
+                            <td>{{ $badrecord->buytime }}</td>                           
                             <td>
-                                <a href="{{ route('buyrecord.edit', $buyrecord->id) }}" class="btn btn-xs btn-info">
+                                <a href="{{ route('badrecord.edit', $badrecord->id) }}" class="btn btn-xs btn-info">
                                     <i class="fa fa-edit"></i> 详细
                                 </a>
-                                <button type="button" class="btn btn-success btn-xs" data-buyid="{{ $buyrecord->id }}"  data-buytoken="{{ $buyrecord->buytoken }}" 
-                                data-toggle="modal" data-target="#modal-consumpt"  @if ($buyrecord->consumptionflag==1) disabled="disabled" @endif>
-                                    <i class="fa fa-edit"></i>确认
-                                </button>                                
-                                <button type="button" class="btn btn-warning btn-xs" data-buyid="{{ $buyrecord->id }}"  data-buytoken="{{ $buyrecord->buytoken }}" 
-                                data-toggle="modal" data-target="#modal-overdue" @if ($buyrecord->overdueflag==1) disabled="disabled" @endif>
-                                    <i class="fa fa-edit"></i>过期
-                                </button>
-                                
                             </td>
                         </tr>
                     @endforeach
@@ -70,67 +64,6 @@
         </div>
     </div>
 
-    {{-- 确认 --}}
-    <div class="modal fade" id="modal-consumpt" tabIndex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        ×
-                    </button>
-                    <h4 class="modal-title">请确认签到</h4>
-                </div>
-                <div class="modal-body">
-                    <p class="lead">
-                        <i class="fa fa-question-circle fa-lg"></i>
-                        是否真的需要将此{{ config('subscribesystem.buyrecord') }} 签到？
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <form method="POST" action="{{ route('buyrecord.consumpt') }}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="buyid" value="">
-                        <input type="hidden" name="buytoken" value="">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fa fa-times-circle"></i> 确认
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- 过期 --}}
-    <div class="modal fade" id="modal-overdue" tabIndex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        ×
-                    </button>
-                    <h4 class="modal-title">请确认过期</h4>
-                </div>
-                <div class="modal-body">
-                    <p class="lead">
-                        <i class="fa fa-question-circle fa-lg"></i>
-                        是否真的需要将此{{ config('subscribesystem.buyrecord') }} 设置为过期？
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <form method="POST" action="{{ route('buyrecord.overdue') }}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="buyid" value="">
-                        <input type="hidden" name="buytoken" value="">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fa fa-times-circle"></i> 确认
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     {{-- 搜索框 --}}
     <div class="modal fade" id="modal-search" tabIndex="-1" role="dialog">
@@ -143,7 +76,7 @@
                     <h4 class="modal-title">请输入查询条件</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('buyrecord.search') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('badrecord.search') }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
                             <label for="productname" class="col-md-3 control-label">

@@ -10,7 +10,10 @@
             <div class="col-md-6">
                 <h3>{{ config('subscribesystem.buyrecord') }} <small>» 列表</small></h3>
             </div>
-            <div class="col-md-6 text-right">                
+            <div class="col-md-6 text-right">
+                <a href="{{ route('buyrecord.index') }}" class="btn btn-info btn-md">
+                    <i class="fa fa-plus-circle"></i> {{ config('subscribesystem.buyrecord') }}首页
+                </a>                
                 <button class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-search">
                     <i class="fa fa-plus-circle"></i> 搜索{{ config('subscribesystem.buyrecord') }}
                 </button>
@@ -159,14 +162,6 @@
                             </label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" id="customeraccount" name="customeraccount">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="customername" class="col-md-3 control-label">
-                                客户姓名
-                            </label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="customername" name="customername">
                             </div>
                         </div>
                         <div class="form-group">

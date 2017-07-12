@@ -180,10 +180,9 @@ class ProductDetailController extends Controller
     {   
         $this->validate($request, [
             'usebegindate' => 'required|string|max:255',
-            'useenddate' => 'required|string|max:255',
-            'usebegintime' => 'required|string|max:255',
-            'useendtime' => 'required|string|max:255',
+            'useenddate' => 'required|string|max:255',            
         ]);
+
         $searchCondition=$this->_searchCondition;
 
         foreach (array_keys($this->_searchCondition) as $field) {
@@ -196,36 +195,26 @@ class ProductDetailController extends Controller
                         ->first();
 
         $details = ProductDetail::where('productifo_id',$id)
-                            ->whereBetween('usedate',[$searchCondition['usebegindate'],$searchCondition['useenddate']])                            
-                            ->whereBetween('usebegintime',[$searchCondition['usebegindate'],$searchCondition['useenddate']])
-                            ->whereBetween('useendtime',[$searchCondition['usebegindate'],$searchCondition['useenddate']])
-                            ->where('delflag',0)
-                            ->orderBy('usedate','desc') 
+                            ->whereBetween('usedate',[$searchCondition['usebegindate'],$searchCondition['useenddate']])                           
+                            ->where('delflag',0);        
+
+        if ($searchCondition['usebegintime']){
+            $details=$details->where('usebegintime','>=', $searchCondition['usebegintime']);            
+        }
+
+        if ($searchCondition['useendtime']){
+            $details=$details->where('useendtime','<=', $searchCondition['useendtime']);            
+        }
+
+        $details =$details->orderBy('usedate','desc') 
                             ->paginate(config('subscribesystem.per_page'));
 
-        return view('admin.detail.search',compact('details','searchCondition'));
+        return view('admin.productdetail.search',compact('details', 'product', 'searchCondition'));
     }
 
     public function order($customer_id, $did)
     {
-        $searchCondition=$this->_searchCondition;
-
-        foreach (array_keys($this->_searchCondition) as $field) {
-            $searchCondition[$field] = $request->get($field);
-        }
-        
-        $product = Product::where('delflag', 0)
-                        ->where('company_id', Auth::user()->company_id)
-                        ->where('id', $id)
-                        ->first();
-
-        $details = ProductDetail::where('productifo_id',$id)
-                            ->whereBetween('usedate',[$searchCondition['usebegindate'],$searchCondition['useenddate']])                            
-                            ->where('delflag',0)
-                            ->orderBy('usedate','desc') 
-                            ->paginate(config('subscribesystem.per_page'));
-
-        return view('admin.detail.search',compact('details','searchCondition'));
+       
     }
 
 }

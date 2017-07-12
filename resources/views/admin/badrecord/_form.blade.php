@@ -13,7 +13,15 @@
         <div class="col-md-8">
             <input type="text" class="form-control" id="customeraccount" name="customeraccount" value="{{ $badrecord->customer->customeraccount }}" readonly>
         </div>
-    </div>    
+    </div>
+    <div class="form-group">
+        <label for=companyname" class="col-md-3 control-label">
+            {{ config('subscribesystem.company') }}名称
+        </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" id="companyname" name="companyname" value="{{ $badrecord->company->companyname }}" readonly>
+        </div>
+    </div>
     <div class="form-group">
         <label for="productname" class="col-md-3 control-label">
             {{ config('subscribesystem.product') }}名称
@@ -71,29 +79,18 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-md-6 col-md-offset-4">
+        <div class="col-md-8 col-md-offset-3">
             <div class="checkbox">
                 <label>
                     <input type="checkbox" name="cancelflag" {{ $badrecord->cancelflag ? 'checked' : '' }}> 取消预订
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-6 col-md-offset-4">
-            <div class="checkbox">
-                <label>
+               </label>            
+                <label>        
                     <input type="checkbox" name="consumptionflag" {{ $badrecord->consumptionflag ? 'checked' : '' }}> 消费标志
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-6 col-md-offset-4">
-            <div class="checkbox">
+               </label>            
                 <label>
                     <input type="checkbox" name="overdueflag" {{ $badrecord->overdueflag ? 'checked' : '' }}> 过期标志
                 </label>
             </div>
         </div>
     </div>
+   

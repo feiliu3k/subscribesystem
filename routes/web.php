@@ -57,6 +57,10 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::post('buyrecord/overdue', ['uses' => 'BuyrecordController@overdue','as' => 'buyrecord.overdue']);
     Route::post('buyrecord/cancel', ['uses' => 'BuyrecordController@cancel','as' => 'buyrecord.cancel']);
 
+    Route::get('badrecord', ['uses' => 'BadrecordController@index','as' => 'badrecord.index']);
+    Route::get('badrecord/{id}/edit', ['uses' => 'BadrecordController@edit','as' => 'badrecord.edit']);
+    Route::any('badrecord/search', ['uses' => 'BadrecordController@search','as' => 'badrecord.search']);
+
     Route::resource('customer', 'CustomerController', ['except' => 'show']);
 });
 
