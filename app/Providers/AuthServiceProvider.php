@@ -25,6 +25,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Gate::define('show-product', function ($user, $product) {
+        //     return $user->owns($product);
+        // });
+
+        // Gate::define('show-detail', function ($user, $detail) {
+        //     return $user->owns($detail->product);
+        // });
+
+        // Gate::define('show-buyrecord', function ($user, $buyrecord) {
+        //     return $user->owns($buyrecord->product);
+        // });
+
+        // Gate::define('show-badrecord', function ($user, $badrecord) {
+        //     return $user->owns($badrecord->product);
+        // });
     }
 }

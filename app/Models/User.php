@@ -51,4 +51,8 @@ class User extends Authenticatable
             Role::whereRolename($role)->firstOrFail()
         );
     }
+
+    public function owns($product) {
+        return $this->company_id == $product->company_id;
+    }
 }
