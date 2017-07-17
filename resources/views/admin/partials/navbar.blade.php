@@ -1,22 +1,26 @@
 <ul class="nav navbar-nav">
     <li><a href="{{ url('/') }}">首页</a></li>
     @if (Auth::check())
-        @can('edit-post')
-        <li @if (Request::is('admin/qnaire*')) class="active" @endif>
-            <a href="{{ url('admin/qnaire') }}">{{ config('cms.title') }}</a>
-        </li>
+        @can('list-product')
+            <li @if (Request::is('admin/product*')) class="active" @endif>
+                <a href="{{ url('admin/product') }}">{{ config('subscribesystem.product') }}</a>
+            </li>
         @endcan
-        @can('edit-jrsx')
-        <li @if (Request::is('admin/jrsx*')) class="active" @endif>
-            <a href="{{ url('admin/jrsx') }}">{{ config('cms.jrsx.jrsx') }}</a>
-        </li>
+        @can('list-detail')
+            <li @if (Request::is('admin/productDetail*')) @endif>
+                <a href="{{ url('admin/productDetail') }}">{{ config('subscribesystem.detail') }}</a>
+            </li>
         @endcan
-        @can('edit-comment')
-        <li @if (Request::is('admin/comment*')) class="active" @endif>
-            <a href="{{ url('admin/comment') }}">{{ config('cms.comment') }}</a>
-        </li>
+        @can('list-buyrecord')
+            <li @if (Request::is('admin/buyrecord*')) @endif>
+                <a href="{{ url('admin/buyrecord') }}">{{ config('subscribesystem.buyrecord') }}</a>
+            </li>
         @endcan
-
+        @can('list-badrecord')
+            <li @if (Request::is('admin/badrecord*')) @endif>
+                <a href="{{ url('admin/badrecord') }}">{{ config('subscribesystem.badrecord') }}</a>
+            </li>
+        @endcan
     @endif
 </ul>
 <ul class="nav navbar-nav nav-tabs">
@@ -28,10 +32,14 @@
         </a>
 
         <ul class="dropdown-menu">
-            <li><a href="{{ url('admin/dept') }}">单位</a></li>
-            <li><a href="{{ url('admin/pro') }}">栏目</a></li>
-
-            <li><a href="{{ url('admin/user') }}">用户</a></li>
+            <li><a href="{{ url('admin/area') }}">区域</a></li>
+            <li><a href="{{ url('admin/company') }}">单位</a></li>
+            <li><a href="{{ url('admin/company') }}">类型</a></li>
+            <li><a href="{{ url('admin/company') }}">功能</a></li>
+            <li><a href="{{ url('admin/customer') }}">客户</a></li>
+            <li><a href="{{ url('admin/log/manager') }}">日志</a></li>
+            <hr>
+            <li><a href="{{ url('admin/manager') }}">管理员</a></li>            
             <li><a href="{{ url('admin/role') }}">角色</a></li>
             <li><a href="{{ url('admin/permission') }}">权限</a></li>
         </ul>

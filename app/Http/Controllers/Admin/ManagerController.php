@@ -76,6 +76,7 @@ class ManagerController extends Controller
      */
     public function create()
     {
+
         $companies=Company::all();
         $manager=new User();
         return view('admin.manager.create',compact('manager','companies'));
@@ -89,6 +90,9 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create-manager')) {       
+            abort(403);
+        }
         $this->validate($request, [            
             'managername' => 'required|string|max:255',
             'manageraccount' => 'required|string|max:255|unique:manager',
@@ -139,6 +143,9 @@ class ManagerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-manager')) {       
+            abort(403);
+        }
         $this->validate($request, [            
             'managername' => 'required|string|max:255',
             'manageraccount' => 'required|string|max:255'                   
@@ -166,6 +173,9 @@ class ManagerController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-manager')) {       
+            abort(403);
+        }
         $manager = User::findOrFail($id);
         $manager->delflag=1;
         $manager->save();
@@ -199,6 +209,9 @@ class ManagerController extends Controller
     public function updateRole(Request $request,$id)
     {
        // dd($request);
+       if (Gate::denies('add-role')) {       
+            abort(403);
+        }
         $manager = User::findOrFail($id);
         $roleids=$request->roles;
 

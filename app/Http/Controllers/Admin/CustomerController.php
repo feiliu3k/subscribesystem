@@ -50,7 +50,9 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if (Gate::denies('create-customer')) {       
+            abort(403);
+        }
         $this->validate($request, [            
             'customername' => 'required|string|max:255',
             'customeraccount' => 'required|string|max:255|unique:customer',
@@ -98,6 +100,9 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-customer')) {       
+            abort(403);
+        }
         $this->validate($request, [            
             'customername' => 'required|string|max:255',                              
         ]);
@@ -123,6 +128,9 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-customer')) {       
+            abort(403);
+        }
         $customer = Customer::findOrFail($id);
         $customer->delflag=1;
         $customer->save();

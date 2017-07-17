@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,24 +21,26 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(GateContract $gate)
     {
-        $this->registerPolicies();
+        if (!empty($_SERVER['SCRIPT_NAME']) && strtolower($_SERVER['SCRIPT_NAME']) === 'artisan') {
+            return false;
+        }
+        
+        $gate->before(function ($user, $ability) {
+            if ($user->id === 1) {
+                return true;
+            }
+        });
 
-        // Gate::define('show-product', function ($user, $product) {
-        //     return $user->owns($product);
-        // });
+        $this->registerPolicies($gate);
 
-        // Gate::define('show-detail', function ($user, $detail) {
-        //     return $user->owns($detail->product);
-        // });
+        $permissions = \App\Models\Permission::with('roles')->get();
 
-        // Gate::define('show-buyrecord', function ($user, $buyrecord) {
-        //     return $user->owns($buyrecord->product);
-        // });
-
-        // Gate::define('show-badrecord', function ($user, $badrecord) {
-        //     return $user->owns($badrecord->product);
-        // });
+        foreach ($permissions as $permission) {
+            $gate->define($permission->name, function ($user) use ($permission) {
+                return $user->hasPermission($permission);
+            });
+        }
     }
 }

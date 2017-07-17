@@ -46,7 +46,10 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
+        if (Gate::denies('create-role')) {       
+            abort(403);
+        }
         $this->validate($request, [
             'rolename' => 'required|string|max:255|unique:role',
             'rolelabel' => 'required|string|max:255',                        
@@ -85,6 +88,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-role')) {       
+            abort(403);
+        }
         $this->validate($request, [            
             'rolelabel' => 'required|string|max:255',                        
         ]);
@@ -107,6 +113,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-role')) {       
+            abort(403);
+        }
         $role = Role::findOrFail($id);
         $role->delflag=1;
         $role->save();
@@ -140,6 +149,9 @@ class RoleController extends Controller
     public function updatePermission(Request $request,$id)
     {
         //dd($request->permissions);
+        if (Gate::denies('add-permission')) {       
+            abort(403);
+        }
         $role = Role::findOrFail($id);
         $permissionids=$request->permissions;
         $count=0;

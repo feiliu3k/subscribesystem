@@ -52,6 +52,9 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create-area')) {       
+            abort(403);
+        }
         $this->validate($request, [
             'areaname' => 'required|unique:areaname|max:255'           
         ]);
@@ -94,6 +97,9 @@ class AreaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-area')) {       
+            abort(403);
+        }
         $this->validate($request, [
             'areaname' => 'required|unique:areaname|max:255'           
         ]);
@@ -117,6 +123,9 @@ class AreaController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-area')) {       
+            abort(403);
+        }
         $area = Area::findOrFail($id);
         $area->delflag=1;
         $area->save();
