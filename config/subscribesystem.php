@@ -12,6 +12,7 @@ return [
     'buyrecord' => '预定记录',
     'badrecord' => '不良记录',
     'customer' => '客户',
+    'log' => '日志',
     'per_page' => 20, 
     'admin'=>'admin',
     'uploads' => [

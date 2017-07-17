@@ -31,18 +31,16 @@
                         </tr>
                      </thead>
                     <tbody>
-                    @foreach ($areas as $area)
+                    @foreach ($logs as $log)
                         <tr>
                             <td>{{ $log->id }}</td>
                             <td>{{ $log->logintime }}</td>
                             <td>{{ $log->loginaccount }}</td>
                             <td>{{ $log->successflag }}</td>
-                            <td>{{ $log->ipaddress }}</td>                       
+                            <td>{{ $log->ipaddress }}</td>
 
                             <td>
-                                <a href="#" class="btn btn-xs btn-info">
-                                    <i class="fa fa-edit"></i> 编辑
-                                </a>
+                                
                             </td>
                         </tr>
                     @endforeach

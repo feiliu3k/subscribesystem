@@ -29,8 +29,8 @@
             <ul class="dropdown-menu">
                 <li><a href="{{ url('admin/area') }}">区域</a></li>
                 <li><a href="{{ url('admin/company') }}">单位</a></li>
-                <li><a href="{{ url('admin/company') }}">类型</a></li>
-                <li><a href="{{ url('admin/company') }}">功能</a></li>
+                <li><a href="{{ url('admin/productType') }}">类型</a></li>
+                <li><a href="{{ url('admin/productFunction') }}">功能</a></li>
                 <li><a href="{{ url('admin/customer') }}">客户</a></li>
                 <li><a href="{{ url('admin/log/manager') }}">日志</a></li>
                 <hr>

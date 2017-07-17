@@ -40,9 +40,7 @@
                             <td>{{ $log->ipaddress }}</td>
 
                             <td>
-                                <a href="#" class="btn btn-xs btn-info">
-                                    <i class="fa fa-edit"></i> 编辑
-                                </a>
+                                
                             </td>
                         </tr>
                     @endforeach

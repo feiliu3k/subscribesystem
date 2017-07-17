@@ -18,9 +18,6 @@ Route::get('/regsuccess', function () {
     return view('reg');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-
 Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
 {
     $router->get('dash', 'DashboardController@index');
@@ -61,7 +58,11 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::get('badrecord/{id}/edit', ['uses' => 'BadrecordController@edit','as' => 'badrecord.edit']);
     Route::any('badrecord/search', ['uses' => 'BadrecordController@search','as' => 'badrecord.search']);
 
+
     Route::resource('customer', 'CustomerController', ['except' => 'show']);
+
+    Route::get('log/manager', ['uses' => 'LogController@manager','as' => 'log.manager.index']);
+    Route::get('log/customer', ['uses' => 'LogController@customer','as' => 'log.customer.index']);
 });
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Models\Managerloginlog;
+use App\Models\Customerloginlog;
+
 class LogController extends Controller
 {
     public function __construct()
