@@ -23,24 +23,22 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!empty($_SERVER['SCRIPT_NAME']) && strtolower($_SERVER['SCRIPT_NAME']) === 'artisan') {
-            return false;
-        }
-        
-        Gate::before(function ($user, $ability) {
-            if ($user->id === 1) {
-                return true;
-            }
-        });
-
         $this->registerPolicies();
 
-        $permissions = \App\Models\Permission::with('roles')->get();
+        // Gate::define('show-product', function ($user, $product) {
+        //     return $user->owns($product);
+        // });
 
-        foreach ($permissions as $permission) {
-            Gate::define($permission->name, function ($user) use ($permission) {
-                return $user->hasPermission($permission);
-            });
-        }
+        // Gate::define('show-detail', function ($user, $detail) {
+        //     return $user->owns($detail->product);
+        // });
+
+        // Gate::define('show-buyrecord', function ($user, $buyrecord) {
+        //     return $user->owns($buyrecord->product);
+        // });
+
+        // Gate::define('show-badrecord', function ($user, $badrecord) {
+        //     return $user->owns($badrecord->product);
+        // });
     }
 }

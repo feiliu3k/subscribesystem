@@ -70,9 +70,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::denies('create_product')) {       
-            abort(403);
-        }
         $this->validate($request, [            
             'productname' => 'required|string|max:255',
             'productFunction_ids' =>'required'
@@ -130,9 +127,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Gate::denies('modify_product')) {       
-            abort(403);
-        }
         $this->validate($request, [            
             'productname' => 'required|string|max:255',
             'productFunction_ids' =>'required'
@@ -168,9 +162,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::denies('delete_product')) {       
-            abort(403);
-        }
         $product = Product::where('delflag', 0);
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);

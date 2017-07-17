@@ -53,9 +53,6 @@ class ProductTypeController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::denies('create-type')) {       
-            abort(403);
-        }
         $this->validate($request, [
             'typename' => 'required|string|max:255|unique:producttype',                       
         ]);
@@ -98,9 +95,6 @@ class ProductTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Gate::denies('modify-type')) {       
-            abort(403);
-        }
         $this->validate($request, [
             'typename' => 'required|string|max:255|unique:producttype',                       
         ]);
@@ -124,9 +118,6 @@ class ProductTypeController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::denies('delete-type')) {       
-            abort(403);
-        }
         $productType = ProductType::findOrFail($id);
         $productType->delflag=1;
         $productType->save();

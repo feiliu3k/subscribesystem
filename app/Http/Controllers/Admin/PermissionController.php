@@ -45,9 +45,6 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::denies('create-permission')) {       
-            abort(403);
-        }
         $this->validate($request, [            
             'permissionlabel' => 'required|string|max:255',
             'permissionname' => 'required|string|max:255|unique:permission',                       
@@ -85,9 +82,6 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Gate::denies('modify-permission')) {       
-            abort(403);
-        }
         $this->validate($request, [            
             'permissionlabel' => 'required|string|max:255',                                  
         ]);
@@ -109,9 +103,6 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::denies('delete-permission')) {       
-            abort(403);
-        }
         $permission = Permission::findOrFail($id);
         $permission->delflag=1;
         $permission->save();

@@ -53,9 +53,6 @@ class ProductFunctionController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::denies('create-function')) {       
-            abort(403);
-        }
         $this->validate($request, [
             'functionname' => 'required|string|max:255|unique:productfunction'                       
         ]);
@@ -97,9 +94,6 @@ class ProductFunctionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Gate::denies('modify-function')) {       
-            abort(403);
-        }
         $this->validate($request, [
             'functionname' => 'required|string|max:255|unique:productfunction',                       
         ]);
@@ -123,9 +117,6 @@ class ProductFunctionController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::denies('delete-function')) {       
-            abort(403);
-        }
         $productFunction = ProductFunction::findOrFail($id);
         $productFunction->delflag=1;
         $productFunction->save();

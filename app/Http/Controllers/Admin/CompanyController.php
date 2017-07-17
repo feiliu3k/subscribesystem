@@ -52,9 +52,6 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::denies('create-company')) {       
-            abort(403);
-        }
         $this->validate($request, [
             'companyname' => 'required|unique:company|max:255'           
         ]);
@@ -97,9 +94,6 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Gate::denies('modify-company')) {       
-            abort(403);
-        }
         $this->validate($request, [
             'companyname' => 'required|unique:company|max:255'           
         ]);
@@ -123,9 +117,6 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::denies('delete-company')) {       
-            abort(403);
-        }
         $company = Company::findOrFail($id);
         $company->delete();
 

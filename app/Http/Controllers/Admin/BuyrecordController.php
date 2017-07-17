@@ -106,9 +106,6 @@ class BuyrecordController extends Controller
 
     public function consumpt(Request $request)
     {
-        if (Gate::denies('modify-consumpt')) {       
-            abort(403);
-        }
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
@@ -124,9 +121,6 @@ class BuyrecordController extends Controller
 
     public function overdue(Request $request)
     {
-        if (Gate::denies('modify-overdue')) {       
-            abort(403);
-        }
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
@@ -143,9 +137,6 @@ class BuyrecordController extends Controller
 
     public function cancel(Request $request)
     {
-        if (Gate::denies('modify-cancel')) {       
-            abort(403);
-        }
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
         if (Auth::user()->managername<>config('subscribesystem.admin')){

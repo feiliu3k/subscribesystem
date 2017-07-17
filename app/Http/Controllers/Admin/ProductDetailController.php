@@ -73,9 +73,6 @@ class ProductDetailController extends Controller
      */
     public function store(Request $request, $id)
     {
-        if (Gate::denies('create_detail')) {       
-            abort(403);
-        }
         $this->validate($request, [
             'usedate' => 'required|string|max:255',
         ]);
@@ -137,9 +134,6 @@ class ProductDetailController extends Controller
      */
     public function update(Request $request, $id, $did)
     {
-        if (Gate::denies('modify_detail')) {       
-            abort(403);
-        }
         $this->validate($request, [
             'usedate' => 'required|string|max:255',
         ]); 
@@ -182,9 +176,6 @@ class ProductDetailController extends Controller
      */
     public function destroy($id, $did)
     {
-        if (Gate::denies('delete_detail')) {       
-            abort(403);
-        }
         $detail = ProductDetail::where('delflag',0)                                
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
