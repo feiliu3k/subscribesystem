@@ -8,8 +8,6 @@ use App\Http\Controllers\Controller;
 use Validator, Auth, Redirect;
 
 use App\Models\Customer;
-use App\Models\Role;
-
 
 class CustomerController extends Controller
 {

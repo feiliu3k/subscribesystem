@@ -26,9 +26,9 @@
                         <thead>
                             <tr>
                                 <th></th>
+                                <th>编号</th>
                                 <th>名称</th>
                                 <th>标签</th>
-                                <th>描述</th>
                             </tr>
                         </thead>
                             <tbody>

@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Authorizable;
 
     protected $table = 'manager';
     protected $primaryKey='id';
@@ -28,7 +29,7 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class,'manager_role','role_id','manager_id');
+        return $this->belongsToMany(Role::class,'manager_role','manager_id','role_id');
     }
     // 判断用户是否具有某个角色
     public function hasRole($role)
@@ -40,9 +41,14 @@ class User extends Authenticatable
         return !! $role->intersect($this->roles)->count();
     }
     // 判断用户是否具有某权限
-    public function hasPermission($permission)
-    {
-        return $this->hasRole($permission->roles);
+    public function hasPermission($permissionname)
+    {   
+        $permission=Permission::where('permissionname',$permissionname)
+                                ->where('delflag',0)->first();
+        if ($permission)
+            return $this->hasRole($permission->roles);
+        else
+            return false;
     }
     // 给用户分配角色
     public function assignRole($role)

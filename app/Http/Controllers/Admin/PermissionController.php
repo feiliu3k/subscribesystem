@@ -45,6 +45,7 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+ 
         $this->validate($request, [            
             'permissionlabel' => 'required|string|max:255',
             'permissionname' => 'required|string|max:255|unique:permission',                       

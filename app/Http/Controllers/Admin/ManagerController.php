@@ -198,7 +198,6 @@ class ManagerController extends Controller
 
     public function updateRole(Request $request,$id)
     {
-       // dd($request);
         $manager = User::findOrFail($id);
         $roleids=$request->roles;
 

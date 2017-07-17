@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Support\Facades\Gate;
 use App\Models\Role;
 use App\Models\Permission;
 
@@ -46,7 +48,7 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $this->validate($request, [
             'rolename' => 'required|string|max:255|unique:role',
             'rolelabel' => 'required|string|max:255',                        
@@ -90,6 +92,8 @@ class RoleController extends Controller
         ]);
         $role = Role::findOrFail($id);
                 
+        $this->authorize('modify-role', $role);
+
         $role->rolelabel=$request->rolelabel;
         $role->description= $request->description;
 
@@ -139,7 +143,6 @@ class RoleController extends Controller
 
     public function updatePermission(Request $request,$id)
     {
-        //dd($request->permissions);
         $role = Role::findOrFail($id);
         $permissionids=$request->permissions;
         $count=0;

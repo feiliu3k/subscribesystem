@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use App\Models\Area;
+
+
 
 class AreaController extends Controller
 {
@@ -25,6 +28,8 @@ class AreaController extends Controller
      */
     public function index()
     {
+        
+        //dd(Auth::user()->roles->first()->permissions);
         $areas = Area::where('delflag',0)->orderBy('id','desc')->get();        
         return view('admin.area.index')->withAreas($areas);
     }
@@ -77,6 +82,7 @@ class AreaController extends Controller
     public function edit($id)
     {
         $area = Area::findOrFail($id);
+       
         $data = ['id' => $id];
         foreach (array_keys($this->fields) as $field) {
             $data[$field] = old($field, $area->$field);
