@@ -19,7 +19,7 @@ return [
             'storage' => 'local',
             'webpath' => '/uploads',
     ],
-
+    'thumb_path'=>'../../uploads/ss/',
     'image_path'=>'../../uploads/ss/',
     'video_path'=>'../../uploads/ss/',
 ];

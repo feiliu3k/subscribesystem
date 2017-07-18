@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
+    <link rel="stylesheet" href="{{ URL::asset('css/upload.css') }}" >
     <link href="{{ URL::asset('vendor/select2/css/select2.min.css')}}" rel="stylesheet" />
 @stop
 
@@ -115,10 +116,87 @@
             });
             editor.render("productexplain");
         }
+                   
+        $(function() {
+            $("#product-function").select2({
+                tags: true,
+            });
 
-         $("#product-function").select2({
-             tags: true,
-         });
+            //上传图片相关
+
+            $('.upload-mask').on('click',function(){
+                $(this).hide();
+                $('.upload-file').hide();
+            });
+
+            $('.upload-file .close').on('click',function(){
+                $('.upload-mask').hide();
+                $('.upload-file').hide();
+            });
+
+
+            $('.img-upload').on('click',function(){
+                $('.upload-mask').show();
+                $('.upload-file').show();
+
+                $('#filetype').attr('value','image');
+            });
+
+            $('.adimg-upload').on('click',function(){
+                $('.upload-mask').show();
+                $('.upload-file').show();
+
+                $('#filetype').attr('value','adimg');
+            });
+
+
+
+
+            //ajax 上传
+            $(document).ready(function() {
+                var options = {
+                    beforeSubmit:  showRequest,
+                    success:       showResponse,
+                    dataType: 'json'
+                };
+                $('#imgForm input[name=file]').on('change', function(){
+                    //$('#upload-avatar').html('正在上传...');
+                    $('#imgForm').ajaxForm(options).submit();
+                });
+            });
+
+            function showRequest() {
+                $("#validation-errors").hide().empty();
+                $("#output").css('display','none');
+                return true;
+            }
+
+            function showResponse(response)  {
+                if(!response.success)
+                {
+                    var responseErrors = response.errors;
+
+                    $("#validation-errors").append('<div class="alert alert-error"><strong>'+ responseErrors +'</strong><div>');
+
+                    $("#validation-errors").show();
+                } else {
+
+                    $('.upload-mask').hide();
+                    $('.upload-file').hide();
+                    
+                    if (response.filetype=='image'){
+                        $("#liveimg").val(response.src);
+                    }
+
+                    if (response.filetype=='adimg'){
+                        $("#adimg").val(response.src);
+                    }
+
+                }
+            }
+
+        });
+
 
     </script>
 @stop

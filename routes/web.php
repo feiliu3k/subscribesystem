@@ -21,6 +21,7 @@ Route::get('/regsuccess', function () {
 Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
 {
     $router->get('dash', 'DashboardController@index');
+    $router->post('dash/uploadImgFile', ['uses' => 'DashboardController@uploadImgFile', 'as' => 'dash.upload']);
 
     Route::get('reset', 'ManagerController@getReset')->name('admin.reset');
     Route::post('reset', 'ManagerController@postReset');
