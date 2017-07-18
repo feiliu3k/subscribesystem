@@ -51,8 +51,7 @@
     <script src="{{ URL::asset('vendor/select2/js/select2.min.js') }}"></script>
     <script src="{{ URL::asset('vendor/select2/js/i18n/zh-CN.js') }}"></script>
 
-    <script type="text/javascript">
-   
+    <script type="text/javascript">  
 
         try{
             if (editor) {editor.destroy();}
@@ -64,8 +63,6 @@
             });
             editor.render("productexplain");
         }
-
-
 
         $("#product-function").select2({
             tags: true,

@@ -62,6 +62,10 @@ class ProductDetailController extends Controller
 
         $detail = new ProductDetail();
 
+        $detail->ordernum=0;
+        $detail->paynum=0;
+        $detail->maxordernum=1;
+
         return view('admin.productdetail.create',compact('product','detail'));
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+
 use App\Models\Area;
 
 
@@ -60,7 +61,7 @@ class AreaController extends Controller
         $this->validate($request, [
             'areaname' => 'required|unique:areaname|max:255'           
         ]);
-        
+  
         $area = new Area();
         foreach (array_keys($this->fields) as $field) {
             $area->$field = $request->get($field);

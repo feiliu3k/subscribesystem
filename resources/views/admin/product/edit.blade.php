@@ -119,6 +119,6 @@
          $("#product-function").select2({
              tags: true,
          });
-                  
+
     </script>
 @stop

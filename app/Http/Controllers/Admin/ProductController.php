@@ -188,7 +188,7 @@ class ProductController extends Controller
         return view('admin.product.address',compact('product'));     
     }
 
-    public function postProductAddress(Request $request)
+    public function postProductAddress(Request $request, $id)
     {
         $this->validate($request, [            
             'productaddress' => 'required|string|max:255',             
