@@ -15,6 +15,6 @@ class Area extends Model
 
     public function products()
     {
-        return $this->hasMany(product::class);
+        return $this->hasMany(product::class, 'areaname_id');
     }
 }
