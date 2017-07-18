@@ -51,7 +51,7 @@
         </div>
         <div class="panel-body">
             <div id="validation-errors"></div>
-            <form method="POST" action="{{ url('dash/uploadImgFile') }}" id="imgForm" enctype="multipart/form-data">
+            <form method="POST" action="{{ url('admin/dash/uploadImgFile') }}" id="imgForm" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>文件上传</label>
                     <span class="require">(*)</span>
@@ -71,7 +71,7 @@
 	<script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/ueditor.config.js') }}"></script>
     <script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/ueditor.all.js') }}"></script>
     <script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/lang/zh-cn/zh-cn.js') }}"></script>
-	
+	<script src="{{ URL::asset('js/jquery.form.js') }}"></script>
     <script src="{{ URL::asset('vendor/select2/js/select2.min.js') }}"></script>
     <script src="{{ URL::asset('vendor/select2/js/i18n/zh-CN.js') }}"></script>
 
@@ -155,7 +155,7 @@
                     $('.upload-file').hide();
                     
                     if (response.filetype=='image'){
-                        $("#liveimg").val(response.src);
+                        $("#productimg").val(response.src);
                     }
 
                     if (response.filetype=='adimg'){

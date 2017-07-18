@@ -63,6 +63,29 @@
             </div>
         </div>
     </div>
+
+    <div class="upload-mask">
+    </div>
+    <div class="panel panel-info upload-file">
+        <div class="panel-heading">
+            上传文件
+            <span class="close pull-right">关闭</span>
+        </div>
+        <div class="panel-body">
+            <div id="validation-errors"></div>
+            <form method="POST" action="{{ url('admin/dash/uploadImgFile') }}" id="imgForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>文件上传</label>
+                    <span class="require">(*)</span>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input id="thumb" name="file" type="file"  required="required">
+                    <input id="filetype"  type="hidden" name="filetype" value="">
+                </div>
+            </form>
+        </div>
+        <div class="panel-footer">
+        </div>
+    </div>
 </div>
 
 {{-- 确认删除 --}}
@@ -101,7 +124,7 @@
 	<script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/ueditor.config.js') }}"></script>
     <script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/ueditor.all.js') }}"></script>
     <script type="text/javascript" charset="utf-8" src="{{ URL::asset('vendor/ueditor/lang/zh-cn/zh-cn.js') }}"></script>
-	
+	<script src="{{ URL::asset('js/jquery.form.js') }}"></script>	
     <script src="{{ URL::asset('vendor/select2/js/select2.min.js') }}"></script>
     <script src="{{ URL::asset('vendor/select2/js/i18n/zh-CN.js') }}"></script>
 
@@ -149,9 +172,6 @@
                 $('#filetype').attr('value','adimg');
             });
 
-
-
-
             //ajax 上传
             $(document).ready(function() {
                 var options = {
@@ -185,7 +205,7 @@
                     $('.upload-file').hide();
                     
                     if (response.filetype=='image'){
-                        $("#liveimg").val(response.src);
+                        $("#productimg").val(response.src);
                     }
 
                     if (response.filetype=='adimg'){
