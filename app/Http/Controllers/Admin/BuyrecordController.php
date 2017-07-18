@@ -106,6 +106,7 @@ class BuyrecordController extends Controller
 
     public function consumpt(Request $request)
     {
+        $id=$request->buyid;
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
@@ -121,6 +122,7 @@ class BuyrecordController extends Controller
 
     public function overdue(Request $request)
     {
+        $id=$request->buyid;
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
@@ -137,6 +139,7 @@ class BuyrecordController extends Controller
 
     public function cancel(Request $request)
     {
+        $id=$request->buyid;
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
         if (Auth::user()->managername<>config('subscribesystem.admin')){

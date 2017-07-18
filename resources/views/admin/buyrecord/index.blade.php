@@ -55,12 +55,11 @@
                                 <button type="button" class="btn btn-success btn-xs" data-buyid="{{ $buyrecord->id }}"  data-buytoken="{{ $buyrecord->buytoken }}" 
                                 data-toggle="modal" data-target="#modal-consumpt"  @if ($buyrecord->consumptionflag==1) disabled="disabled" @endif>
                                     <i class="fa fa-edit"></i>确认
-                                </button>                                
+                                </button>
                                 <button type="button" class="btn btn-warning btn-xs" data-buyid="{{ $buyrecord->id }}"  data-buytoken="{{ $buyrecord->buytoken }}" 
                                 data-toggle="modal" data-target="#modal-overdue" @if ($buyrecord->overdueflag==1) disabled="disabled" @endif>
                                     <i class="fa fa-edit"></i>过期
                                 </button>
-                                
                             </td>
                         </tr>
                     @endforeach
@@ -268,6 +267,7 @@
                 modal.find('input[name*="buyid"]').val(buyid)
                 modal.find('input[name*="buytoken"]').val(buytoken)
             });
+            
         });
     </script>
 @stop
