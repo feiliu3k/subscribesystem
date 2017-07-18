@@ -11,12 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/regsuccess', function () {
-    return view('reg');
-});
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/regsuccess','HomeController@regsuccess')->name('regsuccess');
 
 Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
 {
