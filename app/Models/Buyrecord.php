@@ -15,7 +15,7 @@ class Buyrecord extends Model
 
     public function company()
     {
-        return $this->belongsTo(company::class,'company_id');
+        return $this->belongsTo(Company::class,'company_id');
     }
 
     public function product()
