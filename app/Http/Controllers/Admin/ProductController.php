@@ -138,7 +138,7 @@ class ProductController extends Controller
         }
         $product = $product->where('id', $id)
                             ->first();
-
+        $address = $product->address;
         $product->productname=$request->productname;
         $product->productimg=$request->productimg;
         $product->areaname_id=$request->area_id;
@@ -148,8 +148,10 @@ class ProductController extends Controller
         $product->company_id= Auth::user()->company_id;
         $product->functions()->detach();
         $product->functions()->attach($request->productFunction_ids);
-        $product->save();    
+        $product->save();
         
+        $address->productaddress = $request->productAddress;
+        $address.save();
         return redirect("/admin/product/$id/edit")
                         ->withSuccess("场地 '$product->productname' 更新成功.");
     }

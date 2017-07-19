@@ -49,10 +49,10 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         
-        $this->validate($request, [            
+        $this->validate($request, [
             'customername' => 'required|string|max:255',
             'customeraccount' => 'required|string|max:255|unique:customer',
-            'newpassword' => 'required|string|min:6|confirmed',                  
+            'newpassword' => 'required|string|min:6|confirmed',
         ]);
         if ($request->newpassword==$request->newpassword_confirmation){
             $customer = new Customer();
@@ -61,10 +61,10 @@ class CustomerController extends Controller
             $customer->email=$request->email;
             $customer->sex= $request->sex;
             $customer->cellphone= $request->cellphone;
-            $customer->IDCard= $request->IDCard;            
+            $customer->IDCard= $request->IDCard;
             $customer->credit= $request->credit;
             $customer->password= bcrypt($request->newpassword);
-            $customer->save();            
+            $customer->save();
             return redirect('/admin/customer')
                             ->withSuccess("客户 '$customer->customername' 新建成功.");
         }else{

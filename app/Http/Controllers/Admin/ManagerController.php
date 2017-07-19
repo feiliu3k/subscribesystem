@@ -151,8 +151,7 @@ class ManagerController extends Controller
         $manager->IDCard= $request->IDCard;
         $manager->application_note= $request->application_note;
         $manager->verifyflag= $request->verifyflag;
-        $manager->password= bcrypt($request->newpassword);
-        $manager->save();        
+        $manager->save();
 
         return redirect("/admin/manager/$id/edit")
                         ->withSuccess("用户 '$manager->managername' 更新成功.");
