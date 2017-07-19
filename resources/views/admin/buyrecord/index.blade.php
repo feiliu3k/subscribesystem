@@ -26,7 +26,8 @@
                 <table id="buyrecords-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>                           
-                            <th>客户账号</th> 
+                            <th>客户账号</th>
+                            <th>单位</th> 
                             <th>{{ config('subscribesystem.product') }}名称</th>
                             <th>预定日期</th>
                             <th>开始时间</th> 
@@ -41,6 +42,7 @@
                     @foreach ($buyrecords as $buyrecord)
                         <tr>                                                       
                             <td>{{ $buyrecord->customer->customeraccount }}</td>
+                            <td>{{ $buyrecord->product->company->companyname }}</td>
                             <td>{{ $buyrecord->product->productname }}</td>
                             <td>{{ $buyrecord->detail->usedate }}</td>
                             <td>{{ $buyrecord->detail->usebegintime }}</td>                            

@@ -1,5 +1,5 @@
 <ul class="nav navbar-nav">
-    <li><a href="{{ url('/') }}">首页</a></li>
+    <li><a href="{{ url('/admin/dash') }}">首页</a></li>
     @if (Auth::check())
         @can('list-product')
             <li @if (Request::is('admin/product*')) class="active" @endif>
@@ -33,7 +33,7 @@
                 <li><a href="{{ url('admin/productFunction') }}">功能</a></li>
                 <li><a href="{{ url('admin/customer') }}">客户</a></li>
                 <li><a href="{{ url('admin/log/manager') }}">日志</a></li>
-                <hr>
+                
                 <li><a href="{{ url('admin/manager') }}">管理员</a></li>
                 <li><a href="{{ url('admin/role') }}">角色</a></li>
                 <li><a href="{{ url('admin/permission') }}">权限</a></li>

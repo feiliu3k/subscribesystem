@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/', 'Admin\DashController@index')->name('dash');
 Route::get('/regsuccess','HomeController@regsuccess')->name('regsuccess');
 
 Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
@@ -61,7 +61,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::get('log/manager', ['uses' => 'LogController@manager','as' => 'log.manager.index']);
     Route::get('log/customer', ['uses' => 'LogController@customer','as' => 'log.customer.index']);
 });
-
+// Login Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
