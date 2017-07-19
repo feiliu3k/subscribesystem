@@ -58,7 +58,7 @@ class ProductController extends Controller
         $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
         $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
         $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
-        $product = new Product();
+        $product = new Product();        
         return view('admin.product.create',compact('product','areas', 'productTypes', 'productFunctions'));
     }
 
@@ -109,7 +109,7 @@ class ProductController extends Controller
         }
         $product = $product->where('id', $id)
                             ->first();
-
+        
         $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
         $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
         $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();

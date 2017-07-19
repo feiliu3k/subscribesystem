@@ -16,7 +16,7 @@ class ProductAddress extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class,'productifo_id','productifo_id');
+        return $this->belongsTo(Product::class,'productifo_id','id');
     }
   
 }
