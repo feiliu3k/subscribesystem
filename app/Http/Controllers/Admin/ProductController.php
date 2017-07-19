@@ -59,7 +59,8 @@ class ProductController extends Controller
         $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
         $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
         $product = new Product();
-        return view('admin.product.create',compact('product','areas', 'productTypes', 'productFunctions'));
+        $address = new ProductAddress();
+        return view('admin.product.create',compact('product','areas', 'productTypes', 'productFunctions', 'address'));
     }
 
     /**
@@ -109,12 +110,13 @@ class ProductController extends Controller
         }
         $product = $product->where('id', $id)
                             ->first();
+        $address = $product->address;
 
         $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
         $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
         $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
 
-        return view('admin.product.edit', compact('product','areas', 'productTypes', 'productFunctions'));
+        return view('admin.product.edit', compact('product','areas', 'productTypes', 'productFunctions', 'address'));
     }
 
 

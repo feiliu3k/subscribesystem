@@ -91,7 +91,7 @@
         </label>
         <div class="col-md-8">
             @if ($product->productAddress)
-                <input type="text" class="form-control" id="productAddress" name="productAddress" value="{{ $product->productAddress->productaddress }}">
+                <input type="text" class="form-control" id="productAddress" name="productAddress" value="{{ $address->productaddress }}">
             @else
                 <input type="text" class="form-control" id="productAddress" name="productAddress">
             @endif
