@@ -58,10 +58,10 @@
     </label>
     <div class="col-md-8"> 
         <label class="radio-inline">
-            <input type="radio" name="sex" id="frmale" value="1" @if ($customer->sex==1) checked="checked" @endif > 女
+            <input type="radio" name="sex" id="frmale" value="1" @if ($customer->sex==1) checked="checked" @endif > 男
         </label>
         <label class="radio-inline">
-            <input type="radio" name="sex" id="male" value="2"  @if ($customer->sex==2) checked="checked" @endif> 男
+            <input type="radio" name="sex" id="male" value="2"  @if ($customer->sex==2) checked="checked" @endif> 女
         </label>
     </div>
 </div>

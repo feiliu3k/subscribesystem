@@ -111,9 +111,16 @@ class BuyrecordController extends Controller
                                 ->where('id',$id); 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
-        }      
-        $buyrecord =$buyrecord->first(); 
-        $buyrecord->consumptionflag=1;
+        }
+        $buyrecord =$buyrecord->first();
+        if ($buyrecord->consumptionflag){
+            $buyrecord->consumptionflag=0;
+            $customer->credit=$customer->credit-300;
+        }
+        else{
+            $buyrecord->consumptionflag=1;
+            $customer->credit=$customer->credit+300;
+        }
         $buyrecord->save();
 
         return redirect('/admin/buyrecord')
@@ -128,8 +135,17 @@ class BuyrecordController extends Controller
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
         }      
-        $buyrecord =$buyrecord->first(); 
-        $buyrecord->overdueflag=1;
+        $buyrecord = $buyrecord->first();
+        $customer = $buyrecord->customer;
+        if ($buyrecord->overdueflag){
+            $buyrecord->overdueflag=0;
+            $customer->credit=$customer->credit-300;
+        }
+        else{
+            $buyrecord->overdueflag=1;
+            $customer->credit=$customer->credit+300;
+        }
+        
         $buyrecord->save();
 
         return redirect('/admin/buyrecord')
