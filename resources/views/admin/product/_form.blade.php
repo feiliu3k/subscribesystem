@@ -90,11 +90,7 @@
             地址
         </label>
         <div class="col-md-8">
-            @if ($product->productAddress)
-                <input type="text" class="form-control" id="productAddress" name="productAddress" value="{{ $address->productaddress }}">
-            @else
-                <input type="text" class="form-control" id="productAddress" name="productAddress">
-            @endif
+            <input type="text" class="form-control" id="productAddress" name="productAddress" value="{{ $product->address->productaddress }}">
         </div>
     </div>
     <div class="form-group">
