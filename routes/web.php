@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'Admin\DashController@index')->name('dash');
+Route::get('/', 'Admin\DashboardController@index')->name('dash');
 Route::get('/regsuccess','HomeController@regsuccess')->name('regsuccess');
 
 Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
