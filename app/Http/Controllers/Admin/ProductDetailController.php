@@ -153,7 +153,7 @@ class ProductDetailController extends Controller
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
         
-        if ($detail->buyrecords->isEmpty()){
+        if (!$detail->buyrecords->isEmpty()){
             return back()->withErrors("已有预订，场地细节不能修改.");
         }
 
