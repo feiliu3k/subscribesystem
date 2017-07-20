@@ -94,6 +94,7 @@
             <input type="text" class="form-control" id="productAddress" name="productAddress" value="{{ $product->address->productaddress }}">
         @else
             <input type="text" class="form-control" id="productAddress" name="productAddress">
+        @endif
         </div>
     </div>
     <div class="form-group">
