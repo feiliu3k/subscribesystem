@@ -136,7 +136,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [            
+        $this->validate($request, [
             'productname' => 'required|string|max:255',
             'productFunction_ids' =>'required'
         ]);
@@ -151,19 +151,23 @@ class ProductController extends Controller
         $product = $product->where('id', $id)
                             ->first();
         $address = $product->address;
+       
         $product->productname=$request->productname;
         $product->productimg=$request->productimg;
         $product->areaname_id=$request->area_id;
         $product->producttype_id= $request->producttype_id;
         $product->productexplain= $request->productexplain;
         $product->manager_id= Auth::user()->id;
-        $product->company_id= Auth::user()->company_id;
         $product->functions()->detach();
         $product->functions()->attach($request->productFunction_ids);
         $product->save();
+        if (!$address){
+            $address = new ProductAddress();
+        }
         
         $address->productaddress = $request->productAddress;
-        $address.save();
+        
+        $product->address()->save($address);
         return redirect("/admin/product/$id/edit")
                         ->withSuccess("场地 '$product->productname' 更新成功.");
     }
