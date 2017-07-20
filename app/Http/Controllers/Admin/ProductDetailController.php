@@ -152,8 +152,8 @@ class ProductDetailController extends Controller
         $detail = ProductDetail::where('delflag',0)
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
-
-        if ($detail->buyrecords){
+        
+        if ($detail->buyrecords->isEmpty()){
             return back()->withErrors("已有预订，场地细节不能修改.");
         }
 
@@ -166,7 +166,7 @@ class ProductDetailController extends Controller
         $detail->ordernum = $request->ordernum;
         $detail->paynum = $request->paynum;
         $detail->maxordernum = $request->maxordernum;
-        $detail->save();    
+        $detail->save();
         
         return redirect("/admin/product/$product->id/detail/$detail->id/edit")
                         ->withSuccess("场地细节 '$product->productname' 更新成功.");
