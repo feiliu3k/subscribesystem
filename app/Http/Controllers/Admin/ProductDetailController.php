@@ -30,7 +30,8 @@ class ProductDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id){
+    public function index($id)
+    {
 
         $product = Product::where('delflag', 0);
         if (Auth::user()->managername<>config('subscribesystem.admin')){
@@ -53,6 +54,9 @@ class ProductDetailController extends Controller
      */
     public function create($id)
     {
+        if (Gate::denies('create-detail')) {
+            abort(403,'你无权进行此操作！');
+        }
         $product = Product::where('delflag', 0);
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
@@ -77,6 +81,9 @@ class ProductDetailController extends Controller
      */
     public function store(Request $request, $id)
     {
+        if (Gate::denies('create-detail')) {
+            abort(403,'你无权进行此操作！');
+        }        
         $this->validate($request, [
             'usedate' => 'required|string|max:255',
         ]);
@@ -113,7 +120,7 @@ class ProductDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id, $did)
-    {             
+    {
         $product = Product::where('delflag', 0);
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
@@ -124,6 +131,10 @@ class ProductDetailController extends Controller
         $detail = ProductDetail::where('delflag',0)
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
+
+        if (Gate::denies('modify-detail',$detail)) {
+            abort(403,'你无权进行此操作！');
+        }                     
 
         return view('admin.productdetail.edit', compact('product', 'detail'));
     }
@@ -152,7 +163,9 @@ class ProductDetailController extends Controller
         $detail = ProductDetail::where('delflag',0)
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
-
+        if (Gate::denies('modify-detail',$detail)) {
+            abort(403,'你无权进行此操作！');
+        }
         if ($detail->buyrecords){
             return back()->withErrors("已有预订，场地细节不能修改.");
         }
@@ -183,6 +196,9 @@ class ProductDetailController extends Controller
         $detail = ProductDetail::where('delflag',0)                                
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
+        if (Gate::denies('delete-detail',$detail)) {
+            abort(403,'你无权进行此操作！');
+        }
         $detail->delflag=1;
         $detail->save();
 
@@ -192,6 +208,9 @@ class ProductDetailController extends Controller
 
     public function search(Request $request, $id)
     {   
+        if (Gate::denies('list-detail')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [
             'usebegindate' => 'required|string|max:255',
             'useenddate' => 'required|string|max:255',            

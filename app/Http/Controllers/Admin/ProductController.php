@@ -55,6 +55,9 @@ class ProductController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('create-product')) {
+            abort(403,'你无权进行此操作！');
+        }
         $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
         $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
         $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
@@ -70,6 +73,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create-product')) {
+            abort(403,'你无权进行此操作！');
+        } 
         $this->validate($request, [            
             'productname' => 'required|string|max:255',
             'productFunction_ids' =>'required'
@@ -102,8 +108,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {                     
+    {
         $product = Product::where('delflag', 0);
+        if (Gate::denies('modify-product', $product)) {
+            abort(403,'你无权进行此操作！');
+        }                             
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
         }
@@ -133,6 +142,9 @@ class ProductController extends Controller
         ]);
 
         $product = Product::where('delflag', 0);
+        if (Gate::denies('modify-product', $product)) {
+            abort(403,'你无权进行此操作！');
+        } 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
         }
@@ -165,6 +177,9 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::where('delflag', 0);
+        if (Gate::denies('delete-product', $product)) {
+            abort(403,'你无权进行此操作！');
+        } 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
         }
@@ -222,6 +237,9 @@ class ProductController extends Controller
     {
      
         $product = Product::where('delflag', 0);
+        if (Gate::denies('delete-product', $product)) {
+            abort(403,'你无权进行此操作！');
+        } 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
         }
@@ -243,6 +261,9 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
+        if (Gate::denies('list-product')) {
+            abort(403,'你无权进行此操作！');
+        } 
         $searchCondition=$this->_searchCondition;
 
         foreach (array_keys($this->_searchCondition) as $field) {

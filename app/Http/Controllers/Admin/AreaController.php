@@ -42,6 +42,9 @@ class AreaController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('create-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $data = [];
         foreach ($this->fields as $field => $default) {
             $data[$field] = old($field, $default);
@@ -58,6 +61,9 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [
             'areaname' => 'required|unique:areaname|max:255'           
         ]);
@@ -82,6 +88,9 @@ class AreaController extends Controller
      */
     public function edit($id)
     {
+        if (Gate::denies('modify-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $area = Area::findOrFail($id);
        
         $data = ['id' => $id];
@@ -101,6 +110,9 @@ class AreaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [
             'areaname' => 'required|unique:areaname|max:255'           
         ]);
@@ -124,6 +136,9 @@ class AreaController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $area = Area::findOrFail($id);
         $area->delflag=1;
         $area->save();

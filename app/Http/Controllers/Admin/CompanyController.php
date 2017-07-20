@@ -36,6 +36,9 @@ class CompanyController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('create-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $data = [];
         foreach ($this->fields as $field => $default) {
             $data[$field] = old($field, $default);
@@ -52,6 +55,9 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [
             'companyname' => 'required|unique:company|max:255'           
         ]);
@@ -76,6 +82,9 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
+        if (Gate::denies('modify-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $company = Company::findOrFail($id);
         $data = ['id' => $id];
         foreach (array_keys($this->fields) as $field) {
@@ -94,6 +103,9 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [
             'companyname' => 'required|unique:company|max:255'           
         ]);
@@ -117,6 +129,9 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $company = Company::findOrFail($id);
         $company->delete();
 
