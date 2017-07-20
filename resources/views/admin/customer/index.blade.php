@@ -47,9 +47,9 @@
                                 @if ($customer->sex==0)
                                     未知
                                 @elseif ($customer->sex==1)
-                                    女
-                                @else
                                     男
+                                @else
+                                    女
                                 @endif                            
                             <td>
                                 <a href="{{ route('customer.edit', $customer->id) }}" class="btn btn-xs btn-info">
