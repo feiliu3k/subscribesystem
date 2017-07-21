@@ -16,7 +16,7 @@ class ProductDetail extends Model
 
     public function product()
     {
-        return $this->belongsTo(product::class,'productifo_id');
+        return $this->belongsTo(Product::class,'productifo_id');
     }
 
     public function buyrecords()

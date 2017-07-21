@@ -40,7 +40,7 @@
                             <th>总数量</th>
                             <th>已预定数量</th>
                             <th>已消费数量</th>
-                            <th>可已预定最大数量</th>    
+                            <th>可预定最大数量</th>    
                             <th data-sortable="false">操作</th>
                         </tr>
                      </thead>

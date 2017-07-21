@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 use App\Models\Product;
 use App\Models\ProductDetail;
@@ -161,13 +162,14 @@ class ProductDetailController extends Controller
         $product = $product->where('id', $id)
                             ->first();
 
+        
         $detail = ProductDetail::where('delflag',0)
                                 ->where('id', $did)
                                 ->orderBy('id','desc')->first();
 
         if (Gate::denies('modify-detail',$detail)) {
             abort(403,'你无权进行此操作！');
-        }    
+        }
         if (!$detail->buyrecords->isEmpty()){
             return back()->withErrors("已有预订，场地细节不能修改.");
         }
@@ -200,6 +202,9 @@ class ProductDetailController extends Controller
                                 ->orderBy('id','desc')->first();
         if (Gate::denies('delete-detail',$detail)) {
             abort(403,'你无权进行此操作！');
+        }
+        if (!$detail->buyrecords->isEmpty()){
+            return back()->withErrors("已有预订，场地细节不能删除.");
         }
         $detail->delflag=1;
         $detail->save();

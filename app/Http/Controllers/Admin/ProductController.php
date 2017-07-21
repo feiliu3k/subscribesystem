@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 use Auth;
 
@@ -110,14 +111,15 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::where('delflag', 0);
-        if (Gate::denies('modify-product', $product)) {
-            abort(403,'你无权进行此操作！');
-        }                             
+       
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
         }
         $product = $product->where('id', $id)
                             ->first();
+        if (Gate::denies('modify-product', $product)) {
+            abort(403,'你无权进行此操作！');
+        }                             
         
         $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
         $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
@@ -142,14 +144,16 @@ class ProductController extends Controller
         ]);
 
         $product = Product::where('delflag', 0);
-        if (Gate::denies('modify-product', $product)) {
-            abort(403,'你无权进行此操作！');
-        } 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
         }
         $product = $product->where('id', $id)
                             ->first();
+
+        if (Gate::denies('modify-product', $product)) {
+            abort(403,'你无权进行此操作！');
+        }
+
         $address = $product->address;
        
         $product->productname=$request->productname;
@@ -181,15 +185,15 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::where('delflag', 0);
-        if (Gate::denies('delete-product', $product)) {
-            abort(403,'你无权进行此操作！');
-        } 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
         }
         $product = $product->where('id', $id)
                             ->first();
 
+        if (Gate::denies('delete-product', $product)) {
+            abort(403,'你无权进行此操作！');
+        } 
         $product->delflag=1;
         $product->save();
 
@@ -241,15 +245,15 @@ class ProductController extends Controller
     {
      
         $product = Product::where('delflag', 0);
-        if (Gate::denies('delete-product', $product)) {
-            abort(403,'你无权进行此操作！');
-        } 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
         }
         $product = $product->where('id', $id)
                             ->first();
 
+        if (Gate::denies('delete-product', $product)) {
+            abort(403,'你无权进行此操作！');
+        } 
         $address=$product->address;
         if ($address) 
         {

@@ -49,8 +49,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('delete-detail', function ($user, $detail) {
             return $user->hasPermission('is-admin') || ($user->hasPermission('delete-detail') && $user->owns($detail->product));
         });
-        Gate::define('modify-detail', function ($user) {
-            return $user->hasPermission('is-admin') || ($user->hasPermission('modify-detail', $detail) && $user->owns($detail->product));
+        Gate::define('modify-detail', function ($user, $detail) {
+            return $user->hasPermission('is-admin') || ($user->hasPermission('modify-detail') && $user->owns($detail->product));
         });
         //订单权限
         Gate::define('list-buyrecord', function ($user) {

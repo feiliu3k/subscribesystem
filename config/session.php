@@ -122,7 +122,7 @@ return [
     |
     */
 
-    'cookie' => 'laravel_session',
+    'cookie' => 'subscribesystem_backend_session',
 
     /*
     |--------------------------------------------------------------------------

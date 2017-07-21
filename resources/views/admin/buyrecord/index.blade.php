@@ -56,11 +56,21 @@
                                 </a>
                                 <button type="button" class="btn btn-success btn-xs" data-buyid="{{ $buyrecord->id }}"  data-buytoken="{{ $buyrecord->buytoken }}" 
                                 data-toggle="modal" data-target="#modal-consumpt">
-                                    <i class="fa fa-edit"></i>确认
+                                    <i class="fa fa-edit"></i>
+                                    @if ($buyrecord->consumptionflag)
+                                        取消确认
+                                    @else
+                                        确认
+                                    @endif
                                 </button>
                                 <button type="button" class="btn btn-warning btn-xs" data-buyid="{{ $buyrecord->id }}"  data-buytoken="{{ $buyrecord->buytoken }}" 
                                 data-toggle="modal" data-target="#modal-overdue">
-                                    <i class="fa fa-edit"></i>过期
+                                    <i class="fa fa-edit"></i>
+                                    @if ($buyrecord->overdueflag)
+                                        取消过期
+                                    @else
+                                        过期
+                                    @endif
                                 </button>
                             </td>
                         </tr>
