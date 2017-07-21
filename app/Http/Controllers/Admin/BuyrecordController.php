@@ -129,13 +129,14 @@ class BuyrecordController extends Controller
         } 
         $customer = $buyrecord->customer;
         if ($buyrecord->consumptionflag){
-            $buyrecord->consumptionflag=0;            
+            $buyrecord->consumptionflag=0;
             $customer->credit=$customer->credit-300;
         }
         else{
-            $buyrecord->consumptionflag=1;           
+            $buyrecord->consumptionflag=1;
             $customer->credit=$customer->credit+300;
         }
+        $customer->save();
         $buyrecord->save();
 
         return redirect('/admin/buyrecord')
@@ -156,12 +157,11 @@ class BuyrecordController extends Controller
         } 
         $customer = $buyrecord->customer;
         if ($buyrecord->overdueflag){
-            $buyrecord->overdueflag=0;            
-            $customer->credit=$customer->credit+300;
+            $buyrecord->overdueflag=0;
+            
         }
         else{
-            $buyrecord->overdueflag=1;            
-            $customer->credit=$customer->credit-300;
+            $buyrecord->overdueflag=1;
         }
         
         $buyrecord->save();
