@@ -128,7 +128,8 @@ class BuyrecordController extends Controller
             abort(403,'你无权进行此操作！');
         } 
         $customer = $buyrecord->customer;
-        $detail = $buyrecord->deatail;
+        $detail = $buyrecord->detail;
+        
         if ($buyrecord->consumptionflag){
             $buyrecord->consumptionflag=0;
             $customer->credit=$customer->credit-300;
