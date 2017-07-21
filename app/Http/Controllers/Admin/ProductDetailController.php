@@ -42,6 +42,7 @@ class ProductDetailController extends Controller
 
         $details = ProductDetail::where('productifo_id',$id)
                                 ->where('delflag',0)
+                                ->orderBy('productifo_id','desc')
                                 ->orderBy('id','desc')
                                 ->paginate(config('subscribesystem.per_page'));
                                 
