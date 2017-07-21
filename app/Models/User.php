@@ -61,4 +61,5 @@ class User extends Authenticatable
     public function owns($product) {
         return $this->company_id == $product->company_id;
     }
+   
 }

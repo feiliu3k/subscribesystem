@@ -46,20 +46,22 @@ class BuyrecordController extends Controller
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
 
-        if (Gate::denies('modify-buyrecord',$buyrecord)) {
-            abort(403,'你无权进行此操作！');
-        } 
 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
         }      
-        $buyrecord =$buyrecord->first();   
+        $buyrecord =$buyrecord->first();
+
+        if (Gate::denies('modify-buyrecord',$buyrecord)) {
+            abort(403,'你无权进行此操作！');
+        }
+
         return view('admin.buyrecord.edit', compact('buyrecord'));
     }
 
     public function search(Request $request)
     {
-         if (Gate::denies('list-buyrecord')) {
+        if (Gate::denies('list-buyrecord')) {
             abort(403,'你无权进行此操作！');
         } 
         $this->validate($request, [
@@ -118,13 +120,13 @@ class BuyrecordController extends Controller
         $id=$request->buyid;
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
-        if (Gate::denies('modify-buyrecord',$buyrecord)) {
-            abort(403,'你无权进行此操作！');
-        } 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
         }
         $buyrecord =$buyrecord->first();
+        if (Gate::denies('modify-buyrecord',$buyrecord)) {
+            abort(403,'你无权进行此操作！');
+        } 
         $customer = $buyrecord->customer;
         if ($buyrecord->consumptionflag){
             $buyrecord->consumptionflag=0;
@@ -147,13 +149,13 @@ class BuyrecordController extends Controller
         $id=$request->buyid;
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id);
-        if (Gate::denies('modify-buyrecord',$buyrecord)) {
-            abort(403,'你无权进行此操作！');
-        } 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
         }      
         $buyrecord = $buyrecord->first();
+        if (Gate::denies('modify-buyrecord',$buyrecord)) {
+            abort(403,'你无权进行此操作！');
+        } 
         $customer = $buyrecord->customer;
         if ($buyrecord->overdueflag){
             $buyrecord->overdueflag=0;
@@ -178,13 +180,13 @@ class BuyrecordController extends Controller
         $id=$request->buyid;
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id);
-        if (Gate::denies('modify-buyrecord',$buyrecord)) {
-            abort(403,'你无权进行此操作！');
-        }                                  
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
         }      
         $buyrecord =$buyrecord->first(); 
+        if (Gate::denies('modify-buyrecord',$buyrecord)) {
+            abort(403,'你无权进行此操作！');
+        }                                  
         $buyrecord->cancelflag=1;
         $buyrecord->save();
 
