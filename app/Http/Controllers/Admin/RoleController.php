@@ -37,7 +37,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        if (Gate::denies('create-permission')) {
+        if (Gate::denies('create-role')) {
             abort(403,'你无权进行此操作！');
         }
         $role=new Role();
@@ -52,7 +52,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::denies('create-permission')) {
+        if (Gate::denies('create-role')) {
             abort(403,'你无权进行此操作！');
         }
         $this->validate($request, [
@@ -80,7 +80,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        if (Gate::denies('modify-permission')) {
+        if (Gate::denies('modify-role')) {
             abort(403,'你无权进行此操作！');
         }
         $role = Role::findOrFail($id);
@@ -96,7 +96,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Gate::denies('modify-permission')) {
+        if (Gate::denies('modify-role')) {
             abort(403,'你无权进行此操作！');
         }
         $this->validate($request, [            
@@ -123,7 +123,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::denies('delete-permission')) {
+        if (Gate::denies('delete-role')) {
             abort(403,'你无权进行此操作！');
         }
         $role = Role::findOrFail($id);
@@ -142,7 +142,7 @@ class RoleController extends Controller
      */
     public function editPermission($id)
     {
-        if (Gate::denies('modify-permission')) {
+        if (Gate::denies('modify-role')) {
             abort(403,'你无权进行此操作！');
         }
         $role = Role::findOrFail($id);
@@ -161,7 +161,7 @@ class RoleController extends Controller
 
     public function updatePermission(Request $request,$id)
     {
-        if (Gate::denies('modify-permission')) {
+        if (Gate::denies('modify-role')) {
             abort(403,'你无权进行此操作！');
         }
         $role = Role::findOrFail($id);
