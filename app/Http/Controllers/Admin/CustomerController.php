@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 use Validator, Auth, Redirect;
 
@@ -35,7 +36,10 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
+    {   
+        if (Gate::denies('create-customer')) {
+            abort(403,'你无权进行此操作！');
+        }     
         $customer=new Customer();
         return view('admin.customer.create',compact('customer'));
     }
@@ -48,6 +52,9 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create-customer')) {
+            abort(403,'你无权进行此操作！');
+        }
         
         $this->validate($request, [
             'customername' => 'required|string|max:255',
@@ -82,6 +89,9 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {   
+        if (Gate::denies('modify-customer')) {
+            abort(403,'你无权进行此操作！');
+        }        
         $customer = Customer::findOrFail($id);
         return view('admin.customer.edit', compact('customer'));
     }
@@ -96,6 +106,9 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-customer')) {
+            abort(403,'你无权进行此操作！');
+        } 
         $this->validate($request, [            
             'customername' => 'required|string|max:255',                              
         ]);
@@ -121,6 +134,10 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-customer')) {
+            abort(403,'你无权进行此操作！');
+        } 
+        
         $customer = Customer::findOrFail($id);
         $customer->delflag=1;
         $customer->save();

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Support\Facades\Gate;
+
 use App\Models\Role;
 use App\Models\Permission;
 
@@ -37,6 +37,9 @@ class RoleController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('create-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $role=new Role();
         return view('admin.role.create',compact('role'));
     }
@@ -49,6 +52,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [
             'rolename' => 'required|string|max:255|unique:role',
             'rolelabel' => 'required|string|max:255',                        
@@ -74,6 +80,9 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        if (Gate::denies('modify-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $role = Role::findOrFail($id);
         return view('admin.role.edit', compact('role'));
     }
@@ -87,6 +96,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [            
             'rolelabel' => 'required|string|max:255',                        
         ]);
@@ -111,6 +123,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $role = Role::findOrFail($id);
         $role->delflag=1;
         $role->save();
@@ -127,6 +142,9 @@ class RoleController extends Controller
      */
     public function editPermission($id)
     {
+        if (Gate::denies('modify-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $role = Role::findOrFail($id);
         $rp=$role->permissions;
         $rolePermissions=array();
@@ -143,6 +161,9 @@ class RoleController extends Controller
 
     public function updatePermission(Request $request,$id)
     {
+        if (Gate::denies('modify-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $role = Role::findOrFail($id);
         $permissionids=$request->permissions;
         $count=0;

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Permission;
+use Illuminate\Support\Facades\Gate;
 
 class PermissionController extends Controller
 {
@@ -34,6 +35,9 @@ class PermissionController extends Controller
     public function create()
     {
         $permission=new Permission();
+        if (Gate::denies('create-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         return view('admin.permission.create',compact('permission'));
     }
 
@@ -45,7 +49,9 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
- 
+        if (Gate::denies('create-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [            
             'permissionlabel' => 'required|string|max:255',
             'permissionname' => 'required|string|max:255|unique:permission',                       
@@ -69,7 +75,10 @@ class PermissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {   
+        if (Gate::denies('modify-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $permission = Permission::findOrFail($id);
         return view('admin.permission.edit', compact('permission'));
     }
@@ -83,6 +92,9 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [            
             'permissionlabel' => 'required|string|max:255',                                  
         ]);
@@ -104,6 +116,9 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-permission')) {
+            abort(403,'你无权进行此操作！');
+        }
         $permission = Permission::findOrFail($id);
         $permission->delflag=1;
         $permission->save();

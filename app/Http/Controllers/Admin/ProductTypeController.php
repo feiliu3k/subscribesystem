@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+
 use App\Models\ProductType;
 
 class ProductTypeController extends Controller
@@ -37,6 +39,9 @@ class ProductTypeController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('create-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $data = [];
         foreach ($this->fields as $field => $default) {
             $data[$field] = old($field, $default);
@@ -53,6 +58,9 @@ class ProductTypeController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [
             'typename' => 'required|string|max:255|unique:producttype',                       
         ]);
@@ -77,6 +85,9 @@ class ProductTypeController extends Controller
      */
     public function edit($id)
     {
+        if (Gate::denies('modify-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $productType = ProductType::findOrFail($id);
         $data = ['id' => $id];
         foreach (array_keys($this->fields) as $field) {
@@ -95,6 +106,9 @@ class ProductTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [
             'typename' => 'required|string|max:255|unique:producttype',                       
         ]);
@@ -118,6 +132,9 @@ class ProductTypeController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-meta')) {
+            abort(403,'你无权进行此操作！');
+        }
         $productType = ProductType::findOrFail($id);
         $productType->delflag=1;
         $productType->save();

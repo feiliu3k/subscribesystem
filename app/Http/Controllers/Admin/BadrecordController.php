@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 use App\Models\Badrecord;
 use App\Models\Customer;
@@ -42,6 +43,9 @@ class BadrecordController extends Controller
 
     public function edit($id)
     {   
+        if (Gate::denies('create-badrecord')) {
+            abort(403,'你无权进行此操作！');
+        }
         $badrecord = Badrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
@@ -54,6 +58,9 @@ class BadrecordController extends Controller
 
     public function search(Request $request)
     {
+        if (Gate::denies('create-badrecord')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [
             'usebegindate' => 'required|string|max:255',
             'useenddate' => 'required|string|max:255',            

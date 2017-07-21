@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 use Validator, Auth, Redirect;
 
@@ -76,6 +77,9 @@ class ManagerController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('create-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
         $companies=Company::all();
         $manager=new User();
         return view('admin.manager.create',compact('manager','companies'));
@@ -89,6 +93,9 @@ class ManagerController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [            
             'managername' => 'required|string|max:255',
             'manageraccount' => 'required|string|max:255|unique:manager',
@@ -124,6 +131,9 @@ class ManagerController extends Controller
      */
     public function edit($id)
     {   
+        if (Gate::denies('modify-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
         $companies=Company::all();       
         $manager = User::findOrFail($id);
         return view('admin.manager.edit', compact('manager','companies'));
@@ -139,6 +149,9 @@ class ManagerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Gate::denies('modify-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
         $this->validate($request, [            
             'managername' => 'required|string|max:255',
             'manageraccount' => 'required|string|max:255'                   
@@ -165,6 +178,9 @@ class ManagerController extends Controller
      */
     public function destroy($id)
     {
+        if (Gate::denies('delete-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
         $manager = User::findOrFail($id);
         $manager->delflag=1;
         $manager->save();

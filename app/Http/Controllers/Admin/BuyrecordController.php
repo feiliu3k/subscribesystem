@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 use App\Models\Buyrecord;
 use App\Models\Customer;
@@ -41,9 +42,14 @@ class BuyrecordController extends Controller
     }
 
     public function edit($id)
-    {             
+    {
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
+
+        if (Gate::denies('modify-buyrecord',$buyrecord)) {
+            abort(403,'你无权进行此操作！');
+        } 
+
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
         }      
@@ -53,6 +59,9 @@ class BuyrecordController extends Controller
 
     public function search(Request $request)
     {
+         if (Gate::denies('list-buyrecord')) {
+            abort(403,'你无权进行此操作！');
+        } 
         $this->validate($request, [
             'usebegindate' => 'required|string|max:255',
             'useenddate' => 'required|string|max:255',            
@@ -109,6 +118,9 @@ class BuyrecordController extends Controller
         $id=$request->buyid;
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
                                 ->where('id',$id); 
+        if (Gate::denies('modify-buyrecord',$buyrecord)) {
+            abort(403,'你无权进行此操作！');
+        } 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
         }
@@ -134,7 +146,10 @@ class BuyrecordController extends Controller
     {
         $id=$request->buyid;
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
-                                ->where('id',$id); 
+                                ->where('id',$id);
+        if (Gate::denies('modify-buyrecord',$buyrecord)) {
+            abort(403,'你无权进行此操作！');
+        } 
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
         }      
@@ -162,7 +177,10 @@ class BuyrecordController extends Controller
     {
         $id=$request->buyid;
         $buyrecord = Buyrecord::with('customer','product', 'detail','company')
-                                ->where('id',$id); 
+                                ->where('id',$id);
+        if (Gate::denies('modify-buyrecord',$buyrecord)) {
+            abort(403,'你无权进行此操作！');
+        }                                  
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecord = $buyrecord->where('company_id', Auth::user()->company_id);
         }      
