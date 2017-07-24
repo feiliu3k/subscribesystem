@@ -35,9 +35,7 @@ class BuyrecordController extends Controller
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $buyrecords = $buyrecords->where('company_id', Auth::user()->company_id);
         }
-        $buyrecords = $buyrecords->orderBy('company_id','desc')
-                                ->orderBy('productifo_id','desc')
-                                ->orderBy('buytime','desc')
+        $buyrecords = $buyrecords->orderBy('buytime','desc')
                                 ->paginate(config('subscribesystem.per_page'));
         
         return view('admin.buyrecord.index', compact('buyrecords'));
