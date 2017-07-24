@@ -68,6 +68,28 @@ class ProductDetailController extends Controller
 
         $detail = new ProductDetail();
 
+        $detail->productprice=0;
+        $detail->ordernum=0;
+        $detail->paynum=0;
+        $detail->maxordernum=1;
+
+        return view('admin.productdetail.create',compact('product','detail'));
+    }
+
+    public function batCreate($id)
+    {
+        if (Gate::denies('create-detail')) {
+            abort(403,'你无权进行此操作！');
+        }
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
+
+        $detail = new ProductDetail();
+        $detail->productprice=0;
         $detail->ordernum=0;
         $detail->paynum=0;
         $detail->maxordernum=1;
@@ -88,6 +110,45 @@ class ProductDetailController extends Controller
         }        
         $this->validate($request, [
             'usedate' => 'required|string|max:255',
+        ]);
+
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
+        
+        $detail = new ProductDetail();
+
+        $detail->productifo_id=$product->id;
+        $detail->usedate = $request->usedate;
+        $detail->usebegintime = $request->usebegintime;
+        $detail->useendtime = $request->useendtime;
+        $detail->productprice = $request->productprice;
+        $detail->productnum = $request->productnum;
+        $detail->ordernum = $request->ordernum;
+        $detail->paynum = $request->paynum;
+        $detail->maxordernum = $request->maxordernum;
+        
+        $detail->save();            
+        return redirect('/admin/product/'.$product->id.'/detail')
+                        ->withSuccess("场地细节 '$product->productname' 创建成功.");
+       
+    }     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function batStore(Request $request, $id)
+    {
+        if (Gate::denies('create-detail')) {
+            abort(403,'你无权进行此操作！');
+        }
+        $this->validate($request, [
+            'usebegindate' => 'required|string|max:255',
+            'useenddate' => 'required|string|max:255',
         ]);
 
         $product = Product::where('delflag', 0);

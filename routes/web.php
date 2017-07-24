@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::any('product/search',['uses' => 'ProductController@search','as' => 'product.search']);
     Route::resource('product', 'ProductController', ['except' => 'show']);
     Route::any('product/{id}/detail/search',['uses' => 'ProductDetailController@search','as' => 'detail.search']);
+    Route::get('product/{id}/detail/batcreate',['uses'=>'ProductDetailController@batCreate','as'=>'detail.batcreate']);
+    Route::put('product/{id}/detail',['uses'=>'ProductDetailController@batStore','as'=>'detail.batStore']);
     Route::resource('product/{id}/detail', 'ProductDetailController', ['except' => 'show']);
 
     Route::get('buyrecord', ['uses' => 'BuyrecordController@index','as' => 'buyrecord.index']);
