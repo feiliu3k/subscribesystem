@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Carbon\Carbon;
 
 use App\Models\Product;
 use App\Models\ProductDetail;
@@ -94,7 +95,7 @@ class ProductDetailController extends Controller
         $detail->paynum=0;
         $detail->maxordernum=1;
 
-        return view('admin.productdetail.create',compact('product','detail'));
+        return view('admin.productdetail.batCreate',compact('product','detail'));
     }
 
      /**
@@ -143,6 +144,9 @@ class ProductDetailController extends Controller
      */
     public function batStore(Request $request, $id)
     {
+        
+        
+        
         if (Gate::denies('create-detail')) {
             abort(403,'你无权进行此操作！');
         }
@@ -157,20 +161,29 @@ class ProductDetailController extends Controller
         }
         $product = $product->where('id', $id)
                             ->first();
+        $details=[];
+        $usebegindate=new Carbon($request->usebegindate);
+        $useenddate=new Carbon($request->useenddate);
         
-        $detail = new ProductDetail();
+        while ($usebegindate<=$useenddate) {
+            $usedate=$usebegindate;            
+            $detail = new ProductDetail();
+            $detail->productifo_id=$product->id;
+            $detail->usedate = $usedate->toDateString();
+            $detail->usebegintime = $request->usebegintime;
+            $detail->useendtime = $request->useendtime;
+            $detail->productprice = $request->productprice;
+            $detail->productnum = $request->productnum;
+            $detail->ordernum = $request->ordernum;
+            $detail->paynum = $request->paynum;
+            $detail->maxordernum = $request->maxordernum;
 
-        $detail->productifo_id=$product->id;
-        $detail->usedate = $request->usedate;
-        $detail->usebegintime = $request->usebegintime;
-        $detail->useendtime = $request->useendtime;
-        $detail->productprice = $request->productprice;
-        $detail->productnum = $request->productnum;
-        $detail->ordernum = $request->ordernum;
-        $detail->paynum = $request->paynum;
-        $detail->maxordernum = $request->maxordernum;
+            $details[] = $detail->attributesToArray();
+            $usebegindate=$usebegindate->addDay();
+        }
         
-        $detail->save();            
+        ProductDetail::insert($details);
+        
         return redirect('/admin/product/'.$product->id.'/detail')
                         ->withSuccess("场地细节 '$product->productname' 创建成功.");
        

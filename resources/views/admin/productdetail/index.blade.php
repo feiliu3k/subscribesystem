@@ -15,6 +15,10 @@
                     <i class="fa fa-plus-circle"></i> 新建{{ config('subscribesystem.detail') }}
                 </a>
 
+                <a href="{{ route('detail.batCreate', $product->id) }}" class="btn btn-success btn-md">
+                    <i class="fa fa-plus-circle"></i> 批量新建{{ config('subscribesystem.detail') }}
+                </a>
+
                 <button class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-search">
                     <i class="fa fa-plus-circle"></i> 搜索{{ config('subscribesystem.detail') }}
                 </button>
