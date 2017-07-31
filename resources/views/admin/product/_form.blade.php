@@ -98,6 +98,14 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="cellphone" class="col-md-3 control-label">
+            联系电话
+        </label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" id="cellphone" name="cellphone" value="{{ $product->cellphone }}">
+        </div>
+    </div>
+    <div class="form-group">
         <label for="productexplain" class="col-md-3 control-label">
             内容简介
         </label>

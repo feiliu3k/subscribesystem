@@ -10,7 +10,7 @@ class Product extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $fillable = [
-        'productname', 'productimg' ,'productexplain' ,'delflag'
+        'productname', 'productimg' ,'productexplain' ,'delflag', 'cellphone'
     ];
 
     public function area()
