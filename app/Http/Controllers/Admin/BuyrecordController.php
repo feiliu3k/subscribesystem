@@ -132,12 +132,12 @@ class BuyrecordController extends Controller
         
         if ($buyrecord->consumptionflag){
             $buyrecord->consumptionflag=0;
-            $customer->credit=$customer->credit-300;
+            $customer->credit=$customer->credit-config('subscribesystem.per_rating');
             $detail->paynum=$detail->paynum-$buyrecord->buyproductnum;
         }
         else{
             $buyrecord->consumptionflag=1;
-            $customer->credit=$customer->credit+300;
+            $customer->credit=$customer->credit+config('subscribesystem.per_rating');
             $detail->paynum=$detail->paynum+$buyrecord->buyproductnum;
         }
         $customer->save();

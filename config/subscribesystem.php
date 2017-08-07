@@ -14,12 +14,13 @@ return [
     'customer' => '客户',
     'log' => '日志',
     'per_page' => 20, 
-    'admin'=>'admin',
+    'admin' => 'admin',
     'uploads' => [
             'storage' => 'local',
             'webpath' => '/uploads',
     ],
-    'thumb_path'=>'../../uploads/ss/',
-    'image_path'=>'../../uploads/ss/',
-    'video_path'=>'../../uploads/ss/',
+    'per_rating' => 0,
+    'thumb_path' => '../../uploads/ss/',
+    'image_path' => '../../uploads/ss/',
+    'video_path' => '../../uploads/ss/',
 ];
