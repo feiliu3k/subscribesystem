@@ -30,6 +30,40 @@
 		</div>
 	</div>
     <div class="form-group">
+        <div class="col-md-8 col-md-offset-3">
+            <div class="checkbox" >
+                <label>
+                    <input  type="checkbox" name="weeks[]" value=1>
+                    周一
+                </label>
+                <label>
+                    <input  type="checkbox" name="weeks[]" value=2>
+                    周二
+                </label>
+                <label>
+                    <input  type="checkbox" name="weeks[]" value=3>
+                    周三
+                </label>
+                <label>
+                    <input  type="checkbox" name="weeks[]" value=4>
+                    周四
+                </label>
+                <label>
+                    <input  type="checkbox" name="weeks[]" value=5>
+                    周五
+                </label>
+                <label>
+                    <input  type="checkbox" name="weeks[]" value=6>
+                    周六
+                </label>
+                <label>
+                    <input  type="checkbox" name="weeks[]" value=0>
+                    周日
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="usebegintime" class="col-md-3 control-label">
             使用开始时间
         </label>

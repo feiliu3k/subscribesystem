@@ -144,9 +144,6 @@ class ProductDetailController extends Controller
      */
     public function batStore(Request $request, $id)
     {
-        
-        
-        
         if (Gate::denies('create-detail')) {
             abort(403,'你无权进行此操作！');
         }
@@ -164,21 +161,30 @@ class ProductDetailController extends Controller
         $details=[];
         $usebegindate=new Carbon($request->usebegindate);
         $useenddate=new Carbon($request->useenddate);
-        
-        while ($usebegindate<=$useenddate) {
-            $usedate=$usebegindate;            
-            $detail = new ProductDetail();
-            $detail->productifo_id=$product->id;
-            $detail->usedate = $usedate->toDateString();
-            $detail->usebegintime = $request->usebegintime;
-            $detail->useendtime = $request->useendtime;
-            $detail->productprice = $request->productprice;
-            $detail->productnum = $request->productnum;
-            $detail->ordernum = $request->ordernum;
-            $detail->paynum = $request->paynum;
-            $detail->maxordernum = $request->maxordernum;
+        $weeks=$request->weeks;
 
-            $details[] = $detail->attributesToArray();
+        while ($usebegindate<=$useenddate) {
+            $usedate=$usebegindate;
+
+            $week= $usedate->dayOfWeek;
+
+            if (in_array($week,$weeks)){
+
+                $detail = new ProductDetail();
+                $detail->productifo_id=$product->id;
+                $detail->usedate = $usedate->toDateString();
+                $detail->usebegintime = $request->usebegintime;
+                $detail->useendtime = $request->useendtime;
+                $detail->productprice = $request->productprice;
+                $detail->productnum = $request->productnum;
+                $detail->ordernum = $request->ordernum;
+                $detail->paynum = $request->paynum;
+                $detail->maxordernum = $request->maxordernum;
+
+                $details[] = $detail->attributesToArray();
+
+            }
+
             $usebegindate=$usebegindate->addDay();
         }
         
