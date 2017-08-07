@@ -89,6 +89,7 @@ class ProductController extends Controller
         $product->areaname_id = $request->area_id;
         $product->producttype_id = $request->producttype_id;
         $product->productexplain = $request->productexplain;
+        $product->cellphone = $request->cellphone;
         $product->manager_id = Auth::user()->id;
         $product->company_id = Auth::user()->company_id;
         $address->productaddress = $request->productAddress;
@@ -161,6 +162,7 @@ class ProductController extends Controller
         $product->areaname_id=$request->area_id;
         $product->producttype_id= $request->producttype_id;
         $product->productexplain= $request->productexplain;
+        $product->cellphone = $request->cellphone;
         $product->manager_id= Auth::user()->id;
         $product->functions()->detach();
         $product->functions()->attach($request->productFunction_ids);
@@ -288,7 +290,6 @@ class ProductController extends Controller
             $products = $products->where('company_id', Auth::user()->company_id);
         }
         
-                            
         if ($searchCondition['productname']){
             $products=$products->where('productname','like', '%'.$searchCondition['productname'].'%');
         }
