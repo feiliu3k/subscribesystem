@@ -47,7 +47,7 @@
                 使用时间范围
             </label>        
             <div class="col-md-3">
-                <div class="input-group date" id="usebegintime">
+                <div class="input-group date usebegintime">
                     <input type="text" class="form-control" name="usebegintime[]" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
@@ -55,7 +55,7 @@
                 </div>
             </div>   
             <div class="col-md-3">
-                <div class="input-group date" id="useendtime">
+                <div class="input-group date useendtime">
                     <input type="text" class="form-control" name="useendtime[]" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
@@ -102,8 +102,17 @@
             });
             //add usetime
             $('.usetimes').on('click','.btn-add-usetime',function(){
-                var template=$('#use-time-template').html();
-                $(this).parents('.usetime').first().after(template);
+                var template=$('#use-time-template');
+                var usetime=$(this).parents('.usetime').first();
+                usetime.after(template.html());
+                usetime.next().find('.usebegintime').datetimepicker({
+                        locale: 'zh-CN',
+                        format: 'HH:mm:ss'
+                    });
+                usetime.next().find('.useendtime').datetimepicker({
+                        locale: 'zh-CN',
+                        format: 'HH:mm:ss'
+                    });
             });
  
                         //delete usetime
