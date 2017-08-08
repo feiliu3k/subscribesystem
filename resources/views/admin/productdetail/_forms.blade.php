@@ -30,62 +30,66 @@
 		</div>
 	</div>
     <div class="form-group">
-        <div class="col-md-8 col-md-offset-3">
+        <label class="col-md-3 control-label">
+            选中需要添加星期
+        </label>
+        <div class="col-md-8">
             <div class="checkbox" >
                 <label>
                     <input  type="checkbox" name="weeks[]" value=1>
-                    周一
+                    星期一
                 </label>
                 <label>
                     <input  type="checkbox" name="weeks[]" value=2>
-                    周二
+                    星期二
                 </label>
                 <label>
                     <input  type="checkbox" name="weeks[]" value=3>
-                    周三
+                    星期三
                 </label>
                 <label>
                     <input  type="checkbox" name="weeks[]" value=4>
-                    周四
+                    星期四
                 </label>
                 <label>
                     <input  type="checkbox" name="weeks[]" value=5>
-                    周五
+                    星期五
                 </label>
                 <label>
                     <input  type="checkbox" name="weeks[]" value=6>
-                    周六
+                    星期六
                 </label>
                 <label>
                     <input  type="checkbox" name="weeks[]" value=0>
-                    周日
+                    星期日
                 </label>
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <label for="usebegintime" class="col-md-3 control-label">
-            使用开始时间
-        </label>
-        <div class="col-md-8">
-            <div class="input-group date" id="usebegintime">
-                <input type="text" class="form-control" name="usebegintime" value="{{ $detail->usebegintime }}" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-time"></span>
-                </span>
+    <div class="usetimes">
+        <div class="form-group usetime">
+            <label for="usebegintime" class="col-md-3 control-label">
+                使用时间范围
+            </label>        
+            <div class="col-md-3">
+                <div class="input-group date usebegintime">
+                    <input type="text" class="form-control" name="usebegintime[]" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
+            </div>   
+            <div class="col-md-3">
+                <div class="input-group date useendtime">
+                    <input type="text" class="form-control" name="useendtime[]" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="useendtime" class="col-md-3 control-label">
-            使用结束时间
-        </label>
-        <div class="col-md-8">
-            <div class="input-group date" id="useendtime">
-                <input type="text" class="form-control" name="useendtime" value="{{ $detail->useendtime }}" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-time"></span>
-                </span>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-danger btn-delete-usetime"><i class="fa fa-times-circle"></i>删除</button>
+                <button type="button" class="btn btn-success btn-add-usetime"><i class="fa fa-plus-circle"></i>添加</button>
             </div>
         </div>
     </div>

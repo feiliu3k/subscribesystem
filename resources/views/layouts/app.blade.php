@@ -17,6 +17,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">    
     <link href="{{ asset('vendor/dataTables/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/icheck/skins/flat/red.css') }}" rel="stylesheet">
+    
 </head>
 <body>
     <div id="app">
@@ -48,6 +50,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('vendor/dataTables/js/jquery.dataTables.js') }}"></script>        
     <script src="{{ asset('vendor/dataTables/js/dataTables.bootstrap.js') }}"></script>
-     @yield('scripts')
+    <script src="{{ asset('vendor/icheck/icheck.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>
