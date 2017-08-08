@@ -147,10 +147,18 @@ class ProductDetailController extends Controller
         if (Gate::denies('create-detail')) {
             abort(403,'你无权进行此操作！');
         }
+
+        $usebegintimes=$request->usebegintime;
+        $useendtimes=$request->useendtime;
+        if ((count($usebegintimes)==0) || (count($usebegintimes)!=count($useendtimes))){
+            return back()->withErrors("时间范围有错，请重新输入！");
+        }
+
         $this->validate($request, [
             'usebegindate' => 'required|string|max:255',
             'useenddate' => 'required|string|max:255',
         ]);
+
 
         $product = Product::where('delflag', 0);
         if (Auth::user()->managername<>config('subscribesystem.admin')){
@@ -158,37 +166,59 @@ class ProductDetailController extends Controller
         }
         $product = $product->where('id', $id)
                             ->first();
-        $details=[];
+        
         $usebegindate=new Carbon($request->usebegindate);
         $useenddate=new Carbon($request->useenddate);
+        
         $weeks=$request->weeks;
 
-        while ($usebegindate<=$useenddate) {
-            $usedate=$usebegindate;
 
-            $week= $usedate->dayOfWeek;
+        $details=array(); 
+        for ($i=0;$i<count($usebegintimes);$i++){
+              
+            $usebegintime=$usebegintimes[$i];
+            $useendtime=$useendtimes[$i];
 
-            if (in_array($week,$weeks)){
+            while ($usebegindate<=$useenddate) {
+                $usedate=$usebegindate;
+                $week= $usedate->dayOfWeek;         
 
-                $detail = new ProductDetail();
-                $detail->productifo_id=$product->id;
-                $detail->usedate = $usedate->toDateString();
-                $detail->usebegintime = $request->usebegintime;
-                $detail->useendtime = $request->useendtime;
-                $detail->productprice = $request->productprice;
-                $detail->productnum = $request->productnum;
-                $detail->ordernum = $request->ordernum;
-                $detail->paynum = $request->paynum;
-                $detail->maxordernum = $request->maxordernum;
+                if (empty($weeks)) {
+                    $detail = new ProductDetail();
+                    $detail->productifo_id=$product->id;
+                    $detail->usedate = $usedate->toDateString();
+                    $detail->usebegintime = $usebegintime;
+                    $detail->useendtime = $useendtime;
+                    $detail->productprice = $request->productprice;
+                    $detail->productnum = $request->productnum;
+                    $detail->ordernum = $request->ordernum;
+                    $detail->paynum = $request->paynum;
+                    $detail->maxordernum = $request->maxordernum;
+                    $arr=$detail->attributesToArray();
+                    array_push($details,$arr);
+                } else if  (in_array($week,$weeks)) {
+                    $detail = new ProductDetail();
+                    $detail->productifo_id=$product->id;
+                    $detail->usedate = $usedate->toDateString();
+                    $detail->usebegintime = $usebegintime;
+                    $detail->useendtime = $useendtime;
+                    $detail->productprice = $request->productprice;
+                    $detail->productnum = $request->productnum;
+                    $detail->ordernum = $request->ordernum;
+                    $detail->paynum = $request->paynum;
+                    $detail->maxordernum = $request->maxordernum;
 
-                $details[] = $detail->attributesToArray();
-
+                    $arr=$detail->attributesToArray();
+                    array_push($details,$arr);
+                }
+                $usebegindate=$usebegindate->addDay();
             }
-
-            $usebegindate=$usebegindate->addDay();
+            
         }
-        
         ProductDetail::insert($details);
+
+        
+        
         
         return redirect('/admin/product/'.$product->id.'/detail')
                         ->withSuccess("场地细节 '$product->productname' 创建成功.");
