@@ -62,6 +62,12 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
 
     Route::get('log/manager', ['uses' => 'LogController@manager','as' => 'log.manager.index']);
     Route::get('log/customer', ['uses' => 'LogController@customer','as' => 'log.customer.index']);
+
+    Route::get('upload', 'UploadController@index');
+    Route::post('upload/file', 'UploadController@uploadFile');
+    Route::delete('upload/file', 'UploadController@deleteFile');
+    Route::post('upload/folder', 'UploadController@createFolder');
+    Route::delete('upload/folder', 'UploadController@deleteFolder');
 });
 // Login Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
