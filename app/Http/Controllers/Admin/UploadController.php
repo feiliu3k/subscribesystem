@@ -1,12 +1,14 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
 use App\Services\UploadsManager;
+
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Requests\UploadNewFolderRequest;
 use Illuminate\Support\Facades\File;
@@ -24,12 +26,12 @@ class UploadController extends Controller
      * Show page of files / subfolders
      */
     public function index(Request $request)
-    {
-        $folder = $request->get('folder');       
-        $data = $this->manager->folderInfo($folder);        
+    {        
+        $folder = $request->get('folder');
+        $data = $this->manager->folderInfo($folder);
+
         return view('admin.upload.index', $data);
     }
-
 
     /**
     * 创建新目录
@@ -38,15 +40,16 @@ class UploadController extends Controller
     {
         $new_folder = $request->get('new_folder');
         $folder = $request->get('folder').'/'.$new_folder;
+
         $result = $this->manager->createDirectory($folder);
 
         if ($result === true) {
             return redirect()
                 ->back()
-                ->withSuccess("目录 '$new_folder' 新建成功.");
+                ->withSuccess("'$new_folder'目录新建成功.");
         }
 
-        $error = $result ? : "新建文件夹出错.";
+        $error = $result ? : "新建目录出错！";
         return redirect()
                 ->back()
                 ->withErrors([$error]);
@@ -65,10 +68,10 @@ class UploadController extends Controller
         if ($result === true) {
             return redirect()
                 ->back()
-                ->withSuccess("文件 '$del_file' 删除成功.");
+                ->withSuccess("'$del_file' 文件删除成功.");
         }
 
-        $error = $result ? : "删除文件出错.";
+        $error = $result ? : "删除文件出错！";
         return redirect()
                 ->back()
                 ->withErrors([$error]);
@@ -87,18 +90,18 @@ class UploadController extends Controller
         if ($result === true) {
             return redirect()
                 ->back()
-                ->withSuccess("目录 '$del_folder' 删除成功.");
+                ->withSuccess("'$del_folder'目录删除成功！");
         }
 
-        $error = $result ? : "删除文件夹出错.";
+        $error = $result ? : "目录删除出错！";
         return redirect()
                 ->back()
                 ->withErrors([$error]);
     }
 
     /**
-     * 上传文件
-     */
+ * 上传文件
+ */
     public function uploadFile(UploadFileRequest $request)
     {
         $file = $_FILES['file'];
@@ -112,12 +115,13 @@ class UploadController extends Controller
         if ($result === true) {
             return redirect()
                     ->back()
-                    ->withSuccess("文件 '$fileName' 上传成功.");
+                    ->withSuccess("'$fileName' 文件上传成功！");
         }
 
-        $error = $result ? : "上传文件文件出错.";
+        $error = $result ? : "文件上传失败！";
         return redirect()
                 ->back()
                 ->withErrors([$error]);
     }
+
 }

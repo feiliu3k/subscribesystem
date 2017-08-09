@@ -13,7 +13,7 @@ class UploadsManager
 
     public function __construct(PhpRepository $mimeDetect)
     {
-        $this->disk = Storage::disk(config('rating.uploads.storage'));
+        $this->disk = Storage::disk(config('subscribesystem.uploads.storage'));
         $this->mimeDetect = $mimeDetect;
     }
 
@@ -29,7 +29,6 @@ class UploadsManager
      *     'files' => array of file details on each file in folder
      * ]
      */
-
     public function folderInfo($folder)
     {
         $folder = $this->cleanFolder($folder);
@@ -48,20 +47,6 @@ class UploadsManager
         foreach ($this->disk->files($folder) as $path) {
             $files[] = $this->fileDetails($path);
         }
-
-
-        // if(is_array($files)){
-        //     foreach ($files as $row_array){
-        //         if(is_array($row_array)){
-        //             $key_array[] = $row_array['modified'];
-        //         }else{
-        //             return false;
-        //         }
-        //     }
-        // }else{
-        //     return false;
-        // }
-        // array_multisort($key_array,SORT_DESC,$files);
 
         return compact(
             'folder',
@@ -124,7 +109,7 @@ class UploadsManager
      */
     public function fileWebpath($path)
     {
-        $path = rtrim(config('rating.uploads.webpath'), '/') . '/' .ltrim($path, '/');
+        $path = rtrim(config('subscribesystem.uploads.webpath'), '/') . '/' .ltrim($path, '/');
         return url($path);
     }
 
@@ -163,9 +148,8 @@ class UploadsManager
     {
         $folder = $this->cleanFolder($folder);
 
-
         if ($this->disk->exists($folder)) {
-            return "目录 '$folder' 已经存在.";
+            return "'$folder' 目录已经存在.";
         }
 
         return $this->disk->makeDirectory($folder);
@@ -183,7 +167,7 @@ class UploadsManager
             $this->disk->files($folder)
         );
         if (! empty($filesFolders)) {
-            return "文件夹非空.";
+            return "目录非空，无法删除！";
         }
 
         return $this->disk->deleteDirectory($folder);
@@ -197,7 +181,7 @@ class UploadsManager
         $path = $this->cleanFolder($path);
 
         if (! $this->disk->exists($path)) {
-            return "文件不存在.";
+            return "文件不存在！";
         }
 
         return $this->disk->delete($path);
@@ -211,7 +195,7 @@ class UploadsManager
         $path = $this->cleanFolder($path);
 
         if ($this->disk->exists($path)) {
-            return "文件已存在.";
+            return "文件已存在！";
         }
 
         return $this->disk->put($path, $content);
