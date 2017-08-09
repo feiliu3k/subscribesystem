@@ -181,31 +181,39 @@ class ProductDetailController extends Controller
             $week= $usedate->dayOfWeek;
             if (empty($weeks)) {
                 for ($i=0;$i<count($usebegintimes);$i++){
-                    $detail = new ProductDetail();
-                    $detail->productifo_id=$product->id;
-                    $detail->usedate = $usedate->toDateString();
-                    $detail->usebegintime = $usebegintimes[$i];
-                    $detail->useendtime = $useendtimes[$i];
-                    $detail->productprice = $request->productprice;
-                    $detail->productnum = $request->productnum;
-                    $detail->ordernum = $request->ordernum;
-                    $detail->paynum = $request->paynum;
-                    $detail->maxordernum = $request->maxordernum;
-                    $details[]=$detail->attributesToArray();
+                    if (($usebegintimes[$i]) && ($useendtimes[$i])){                        
+                        $detail = new ProductDetail();
+                        $detail->productifo_id=$product->id;
+                        $detail->usedate = $usedate->toDateString();
+                        $detail->usebegintime = $usebegintimes[$i];
+                        $detail->useendtime = $useendtimes[$i];
+                        $detail->productprice = $request->productprice;
+                        $detail->productnum = $request->productnum;
+                        $detail->ordernum = $request->ordernum;
+                        $detail->paynum = $request->paynum;
+                        $detail->maxordernum = $request->maxordernum;
+                        $details[]=$detail->attributesToArray();
+                    }else{
+                        return back()->withErrors("时间有错，请重新输入！");
+                    }
                 }
             } else if  (in_array($week,$weeks)) {
                 for ($i=0;$i<count($usebegintimes);$i++){
-                    $detail = new ProductDetail();
-                    $detail->productifo_id=$product->id;
-                    $detail->usedate = $usedate->toDateString();
-                    $detail->usebegintime = $usebegintimes[$i];
-                    $detail->useendtime = $useendtimes[$i];
-                    $detail->productprice = $request->productprice;
-                    $detail->productnum = $request->productnum;
-                    $detail->ordernum = $request->ordernum;
-                    $detail->paynum = $request->paynum;
-                    $detail->maxordernum = $request->maxordernum;
-                    $details[]=$detail->attributesToArray();
+                    if (($usebegintimes[$i]) && ($useendtimes[$i])){                        
+                        $detail = new ProductDetail();
+                        $detail->productifo_id=$product->id;
+                        $detail->usedate = $usedate->toDateString();
+                        $detail->usebegintime = $usebegintimes[$i];
+                        $detail->useendtime = $useendtimes[$i];
+                        $detail->productprice = $request->productprice;
+                        $detail->productnum = $request->productnum;
+                        $detail->ordernum = $request->ordernum;
+                        $detail->paynum = $request->paynum;
+                        $detail->maxordernum = $request->maxordernum;
+                        $details[]=$detail->attributesToArray();
+                    }else{
+                        return back()->withErrors("时间有错，请重新输入！");
+                    }
                 }
             }
             $usebegindate=$usebegindate->addDay();
