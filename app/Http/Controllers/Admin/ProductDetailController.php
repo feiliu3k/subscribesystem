@@ -173,53 +173,46 @@ class ProductDetailController extends Controller
         $weeks=$request->weeks;
 
 
-        $details=array(); 
-        for ($i=0;$i<count($usebegintimes);$i++){
-              
-            $usebegintime=$usebegintimes[$i];
-            $useendtime=$useendtimes[$i];
+        $details=[]; 
 
-            while ($usebegindate<=$useenddate) {
-                $usedate=$usebegindate;
-                $week= $usedate->dayOfWeek;         
 
-                if (empty($weeks)) {
+        while ($usebegindate<=$useenddate) {
+            $usedate=$usebegindate;
+            $week= $usedate->dayOfWeek;
+            if (empty($weeks)) {
+                for ($i=0;$i<count($usebegintimes);$i++){
                     $detail = new ProductDetail();
                     $detail->productifo_id=$product->id;
                     $detail->usedate = $usedate->toDateString();
-                    $detail->usebegintime = $usebegintime;
-                    $detail->useendtime = $useendtime;
+                    $detail->usebegintime = $usebegintimes[$i];
+                    $detail->useendtime = $useendtimes[$i];
                     $detail->productprice = $request->productprice;
                     $detail->productnum = $request->productnum;
                     $detail->ordernum = $request->ordernum;
                     $detail->paynum = $request->paynum;
                     $detail->maxordernum = $request->maxordernum;
-                    $arr=$detail->attributesToArray();
-                    array_push($details,$arr);
-                } else if  (in_array($week,$weeks)) {
-                    $detail = new ProductDetail();
-                    $detail->productifo_id=$product->id;
-                    $detail->usedate = $usedate->toDateString();
-                    $detail->usebegintime = $usebegintime;
-                    $detail->useendtime = $useendtime;
-                    $detail->productprice = $request->productprice;
-                    $detail->productnum = $request->productnum;
-                    $detail->ordernum = $request->ordernum;
-                    $detail->paynum = $request->paynum;
-                    $detail->maxordernum = $request->maxordernum;
-
-                    $arr=$detail->attributesToArray();
-                    array_push($details,$arr);
+                    $details[]=$detail->attributesToArray();
                 }
-                $usebegindate=$usebegindate->addDay();
+            } else if  (in_array($week,$weeks)) {
+                for ($i=0;$i<count($usebegintimes);$i++){
+                    $detail = new ProductDetail();
+                    $detail->productifo_id=$product->id;
+                    $detail->usedate = $usedate->toDateString();
+                    $detail->usebegintime = $usebegintimes[$i];
+                    $detail->useendtime = $useendtimes[$i];
+                    $detail->productprice = $request->productprice;
+                    $detail->productnum = $request->productnum;
+                    $detail->ordernum = $request->ordernum;
+                    $detail->paynum = $request->paynum;
+                    $detail->maxordernum = $request->maxordernum;
+                    $details[]=$detail->attributesToArray();
+                }
             }
-            
+            $usebegindate=$usebegindate->addDay();
         }
+        
         ProductDetail::insert($details);
 
-        
-        
-        
         return redirect('/admin/product/'.$product->id.'/detail')
                         ->withSuccess("场地细节 '$product->productname' 创建成功.");
        
