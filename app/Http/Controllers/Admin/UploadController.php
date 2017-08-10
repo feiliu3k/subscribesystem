@@ -12,6 +12,7 @@ use App\Services\UploadsManager;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Requests\UploadNewFolderRequest;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 
 class UploadController extends Controller
 {
@@ -20,13 +21,17 @@ class UploadController extends Controller
     public function __construct(UploadsManager $manager)
     {
         $this->manager = $manager;
+        $this->middleware('auth');
     }
 
     /**
      * Show page of files / subfolders
      */
     public function index(Request $request)
-    {        
+    {   
+        if (Gate::denies('modify-manager')) {
+            abort(403,'你无权进行此操作！');
+        } 
         $folder = $request->get('folder');
         $data = $this->manager->folderInfo($folder);
 
@@ -38,6 +43,9 @@ class UploadController extends Controller
     */
     public function createFolder(UploadNewFolderRequest $request)
     {
+        if (Gate::denies('modify-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
         $new_folder = $request->get('new_folder');
         $folder = $request->get('folder').'/'.$new_folder;
 
@@ -60,6 +68,9 @@ class UploadController extends Controller
      */
     public function deleteFile(Request $request)
     {
+        if (Gate::denies('modify-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
         $del_file = $request->get('del_file');
         $path = $request->get('folder').'/'.$del_file;
 
@@ -82,6 +93,9 @@ class UploadController extends Controller
      */
     public function deleteFolder(Request $request)
     {
+        if (Gate::denies('modify-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
         $del_folder = $request->get('del_folder');
         $folder = $request->get('folder').'/'.$del_folder;
 
@@ -104,6 +118,9 @@ class UploadController extends Controller
  */
     public function uploadFile(UploadFileRequest $request)
     {
+        if (Gate::denies('modify-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
         $file = $_FILES['file'];
         $fileName = $request->get('file_name');
         $fileName = $fileName ?: $file['name'];

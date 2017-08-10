@@ -69,10 +69,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::post('upload/folder', 'UploadController@createFolder');
     Route::delete('upload/folder', 'UploadController@deleteFolder');
 
-    Route::post('loadManager', 'LoadExcelController@loadManager');
-    Route::post('loadArea', 'LoadExcelController@loadArea');
-    Route::post('loadType', 'LoadExcelController@loadType');
-    Route::post('loadFunc', 'LoadExcelController@loadFunc');
+    Route::post('loadManager', 'LoadExcelController@loadManager');    
     Route::get('explorer/{type}', 'LoadExcelController@fileExplorer');
 });
 // Login Routes...
