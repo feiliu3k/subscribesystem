@@ -85,6 +85,7 @@ class LoadExcelController extends Controller
                 $manager->verifyflag= 1;
                 $manager->password= bcrypt(trim($alllist_data[16]));
                 $manager->save();
+                $manager->roles()->attach([2]);
                 
                     //功能
                 $productFunctions=[];
