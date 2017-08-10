@@ -171,3 +171,151 @@
         </div>
     </div>
 </div>
+
+@if (strpos($folder,'alllist'))
+{{-- 导入管理员等信息 --}}
+<div class="modal fade" id="modal-alllist-import">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{ url('/admin/loadManager') }}" class="form-horizontal" >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        ×
+                    </button>
+                    <h4 class="modal-title">导入管理员等信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="alllist_filename" class="col-sm-3 control-label">
+                            文件名
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="alllist_filename" name="alllist_filename" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        导入
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endif
+
+@if (strpos($folder,'arealist'))
+{{-- 导入区域信息 --}}
+<div class="modal fade" id="modal-arealist-import">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{ url('/admin/loadArea') }}" class="form-horizontal" >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        ×
+                    </button>
+                    <h4 class="modal-title">导入区域信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="arealist_filename" class="col-sm-3 control-label">
+                            文件名
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="arealist_filename" name="arealist_filename" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        导入
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endif
+
+@if (strpos($folder,'typelist'))
+{{-- 导入类型信息 --}}
+<div class="modal fade" id="modal-typelist-import">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{ url('/admin/loadType') }}" class="form-horizontal" >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        ×
+                    </button>
+                    <h4 class="modal-title">导入类型信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="typelist_filename" class="col-sm-3 control-label">
+                            文件名
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="typelist_filename" name="typelist_filename" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        导入
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endif
+
+@if (strpos($folder,'funclist'))
+{{-- 导入功能信息 --}}
+<div class="modal fade" id="modal-funclist-import">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{ url('/admin/loadFunc') }}" class="form-horizontal" >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        ×
+                    </button>
+                    <h4 class="modal-title">导入功能信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="funclist_filename" class="col-sm-3 control-label">
+                            文件名
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" id="funclist_filename" name="funclist_filename" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        导入
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endif

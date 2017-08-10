@@ -86,43 +86,32 @@
                                 <i class="fa fa-times-circle fa-lg"></i>
                                 删除
                             </button>
-                            @if (is_image($file['mimeType']))
-                                <button type="button" class="btn btn-xs btn-success" onclick="preview_image('{{ $file['webPath'] }}')">
-                                    <i class="fa fa-eye fa-lg"></i>
-                                    预览
-                                </button>
-                            @endif
-                             @if (strpos($folder,'alllist'))
-                                <button type="button" class="btn btn-xs btn-primary" onclick="import_adplaylist('{{ $folder.'/'.$file['name'] }}')">
+
+                            @if (strpos($folder,'alllist'))
+                                <button type="button" class="btn btn-xs btn-primary" onclick="loadManager('{{ $folder.'/'.$file['name'] }}')">
                                     <i class="fa fa-plus-circle fa-lg"></i>
                                     导入管理员等信息
                                 </button>
                             @endif
 
                             @if (strpos($folder,'arealist'))
-                                <button type="button" class="btn btn-xs btn-success" onclick="import_rating('{{ $folder.'/'.$file['name'] }}')">
+                                <button type="button" class="btn btn-xs btn-success" onclick="loadArea('{{ $folder.'/'.$file['name'] }}')">
                                     <i class="fa fa-plus-circle fa-lg"></i>
                                     导入区域
                                 </button>
                             @endif
-                            @if (strpos($folder,'arealist'))
-                                <button type="button" class="btn btn-xs btn-success" onclick="import_rating('{{ $folder.'/'.$file['name'] }}')">
+                            @if (strpos($folder,'typelist'))
+                                <button type="button" class="btn btn-xs btn-success" onclick="loadType('{{ $folder.'/'.$file['name'] }}')">
                                     <i class="fa fa-plus-circle fa-lg"></i>
                                     导入类型
                                 </button>
                             @endif
-                             @if (strpos($folder,'arealist'))
-                                <button type="button" class="btn btn-xs btn-success" onclick="import_rating('{{ $folder.'/'.$file['name'] }}')">
+                             @if (strpos($folder,'funclist'))
+                                <button type="button" class="btn btn-xs btn-success" onclick="loadFunc('{{ $folder.'/'.$file['name'] }}')">
                                     <i class="fa fa-plus-circle fa-lg"></i>
                                     导入功能
                                 </button>
                             @endif
-
-
-
-
-                           
-
                         </td>
                     </tr>
                 @endforeach
@@ -155,12 +144,26 @@
         $("#modal-folder-delete").modal("show");
     }
 
-    // 预览图片
-    function preview_image(path) {
-        $("#preview-image").attr("src", path);
-        $("#modal-image-view").modal("show");
+    // 导入管理员等信息
+    function loadManager(path) {
+        $("#alllist_filename").val(path);
+        $("#modal-alllist-import").modal("show");
     }
-
+    // 导入区域信息
+    function loadArea(path) {
+        $("#arealist_filename").val(path);
+        $("#modal-arealist-import").modal("show");
+    }
+    // 导入类型信息
+    function loadType(path) {
+        $("#typelist_filename").val(path);
+        $("#modal-typelist-import").modal("show");
+    }
+    // 导入功能信息
+    function loadFunc(path) {
+        $("#funclist_filename").val(path);
+        $("#modal-funclist-import").modal("show");
+    }
     // 初始化数据
     $(function() {
         $("#uploads-table").DataTable();
