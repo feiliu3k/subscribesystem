@@ -411,9 +411,10 @@ class ProductDetailController extends Controller
 
         $details=[]; 
 
-        foreach ($product_ids as $product_id) {            
-            while ($usebegindate<=$useenddate) {
-                $usedate=$usebegindate;
+        foreach ($product_ids as $product_id) {
+            $begindate=clone $usebegindate;            
+            while ($begindate<=$useenddate) {
+                $usedate=$begindate;
                 $week= $usedate->dayOfWeek;
                 if (empty($weeks)) {
                     for ($i=0;$i<count($usebegintimes);$i++){
@@ -452,7 +453,7 @@ class ProductDetailController extends Controller
                         }
                     }
                 }
-                $usebegindate=$usebegindate->addDay();
+                $begindate=$begindate->addDay();
             }
         }
         
