@@ -107,7 +107,7 @@ class LoadExcelController extends Controller
                 $address->latitude=trim($alllist_data[6]);
                 //场地
                 $product = new Product();
-                $product->productname= trim($alllist_data[3]);
+                $product->productname= trim($alllist_data[1]);
                 $product->areaname_id = $area->id;
                 $product->producttype_id = $productType->id;
                 $product->productexplain = trim($alllist_data[14]);
