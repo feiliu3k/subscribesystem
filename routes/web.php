@@ -16,8 +16,8 @@ Route::get('/regsuccess','HomeController@regsuccess')->name('regsuccess');
 
 Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
 {
-    $router->get('dash', 'DashboardController@index');
-    $router->post('dash/uploadImgFile', ['uses' => 'DashboardController@uploadImgFile', 'as' => 'dash.upload']);
+    Route::get('dash', 'DashboardController@index');
+    Route::post('dash/uploadImgFile', ['uses' => 'DashboardController@uploadImgFile', 'as' => 'dash.upload']);
 
     Route::get('reset', 'ManagerController@getReset')->name('admin.reset');
     Route::post('reset', 'ManagerController@postReset');
@@ -41,6 +41,10 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::post('product/{id}/deleteAddress',['uses' => 'ProductController@destoryProductAddress', 'as' => 'product.destoryProductAddress']);
     Route::any('product/search',['uses' => 'ProductController@search','as' => 'product.search']);
     Route::resource('product', 'ProductController', ['except' => 'show']);
+
+    Route::get('autogendetail', 'ProductDetailController@getAutoGenDetail');
+    Route::post('autogendetail', ['uses' => 'ProductDetailController@postAutoGenDetail','as' => 'detail.postAutoGenDetail']);
+
     Route::any('product/{id}/detail/search',['uses' => 'ProductDetailController@search','as' => 'detail.search']);
     Route::get('product/{id}/details/batcreate',['uses'=>'ProductDetailController@batCreate','as'=>'detail.batCreate']);
     Route::post('product/{id}/details',['uses'=>'ProductDetailController@batStore','as'=>'detail.batStore']);

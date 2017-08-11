@@ -132,7 +132,7 @@ class ProductDetailController extends Controller
         $detail->paynum = $request->paynum;
         $detail->maxordernum = $request->maxordernum;
         
-        $detail->save();            
+        $detail->save();
         return redirect('/admin/product/'.$product->id.'/detail')
                         ->withSuccess("场地细节 '$product->productname' 创建成功.");
        
@@ -252,7 +252,6 @@ class ProductDetailController extends Controller
         return view('admin.productdetail.edit', compact('product', 'detail'));
     }
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -367,6 +366,100 @@ class ProductDetailController extends Controller
 
     public function order($customer_id, $did)
     {
+       
+    }
+
+    public function getAutoGenDetail()
+    {
+        if (Gate::denies('modify-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
+        $detail = new ProductDetail();
+        $detail->productprice=0;
+        $detail->productnum=10000;
+        $detail->ordernum=0;
+        $detail->paynum=0;
+        $detail->maxordernum=1;
+        return view('admin.productdetail.autogen',compact('detail'));
+    }
+
+    public function postAutoGenDetail(Request $request)
+    {
+        if (Gate::denies('modify-manager')) {
+            abort(403,'你无权进行此操作！');
+        }
+
+        $usebegintimes=$request->usebegintime;
+        $useendtimes=$request->useendtime;
+        if ((count($usebegintimes)==0) || (count($usebegintimes)!=count($useendtimes))){
+            return back()->withErrors("时间范围有错，请重新输入！");
+        }
+
+        $this->validate($request, [
+            'usebegindate' => 'required|string|max:255',
+            'useenddate' => 'required|string|max:255',
+        ]);
+
+
+        $product_ids = Product::where('delflag', 0)->select('id')->get();       
+        
+        $usebegindate=new Carbon($request->usebegindate);
+        $useenddate=new Carbon($request->useenddate);
+        
+        $weeks=$request->weeks;
+
+
+        $details=[]; 
+
+        foreach ($product_ids as $product_id) {            
+            while ($usebegindate<=$useenddate) {
+                $usedate=$usebegindate;
+                $week= $usedate->dayOfWeek;
+                if (empty($weeks)) {
+                    for ($i=0;$i<count($usebegintimes);$i++){
+                        if (($usebegintimes[$i]) && ($useendtimes[$i])){                        
+                            $detail = new ProductDetail();
+                            $detail->productifo_id=$product_id->id;
+                            $detail->usedate = $usedate->toDateString();
+                            $detail->usebegintime = $usebegintimes[$i];
+                            $detail->useendtime = $useendtimes[$i];
+                            $detail->productprice = $request->productprice;
+                            $detail->productnum = $request->productnum;
+                            $detail->ordernum = $request->ordernum;
+                            $detail->paynum = $request->paynum;
+                            $detail->maxordernum = $request->maxordernum;
+                            $details[]=$detail->attributesToArray();
+                        }else{
+                            return back()->withErrors("时间有错，请重新输入！");
+                        }
+                    }
+                } else if  (in_array($week,$weeks)) {
+                    for ($i=0;$i<count($usebegintimes);$i++){
+                        if (($usebegintimes[$i]) && ($useendtimes[$i])){                        
+                            $detail = new ProductDetail();
+                            $detail->productifo_id=$product_id->id;
+                            $detail->usedate = $usedate->toDateString();
+                            $detail->usebegintime = $usebegintimes[$i];
+                            $detail->useendtime = $useendtimes[$i];
+                            $detail->productprice = $request->productprice;
+                            $detail->productnum = $request->productnum;
+                            $detail->ordernum = $request->ordernum;
+                            $detail->paynum = $request->paynum;
+                            $detail->maxordernum = $request->maxordernum;
+                            $details[]=$detail->attributesToArray();
+                        }else{
+                            return back()->withErrors("时间有错，请重新输入！");
+                        }
+                    }
+                }
+                $usebegindate=$usebegindate->addDay();
+            }
+        }
+        
+        ProductDetail::insert($details);
+
+        return redirect('/admin/product')
+                        ->withSuccess("场地细节自动生成成功.");
        
     }
 

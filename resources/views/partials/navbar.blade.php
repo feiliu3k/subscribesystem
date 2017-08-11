@@ -38,6 +38,7 @@
                 <li><a href="{{ url('admin/role') }}">角色</a></li>
                 <li><a href="{{ url('admin/permission') }}">权限</a></li>
                 <li><a href="{{ url('admin/explorer/alllist') }}">导入管理员等数据</a></li>
+                <li><a href="{{ url('admin/autogendetail') }}">自动产生场地细节数据</a></li>
             </ul>
         
         </li> 
