@@ -68,7 +68,7 @@
             已预定数量
         </label>
         <div class="col-md-8">
-            <input type="text" class="form-control" name="ordernum"  id="ordernum" value="{{ $detail->ordernum }}" >
+            <input type="text" class="form-control" name="ordernum"  id="ordernum" value="{{ $detail->ordernum }}" readonly>
         </div>
     </div>
     <div class="form-group">
@@ -76,7 +76,7 @@
             已消费数量
         </label>
         <div class="col-md-8">
-            <input type="text" class="form-control" name="paynum"  id="paynum" value="{{ $detail->paynum }}" >
+            <input type="text" class="form-control" name="paynum"  id="paynum" value="{{ $detail->paynum }}" readonly>
         </div>
     </div>
     <div class="form-group">

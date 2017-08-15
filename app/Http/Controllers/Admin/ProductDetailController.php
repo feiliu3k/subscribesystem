@@ -68,7 +68,7 @@ class ProductDetailController extends Controller
                             ->first();
 
         $detail = new ProductDetail();
-
+        $detail->productnum=0;
         $detail->productprice=0;
         $detail->ordernum=0;
         $detail->paynum=0;
@@ -90,6 +90,7 @@ class ProductDetailController extends Controller
                             ->first();
 
         $detail = new ProductDetail();
+        $detail->productnum=0;
         $detail->productprice=0;
         $detail->ordernum=0;
         $detail->paynum=0;

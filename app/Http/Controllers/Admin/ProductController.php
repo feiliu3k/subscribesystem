@@ -59,9 +59,9 @@ class ProductController extends Controller
         if (Gate::denies('create-product')) {
             abort(403,'你无权进行此操作！');
         }
-        $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
-        $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
-        $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
+        $areas = Area::where('delflag',0)->get();       
+        $productTypes = ProductType::where('delflag',0)->get();
+        $productFunctions = ProductFunction::where('delflag',0)->get();
         $product = new Product();        
         return view('admin.product.create',compact('product','areas', 'productTypes', 'productFunctions'));
     }
@@ -122,9 +122,9 @@ class ProductController extends Controller
             abort(403,'你无权进行此操作！');
         }                             
         
-        $areas = Area::where('delflag',0)->orderBy('id','desc')->get();       
-        $productTypes = ProductType::where('delflag',0)->orderBy('id','desc')->get();
-        $productFunctions = ProductFunction::where('delflag',0)->orderBy('id','desc')->get();
+        $areas = Area::where('delflag',0)->get();       
+        $productTypes = ProductType::where('delflag',0)->get();
+        $productFunctions = ProductFunction::where('delflag',0)->get();
 
         return view('admin.product.edit', compact('product','areas', 'productTypes', 'productFunctions'));
     }
