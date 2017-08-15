@@ -410,9 +410,9 @@ class ProductDetailController extends Controller
         $weeks=$request->weeks;
 
 
-        $details=[]; 
 
         foreach ($product_ids as $product_id) {
+            $details=[]; 
             $begindate=clone $usebegindate;            
             while ($begindate<=$useenddate) {
                 $usedate=$begindate;
@@ -456,9 +456,9 @@ class ProductDetailController extends Controller
                 }
                 $begindate=$begindate->addDay();
             }
+            ProductDetail::insert($details);
         }
         
-        ProductDetail::insert($details);
 
         return redirect('/admin/product')
                         ->withSuccess("场地细节自动生成成功.");
