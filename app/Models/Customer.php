@@ -29,4 +29,9 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(Badrecord::class,'badrecord', 'id', 'customer_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'usercomment', 'customer_id','id');
+    }
 }
