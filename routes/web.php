@@ -48,6 +48,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::any('product/{id}/detail/search',['uses' => 'ProductDetailController@search','as' => 'detail.search']);
     Route::get('product/{id}/details/batcreate',['uses'=>'ProductDetailController@batCreate','as'=>'detail.batCreate']);
     Route::post('product/{id}/details',['uses'=>'ProductDetailController@batStore','as'=>'detail.batStore']);
+    Route::get('product/{id}/comments',['uses'=>'CommentController@comments','as'=>'product.comments']);
     Route::resource('product/{id}/detail', 'ProductDetailController', ['except' => 'show']);
 
     Route::get('buyrecord', ['uses' => 'BuyrecordController@index','as' => 'buyrecord.index']);
@@ -73,8 +74,12 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::post('upload/folder', 'UploadController@createFolder');
     Route::delete('upload/folder', 'UploadController@deleteFolder');
 
-    Route::post('loadManager', 'LoadExcelController@loadManager');    
+    Route::post('loadManager', 'LoadExcelController@loadManager');
     Route::get('explorer/{type}', 'LoadExcelController@fileExplorer');
+
+    Route::get('comment', ['uses' => 'CommentController@index','as' => 'comment.index']);
+    Route::post('comment/destroy','CommentController@destroy');
+    Route::post('comment/verify', 'CommentController@verify');
 });
 // Login Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

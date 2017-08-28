@@ -2,6 +2,7 @@
 
 @section('styles')
     <link href="{{ URL::asset('vendor/datetimepicker/bootstrap-datetimepicker.min.css')  }}" rel="stylesheet" />
+    <link href="{{ asset('css/jrsx.css') }}" rel="stylesheet">
 @stop
 
 @section('content')
@@ -20,58 +21,70 @@
 
         <div class="row">
             <div class="col-sm-12">
-
                 @include('partials.errors')
                 @include('partials.success')
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <ul class="pull-right list-inline remove-margin-bottom topic-filter">
+                            <li>
+                                <i class="glyphicon glyphicon-time"></i> 评论列表
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    @if (count($comments)>0)
+                        <div class="panel-body remove-padding-horizontal main-body">
+                            <ul class="list-group row topic-list">
+                                @foreach ($comments as $comment)
+                                    <li class="list-group-item media 1" style="margin-top: 0px;">
+                                        <div class="infos">
+                                            <div class="add-margin-bottom">
+                                                <span class="name">用户名：{{ $comment->customer->customername }}</span>
+                                                <span> • </span>
+                                                <span class="product">场地：{{ $comment->product->productname }}</span>
+                                                <span> • </span>
+                                                <span class="product">单位：{{ $comment->company->companyname }}</span>
+                                                <span> • </span>
+                                                <span class="sendtime">发表时间：{{ $comment->sendtime }}</span>
+                                            </div>
+                                            <div class="media-heading">
+                                                {{ $comment->commentcontent }}
+                                            </div>
 
-                <table id="comments-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>编号</th>
-                            <th>{{ config('subscribesystem.customer') }}名称</th>
-                            <th>{{ config('subscribesystem.product') }}名称</th>
-                            <th>{{ config('subscribesystem.company') }}名称</th>
-                            <th>内容</th>
-                            <th>发送时间</th>
-                            <th>使用结束时间</th>
-                            <th>审核标志</th>
-                            <th data-sortable="false">操作</th>
-                        </tr>
-                     </thead>
-                    <tbody>
-                    @foreach ($comments as $comment)
-                        <tr>
-                            <th>{{ $comment->id }}</th>
-                            <th>{{ $comment->customer->customername }}</th>
-                            <th>{{ $comment->product->productname }}</th>
-                            <th>{{ $comment->company->companyname }}</th>
-                            <th>{{ $comment->commentcontent }}</th>
-                            <th>{{ $comment->sendtime }}</th>
-                            <td>
-                                @if ($comment->verifyflag)
-                                    已审核
-                                @else
-                                    未审核
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{ route('detail.edit', [$detail->productifo_id, $detail->id]) }}" class="btn btn-xs btn-info">
-                                    <i class="fa fa-edit"></i> 审核
-                                </a>
-                                <a href="{{ route('detail.edit', [$detail->productifo_id, $detail->id]) }}" class="btn btn-xs btn-info">
-                                    <i class="fa fa-edit"></i> 删除
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                <div class="pull-right">
-                    {!! $comment->render()  !!}
+                                            <div class="col-md-6 pull-right">
+                                                @if (Auth::check())
+                                                    <span class="operate pull-right">
+                                                        <button type="button" class="btn btn-danger btn-xs btn-delete" data-ucid="{{ $comment->id }}" >
+                                                            <i class="fa fa-times-circle"></i>
+                                                            删除
+                                                        </button>
+                                                        <button type="button" class="btn btn-success btn-xs btn-verify" data-ucid="{{ $comment->id }}">
+                                                            <i class="fa fa-check-square-o"></i>
+                                                            @if ($comment->verifyflag==0)
+                                                                通过
+                                                            @else
+                                                                取消
+                                                            @endif
+                                                        </button>
+                                                    </span>
+                                                @endif             
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @else
+                        <div class="panel-body remove-padding-horizontal main-body">
+                            <p>无评论数据</p>
+                        </div>
+                    @endif
+                    <div class="panel-footer text-right">
+                        {!! $comments->render() !!}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     {{-- 搜索框 --}}
     <div class="modal fade" id="modal-search" tabIndex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
@@ -83,7 +96,7 @@
                     <h4 class="modal-title">请输入查询条件</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('detail.search',$product->id) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="#">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
                             <label for="productname" class="col-md-3 control-label">
@@ -161,6 +174,7 @@
     
     <script type="text/javascript">
     $(function () {
+ 
         $('#usebegindate').datetimepicker({
             locale: 'zh-CN',
             format: 'YYYY-MM-DD',
@@ -169,6 +183,56 @@
         $('#useenddate').datetimepicker({
             locale: 'zh-CN',
             format: 'YYYY-MM-DD',
+        });
+
+        $(".btn-delete").click(function(event) {
+            var _self=this;
+            var sure=confirm('你确定要删除吗?');
+            if (sure){
+                var ucid=$(this).attr("data-ucid");
+                var liveid=$(this).attr("data-liveid");
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url("admin/comment/destroy") }}',
+                    data: {'ucid': ucid},
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data){
+                        $(_self).parents("li").remove();
+                        //window.location.href='{{ url("/news") }}/'+tipid;
+                    },
+                    error: function(xhr, type){
+                        alert('删除评论失败！');
+                    }
+                });
+            }
+        });
+        $(".btn-verify").click(function(event) {
+            var _self=this;
+            var ucid=$(this).attr("data-ucid");
+            $.ajax({
+                type: 'POST',
+                url: '{{ url("admin/comment/verify") }}',
+                data: {'ucid': ucid},
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data){
+                    //window.location.href='{{ url("/news") }}/'+tipid;
+                   if(data.verifyflag===0){
+                        $(_self).html('<i class="fa fa-check-square-o"></i> 通过 ');
+                   }else{
+                        $(_self).html('<i class="fa fa-check-square-o"></i> 取消 ');
+                   }
+                },
+                error: function(xhr, type){
+                    alert('审核修改失败！');
+                }
+            });
         });
 
      });

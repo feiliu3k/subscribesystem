@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 
+use Auth, Response;
+
+
 class CommentController extends Controller
 {
     protected $_searchCondition = [
@@ -17,7 +20,7 @@ class CommentController extends Controller
         $this->middleware('auth');
     }
 
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -34,6 +37,24 @@ class CommentController extends Controller
 
         return view('admin.comment.index',compact('comments'));
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function comments($product_id)
+     {
+         $comments = Comment::where('delflag', 0)->where('productifo_id',$product_id)->with('company', 'product', 'customer');
+         if (Auth::user()->managername<>config('subscribesystem.admin')){
+             $comments = $comments->where('company_id', Auth::user()->company_id);
+         }
+         
+         $comments = $comments->orderBy('id','desc')
+                                 ->paginate(config('subscribesystem.per_page'));
+ 
+         return view('admin.comment.index',compact('comments'));
+        
+     }
 
     /**
      * Show the form for editing the specified resource.
@@ -42,7 +63,7 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function verify(Request $request)
-     { 
+     {
          $comment = Comment::findOrFail($request->ucid); 
          $comment->verifyflag = (($comment->verifyflag)==0) ? 1 : 0; 
          $comment->save();
