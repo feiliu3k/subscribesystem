@@ -77,9 +77,10 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::post('loadManager', 'LoadExcelController@loadManager');
     Route::get('explorer/{type}', 'LoadExcelController@fileExplorer');
 
-    Route::get('comment', ['uses' => 'CommentController@index','as' => 'comment.index']);
+    Route::get('comment', ['uses' => 'CommentController@index', 'as' => 'comment.index']);
     Route::post('comment/destroy','CommentController@destroy');
     Route::post('comment/verify', 'CommentController@verify');
+    Route::any('comment/search',['uses' => 'CommentController@search', 'as' => 'comment.search']);
 });
 // Login Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

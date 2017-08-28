@@ -80,7 +80,7 @@
                         </div>
                     @endif
                     <div class="panel-footer text-right">
-                        {!! $comments->render() !!}
+                        {!! $comments->appends($searchCondition)->links() !!}                        
                     </div>
                 </div>
             </div>
