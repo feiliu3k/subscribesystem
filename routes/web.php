@@ -16,7 +16,7 @@ Route::get('/regsuccess','HomeController@regsuccess')->name('regsuccess');
 
 Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
 {
-    Route::get('dash', 'DashboardController@index');
+    Route::get('dash', 'DashboardController@index')->name('admin.dash');
     Route::post('dash/uploadImgFile', ['uses' => 'DashboardController@uploadImgFile', 'as' => 'dash.upload']);
 
     Route::get('reset', 'ManagerController@getReset')->name('admin.reset');
