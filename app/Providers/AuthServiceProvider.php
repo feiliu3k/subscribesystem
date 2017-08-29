@@ -78,6 +78,19 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('modify-badrecord', function ($user) {
             return $user->hasPermission('is-admin') || ($user->hasPermission('modify-badrecord', $badrecord) && $user->owns($badrecord));
         });
+
+        //评论权限
+        Gate::define('list-comment', function ($user) {
+            return $user->hasPermission('is-admin') || $user->hasPermission('list-comment');
+       });
+       Gate::define('verify-comment', function ($user) {
+           return $user->hasPermission('is-admin') || ($user->hasPermission('verify-comment', $comment) && $user->owns($comment));
+       });
+       Gate::define('delete-comment', function ($user) {
+           return $user->hasPermission('is-admin') || ($user->hasPermission('delete-comment', $comment) && $user->owns($comment));
+       });
+
+
         //元数据权限
         Gate::define('list-meta', function ($user) {
              return $user->hasPermission('list-meta') && $user->hasPermission('is-admin');
@@ -157,6 +170,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('modify-permission', function ($user) {
              return $user->hasPermission('modify-permission') && $user->hasPermission('is-admin');
         });
+
+       
 
         Gate::define('is-admin', function ($user) {
              return $user->hasPermission('is-admin');

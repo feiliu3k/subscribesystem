@@ -57,4 +57,9 @@ class Product extends Model
     {
         return $this->hasMany(Badrecord::class, 'productifo_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'usercomment', 'productifo_id', 'id');
+    }
 }

@@ -13,6 +13,7 @@ return [
     'badrecord' => '不良记录',
     'customer' => '客户',
     'log' => '日志',
+    'comment' => '评论',
     'per_page' => 20, 
     'admin' => 'admin',
     'uploads' => [

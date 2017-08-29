@@ -348,7 +348,7 @@ class ProductDetailController extends Controller
                             ->first();
 
         $details = ProductDetail::where('productifo_id',$id)
-                            ->whereBetween('usedate',[$searchCondition['usebegindate'],$searchCondition['useenddate']])                           
+                            ->whereBetween('usedate',[$searchCondition['usebegindate'],$searchCondition['useenddate']])
                             ->where('delflag',0);        
 
         if ($searchCondition['usebegintime']){

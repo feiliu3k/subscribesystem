@@ -16,6 +16,11 @@
                 <a href="{{ url('admin/badrecord') }}">{{ config('subscribesystem.badrecord') }}</a>
             </li>
         @endcan
+        @can('list-comment')
+            <li @if (Request::is('admin/comment*')) @endif>
+                <a href="{{ url('admin/comment') }}">{{ config('subscribesystem.comment') }}</a>
+            </li>
+        @endcan
     @endif
 </ul>
 @if (Auth::check())

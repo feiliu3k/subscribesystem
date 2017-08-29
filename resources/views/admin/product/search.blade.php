@@ -70,7 +70,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>        
+        </div>
     </div>
     {{-- 搜索框 --}}
     <div class="modal fade" id="modal-search" tabIndex="-1" role="dialog">

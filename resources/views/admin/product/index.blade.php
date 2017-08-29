@@ -54,6 +54,10 @@
                                     <a href="{{ route('detail.index', $product->id) }}" class="btn btn-xs btn-info">
                                         <i class="fa fa-edit"></i> 细节
                                     </a>
+                                    
+                                    <a href="{{ route('product.comments', $product->id) }}" class="btn btn-xs btn-primary">
+                                        <i class="fa fa-edit"></i> 评论
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
