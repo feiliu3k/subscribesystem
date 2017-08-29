@@ -99,12 +99,34 @@ class ProductDetailController extends Controller
         return view('admin.productdetail.batCreate',compact('product','detail'));
     }
 
-     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function ConditionDestory($id)
+    {
+        if (Gate::denies('create-detail')) {
+            abort(403,'你无权进行此操作！');
+        }
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
+
+        $detail = new ProductDetail();
+        $detail->productnum=0;
+        $detail->productprice=0;
+        $detail->ordernum=0;
+        $detail->paynum=0;
+        $detail->maxordernum=1;
+
+        return view('admin.productdetail.conditionDestory',compact('product','detail'));
+    }
+    
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Request $request, $id)
     {
         if (Gate::denies('create-detail')) {
@@ -137,12 +159,14 @@ class ProductDetailController extends Controller
         return redirect('/admin/product/'.$product->id.'/detail')
                         ->withSuccess("场地细节 '$product->productname' 创建成功.");
        
-    }     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    }
+    
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function batStore(Request $request, $id)
     {
         if (Gate::denies('create-detail')) {
@@ -306,7 +330,7 @@ class ProductDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $did)
+    public function Destory($id, $did)
     {
         $detail = ProductDetail::where('delflag',0)                                
                                 ->where('id', $did)
@@ -322,6 +346,96 @@ class ProductDetailController extends Controller
 
         return redirect("/admin/product/$detail->productifo_id/detail")
                         ->withSuccess("场地细节 '$did' 已经被删除.");
+    }
+
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function batDestory(Request $request, $id)
+    {
+        if (Gate::denies('create-detail')) {
+            abort(403,'你无权进行此操作！');
+        }
+
+        $usebegintimes=$request->usebegintime;
+        $useendtimes=$request->useendtime;
+        if ((count($usebegintimes)==0) || (count($usebegintimes)!=count($useendtimes))){
+            return back()->withErrors("时间范围有错，请重新输入！");
+        }
+
+        $this->validate($request, [
+            'usebegindate' => 'required|string|max:255',
+            'useenddate' => 'required|string|max:255',
+        ]);
+
+
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
+        
+        $usebegindate=new Carbon($request->usebegindate);
+        $useenddate=new Carbon($request->useenddate);
+        
+        $weeks=$request->weeks;
+
+
+        $details=[]; 
+
+
+        while ($usebegindate<=$useenddate) {
+            $usedate=$usebegindate;
+            $week= $usedate->dayOfWeek;
+            if (empty($weeks)) {
+                for ($i=0;$i<count($usebegintimes);$i++){
+                    if (($usebegintimes[$i]) && ($useendtimes[$i])){                        
+                        $detail = new ProductDetail();
+                        $detail->productifo_id=$product->id;
+                        $detail->usedate = $usedate->toDateString();
+                        $detail->usebegintime = $usebegintimes[$i];
+                        $detail->useendtime = $useendtimes[$i];
+                        $detail->productprice = $request->productprice;
+                        $detail->productnum = $request->productnum;
+                        $detail->ordernum = $request->ordernum;
+                        $detail->paynum = $request->paynum;
+                        $detail->maxordernum = $request->maxordernum;
+                        $details[]=$detail->attributesToArray();
+                    }else{
+                        return back()->withErrors("时间有错，请重新输入！");
+                    }
+                }
+            } else if  (in_array($week,$weeks)) {
+                for ($i=0;$i<count($usebegintimes);$i++){
+                    if (($usebegintimes[$i]) && ($useendtimes[$i])){                        
+                        $detail = new ProductDetail();
+                        $detail->productifo_id=$product->id;
+                        $detail->usedate = $usedate->toDateString();
+                        $detail->usebegintime = $usebegintimes[$i];
+                        $detail->useendtime = $useendtimes[$i];
+                        $detail->productprice = $request->productprice;
+                        $detail->productnum = $request->productnum;
+                        $detail->ordernum = $request->ordernum;
+                        $detail->paynum = $request->paynum;
+                        $detail->maxordernum = $request->maxordernum;
+                        $details[]=$detail->attributesToArray();
+                    }else{
+                        return back()->withErrors("时间有错，请重新输入！");
+                    }
+                }
+            }
+            $usebegindate=$usebegindate->addDay();
+        }
+        
+        ProductDetail::insert($details);
+
+        return redirect('/admin/product/'.$product->id.'/detail')
+                        ->withSuccess("场地细节 '$product->productname' 创建成功.");
+       
     }
 
     public function search(Request $request, $id)
