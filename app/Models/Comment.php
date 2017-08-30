@@ -11,7 +11,7 @@ class Comment extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
-        'customer_id', 'company_id', 'productifo_id', 'commentcontent', 'sendtime', 'delflag', 'verifyflag'
+        'customer_id', 'company_id', 'productifo_id', 'commentcontent', 'sendtime', 'delflag', 'verifyflag', 'commentimgs'
     ];
 
     public function customer()
@@ -37,5 +37,14 @@ class Comment extends Model
         }
        
         return Carbon::now()->diffForHumans(Carbon::parse($date));
+    }
+
+    public function getCommentimgsAttribute($value)
+    {
+        $imgs=[];
+        if (strlen(trim($value))>0){
+            $imgs=explode(',',substr(trim($value),0,-1));
+        }
+        return $imgs;
     }
 }

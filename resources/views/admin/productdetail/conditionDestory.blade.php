@@ -100,7 +100,7 @@
                                 </label>        
                                 <div class="col-md-3">
                                     <div class="input-group date usebegintime">
-                                        <input type="text" class="form-control" name="usebegintime[]" />
+                                        <input type="text" class="form-control" name="usebegintime" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-time"></span>
                                         </span>
@@ -108,16 +108,12 @@
                                 </div>   
                                 <div class="col-md-3">
                                     <div class="input-group date useendtime">
-                                        <input type="text" class="form-control" name="useendtime[]" />
+                                        <input type="text" class="form-control" name="useendtime" />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-time"></span>
                                         </span>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <button type="button" class="btn btn-danger btn-delete-usetime"><i class="fa fa-times-circle"></i>删除</button>
-                                    <button type="button" class="btn btn-success btn-add-usetime"><i class="fa fa-plus-circle"></i>添加</button>
-                                </div>
+                                </div>                               
                             </div>
                         </div>
 
@@ -134,34 +130,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <script id="use-time-template"  type="text/template">
-        <div class="form-group usetime">
-            <label for="usebegintime" class="col-md-3 control-label">
-                使用时间范围
-            </label>        
-            <div class="col-md-3">
-                <div class="input-group date usebegintime">
-                    <input type="text" class="form-control" name="usebegintime[]" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span>
-                    </span>
-                </div>
-            </div>   
-            <div class="col-md-3">
-                <div class="input-group date useendtime">
-                    <input type="text" class="form-control" name="useendtime[]" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span>
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <button type="button" class="btn btn-md btn-danger btn-delete-usetime"><i class="fa fa-times-circle"></i>删除</button>
-                <button type="button" class="btn btn-md btn-success btn-add-usetime"><i class="fa fa-plus-circle"></i>添加</button>
-            </div>
-        </div> 
-    </script>
+    </div>    
 @stop
 @section('scripts')
     <script type="text/javascript"
@@ -191,26 +160,6 @@
                     });
             $('.checkbox input').iCheck({
                 checkboxClass: 'icheckbox_flat-red',
-            });
-            //add usetime
-            $('.usetimes').on('click','.btn-add-usetime',function(){
-                var template=$('#use-time-template');
-                var usetime=$(this).parents('.usetime').first();
-                usetime.after(template.html());
-                usetime.next().find('.usebegintime').datetimepicker({
-                        locale: 'zh-CN',
-                        format: 'HH:mm:ss'
-                    });
-                usetime.next().find('.useendtime').datetimepicker({
-                        locale: 'zh-CN',
-                        format: 'HH:mm:ss'
-                    });
-            });
- 
-            //delete usetime
-            $('.usetimes').on('click','.btn-delete-usetime',function(){
-                var template=$('#use-time-template').html();
-                $(this).parents('.usetime').remove();
             });
         });
     </script>
