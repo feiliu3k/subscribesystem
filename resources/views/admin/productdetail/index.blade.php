@@ -7,19 +7,23 @@
 @section('content')
     <div class="container">
         <div class="row page-title-row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <h3>{{ config('subscribesystem.detail') }} <small>» 列表</small></h3>
             </div>
-            <div class="col-md-6 text-right">
-                <a href="{{ route('detail.create', $product->id) }}" class="btn btn-success btn-md">
+            <div class="col-md-8 text-right">
+                <a href="{{ route('detail.create', $product->id) }}" class="btn btn-info btn-md">
                     <i class="fa fa-plus-circle"></i> 新建{{ config('subscribesystem.detail') }}
                 </a>
 
                 <a href="{{ route('detail.batCreate', $product->id) }}" class="btn btn-success btn-md">
                     <i class="fa fa-plus-circle"></i> 批量新建{{ config('subscribesystem.detail') }}
                 </a>
-
-                <button class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-search">
+				
+				<a href="{{ route('detail.conditionDestory', $product->id) }}" class="btn btn-danger btn-md">
+                    <i class="fa fa-plus-circle"></i> 按条件批量删除{{ config('subscribesystem.detail') }}
+                </a>
+                
+				<button class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-search">
                     <i class="fa fa-plus-circle"></i> 搜索{{ config('subscribesystem.detail') }}
                 </button>
 

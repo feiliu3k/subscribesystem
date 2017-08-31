@@ -68,8 +68,6 @@
             </div>
         </div> 
     </script>
-
-
 @stop
 @section('scripts')
     <script type="text/javascript"
@@ -115,7 +113,7 @@
                     });
             });
  
-                        //delete usetime
+            //delete usetime
             $('.usetimes').on('click','.btn-delete-usetime',function(){
                 var template=$('#use-time-template').html();
                 $(this).parents('.usetime').remove();

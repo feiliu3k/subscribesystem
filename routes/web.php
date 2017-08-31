@@ -48,6 +48,8 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'],function ($router)
     Route::any('product/{id}/detail/search',['uses' => 'ProductDetailController@search','as' => 'detail.search']);
     Route::get('product/{id}/details/batcreate',['uses'=>'ProductDetailController@batCreate','as'=>'detail.batCreate']);
     Route::post('product/{id}/details',['uses'=>'ProductDetailController@batStore','as'=>'detail.batStore']);
+    Route::get('product/{id}/details/conditionDestory',['uses'=>'ProductDetailController@conditionDestory','as'=>'detail.conditionDestory']);
+    Route::post('product/{id}/batdestory',['uses'=>'ProductDetailController@batDestory','as'=>'detail.batDestory']);
     Route::get('product/{id}/comments',['uses'=>'CommentController@comments','as'=>'product.comments']);
     Route::resource('product/{id}/detail', 'ProductDetailController', ['except' => 'show']);
 

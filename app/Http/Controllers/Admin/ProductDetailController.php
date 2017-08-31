@@ -99,12 +99,34 @@ class ProductDetailController extends Controller
         return view('admin.productdetail.batCreate',compact('product','detail'));
     }
 
-     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function ConditionDestory($id)
+    {
+        if (Gate::denies('create-detail')) {
+            abort(403,'你无权进行此操作！');
+        }
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
+
+        $detail = new ProductDetail();
+        $detail->productnum=0;
+        $detail->productprice=0;
+        $detail->ordernum=0;
+        $detail->paynum=0;
+        $detail->maxordernum=1;
+
+        return view('admin.productdetail.conditionDestory',compact('product','detail'));
+    }
+    
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Request $request, $id)
     {
         if (Gate::denies('create-detail')) {
@@ -137,12 +159,14 @@ class ProductDetailController extends Controller
         return redirect('/admin/product/'.$product->id.'/detail')
                         ->withSuccess("场地细节 '$product->productname' 创建成功.");
        
-    }     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    }
+    
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function batStore(Request $request, $id)
     {
         if (Gate::denies('create-detail')) {
@@ -306,7 +330,7 @@ class ProductDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $did)
+    public function Destory($id, $did)
     {
         $detail = ProductDetail::where('delflag',0)                                
                                 ->where('id', $did)
@@ -322,6 +346,56 @@ class ProductDetailController extends Controller
 
         return redirect("/admin/product/$detail->productifo_id/detail")
                         ->withSuccess("场地细节 '$did' 已经被删除.");
+    }
+
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function batDestory(Request $request, $id)
+    {
+        if (Gate::denies('create-detail')) {
+            abort(403,'你无权进行此操作！');
+        }
+     
+        $product = Product::where('delflag', 0);
+        if (Auth::user()->managername<>config('subscribesystem.admin')){
+            $product = $product->where('company_id', Auth::user()->company_id);
+        }
+        $product = $product->where('id', $id)
+                            ->first();
+        if (!$product){
+            return redirect('/admin/product/'.$product->id.'/detail')
+                    ->withErrors("场地细节 '$product->productname' 批量删除失败.");
+        }
+
+        $this->validate($request, [
+            'usebegindate' => 'required|string|max:255',
+            'useenddate' => 'required|string|max:255',
+            'usebegintime' => 'required|string|max:255',
+            'useendtime' => 'required|string|max:255',
+        ]);
+
+        $usebegindate=new Carbon($request->usebegindate);
+        $useenddate=new Carbon($request->useenddate);
+        $usebegintime=$request->usebegintime;
+        $useendtime=$request->useendtime;    
+       
+        $weeks=$request->weeks;
+        //查找出符合条件的detail
+        $details = ProductDetail::where('productifo_id',$id)
+                                ->whereBetween('usedate',[$usebegindate,$useenddate])
+                                ->where('usebegintime','>=',$usebegintime)
+                                ->where('useendtime','<=',$useendtime)
+                                ->where('delflag',0)
+                                ->get();
+        //对符合条件的数据进行删除
+        
+        return redirect('/admin/product/'.$product->id.'/detail')
+                        ->withSuccess("场地细节 '$product->productname' 批量删除成功.");
+       
     }
 
     public function search(Request $request, $id)

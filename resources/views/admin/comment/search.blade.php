@@ -2,7 +2,8 @@
 
 @section('styles')
     <link href="{{ URL::asset('vendor/datetimepicker/bootstrap-datetimepicker.min.css')  }}" rel="stylesheet" />
-    <link href="{{ asset('css/jrsx.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/jrsx.css') }}" rel="stylesheet">    
+    <link href="{{ URL::asset('css/lightbox.css') }}" rel="stylesheet">
 @stop
 
 @section('content')
@@ -36,10 +37,10 @@
                         <div class="panel-body remove-padding-horizontal main-body">
                             <ul class="list-group row topic-list">
                                 @foreach ($comments as $comment)
-                                    <li class="list-group-item media 1" style="margin-top: 0px;">
+                                    <li class="list-group-item media 1" style="margin-top: 0px;">                       
                                         <div class="infos">
                                             <div class="add-margin-bottom">
-                                                <span class="account">账号：{{ $comment->customer->customeraccount }}</span>
+                                            <span class="account">账号：{{ $comment->customer->customeraccount }}</span>
                                                 <span> • </span>
                                                 <span class="product">场地：{{ $comment->product->productname }}</span>
                                                 <span> • </span>
@@ -48,7 +49,31 @@
                                                 <span class="sendtime">发表时间：{{ $comment->sendtime }}</span>
                                             </div>
                                             <div class="media-heading">
-                                                {{ $comment->commentcontent }}
+                                            {{ $comment->commentcontent }}
+                                            </div>
+                                            <div class="add-margin-bottom">
+                                                @if (count($comment->upimg)>0)
+                                                    @foreach ($comment->upimg as $img)
+                                                        @if (!containsDescenders($img))
+                                                            <img class="js-lightbox"
+                                                            data-role="lightbox"
+                                                            data-source="{{ config('weblive.comment_image_path').$img }}"
+                                                            src="{{ config('weblive.comment_image_path').$img }}"
+                                                            data-group="{{ $comment->ucid }}"
+                                                            data-id="{{ $img }}"
+                                                            data-caption="{{ $comment->nickname }}"
+                                                            data-desc="{{ $comment->ucomment }}"
+                                                            alt="{{ $img }}"
+                                                            width="100px" height="100px" />
+                                                        @else
+                                                            <img class="js-videobox"
+                                                            data-role="videobox"
+                                                            data-source="{{ config('weblive.comment_image_path').$img }}"
+                                                            src="{{ URL::asset('img/play.png') }}"
+                                                            width="100px" height="100px" />
+                                                        @endif
+                                                    @endforeach
+                                                @endif
                                             </div>
 
                                             <div class="col-md-6 pull-right">
@@ -67,7 +92,7 @@
                                                             @endif
                                                         </button>
                                                     </span>
-                                                @endif             
+                                                @endif
                                             </div>
                                         </div>
                                     </li>
@@ -80,7 +105,7 @@
                         </div>
                     @endif
                     <div class="panel-footer text-right">
-                        {!! $comments->appends($searchCondition)->render() !!}                        
+                         {!! $comments->appends($searchCondition)->render() !!}
                     </div>
                 </div>
             </div>
@@ -172,6 +197,8 @@
 @stop
 
 @section('scripts')
+    <script src="{{ URL::asset('js/lightbox.js') }}"></script>
+    <script src="{{ URL::asset('js/videobox.js') }}"></script>
 	<script type="text/javascript"
      src="{{ URL::asset('vendor/datetimepicker/moment-with-locales.js')  }}">
     </script>
@@ -181,6 +208,8 @@
     
     <script type="text/javascript">
     $(function () {
+        var lightbox = new LightBox();
+        var videobox = new VideoBox();
  
         $('#begintime').datetimepicker({
             locale: 'zh-CN',
