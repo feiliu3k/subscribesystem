@@ -224,7 +224,7 @@ class ProductDetailController extends Controller
                 }
             } else if  (in_array($week,$weeks)) {
                 for ($i=0;$i<count($usebegintimes);$i++){
-                    if (($usebegintimes[$i]) && ($useendtimes[$i])){                        
+                    if (($usebegintimes[$i]) && ($useendtimes[$i])){
                         $detail = new ProductDetail();
                         $detail->productifo_id=$product->id;
                         $detail->usedate = $usedate->toDateString();
@@ -384,15 +384,33 @@ class ProductDetailController extends Controller
         $useendtime=$request->useendtime;    
        
         $weeks=$request->weeks;
+        
         //查找出符合条件的detail
+        if (!$weeks){
+            $details = ProductDetail::where('productifo_id',$id)
+                                    ->whereBetween('usedate', [$usebegindate,$useenddate])
+                                    ->where('usebegintime','>=', $usebegintime)
+                                    ->where('useendtime','<=', $useendtime)
+                                    ->where('delflag',0)
+                                    ->update(['delflag'=>1]);
+            return redirect('/admin/product/'.$product->id.'/detail')
+                            ->withSuccess("场地细节 '$product->productname' 批量删除成功.");
+        }
+
+        //对符合条件的数据进行删除
         $details = ProductDetail::where('productifo_id',$id)
-                                ->whereBetween('usedate',[$usebegindate,$useenddate])
-                                ->where('usebegintime','>=',$usebegintime)
-                                ->where('useendtime','<=',$useendtime)
+                                ->whereBetween('usedate', [$usebegindate,$useenddate])
+                                ->where('usebegintime','>=', $usebegintime)
+                                ->where('useendtime','<=', $useendtime)
                                 ->where('delflag',0)
                                 ->get();
-        //对符合条件的数据进行删除
-        
+        foreach ($details as $detail) {
+            $usedate=new Carbon($detail->usedate);
+            if (in_array($usedate->dayOfWeek,$weeks)){
+                $detail->delflag=1;
+                $detail->save();
+            }
+        }
         return redirect('/admin/product/'.$product->id.'/detail')
                         ->withSuccess("场地细节 '$product->productname' 批量删除成功.");
        
@@ -418,12 +436,13 @@ class ProductDetailController extends Controller
         if (Auth::user()->managername<>config('subscribesystem.admin')){
             $product = $product->where('company_id', Auth::user()->company_id);
         }
+
         $product = $product->where('id', $id)
                             ->first();
 
         $details = ProductDetail::where('productifo_id',$id)
                             ->whereBetween('usedate',[$searchCondition['usebegindate'],$searchCondition['useenddate']])
-                            ->where('delflag',0);        
+                            ->where('delflag',0);
 
         if ($searchCondition['usebegintime']){
             $details=$details->where('usebegintime','>=', $searchCondition['usebegintime']);            
@@ -476,7 +495,7 @@ class ProductDetailController extends Controller
         ]);
 
 
-        $product_ids = Product::where('delflag', 0)->select('id')->get();       
+        $product_ids = Product::where('delflag', 0)->select('id')->get();
         
         $usebegindate=new Carbon($request->usebegindate);
         $useenddate=new Carbon($request->useenddate);
@@ -493,7 +512,7 @@ class ProductDetailController extends Controller
                 $week= $usedate->dayOfWeek;
                 if (empty($weeks)) {
                     for ($i=0;$i<count($usebegintimes);$i++){
-                        if (($usebegintimes[$i]) && ($useendtimes[$i])){                        
+                        if (($usebegintimes[$i]) && ($useendtimes[$i])){
                             $detail = new ProductDetail();
                             $detail->productifo_id=$product_id->id;
                             $detail->usedate = $usedate->toDateString();
@@ -511,7 +530,7 @@ class ProductDetailController extends Controller
                     }
                 } else if  (in_array($week,$weeks)) {
                     for ($i=0;$i<count($usebegintimes);$i++){
-                        if (($usebegintimes[$i]) && ($useendtimes[$i])){                        
+                        if (($usebegintimes[$i]) && ($useendtimes[$i])){
                             $detail = new ProductDetail();
                             $detail->productifo_id=$product_id->id;
                             $detail->usedate = $usedate->toDateString();
