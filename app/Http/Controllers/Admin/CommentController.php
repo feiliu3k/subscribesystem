@@ -70,7 +70,7 @@ class CommentController extends Controller
          $comments = $comments->orderBy('id','desc')
                                  ->paginate(config('subscribesystem.per_page'));
  
-         return view('admin.comment.index',compact('comments'));
+         return view('admin.comment.index',compact('comments', 'products'));
         
      }
 

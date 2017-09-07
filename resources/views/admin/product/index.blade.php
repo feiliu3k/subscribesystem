@@ -142,5 +142,5 @@
             $("#products-table").DataTable({
             });
         });
-    </script>    
+    </script>
 @stop
