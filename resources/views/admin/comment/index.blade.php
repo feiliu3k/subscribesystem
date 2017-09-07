@@ -61,7 +61,7 @@
                                                             src="{{ config('subscribesystem.comment_path').$img }}"
                                                             data-group="{{ $comment->id }}"
                                                             data-id="{{ $img }}"
-                                                            data-caption="{{ $comment->customer()->customername }}"
+                                                            data-caption="{{ $comment->customer->customername }}"
                                                             data-desc="{{ $comment->commentcontent }}"
                                                             alt="{{ $img }}"
                                                             width="100px" height="100px" />
