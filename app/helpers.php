@@ -80,3 +80,13 @@ function detectUploadFileMIME($file) {
     // 3.return the flag
     return $flag;
 }
+
+function containsDescenders($text) {
+    $finds=['.mov','.mp4','.3gp','.mkv','.mpg','.avi','.m4v'];
+    foreach ($finds as $find) {
+        if (stripos($text,$find) !== false) {
+            return true;
+        }
+    }
+    return false;
+}

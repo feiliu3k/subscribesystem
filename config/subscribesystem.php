@@ -24,4 +24,6 @@ return [
     'thumb_path' => '../../uploads/ss/',
     'image_path' => '../../uploads/ss/',
     'video_path' => '../../uploads/ss/',
+    'comment_path' => 'http://olive.strtv.cn:7337/placeorder/upimg/',
+    
 ];

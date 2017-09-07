@@ -43,7 +43,7 @@
                                 <td>{{ $product->productType->typename }}</td>
                                 <td>{{ $product->area->areaname }}</td>
                                 <td>
-                                    <a href="{{ route('product.edit', $product->id) }}" class="btn btn-xs btn-info">
+                                    <a href="{{ route('product.edit', $product->id) }}" class="btn btn-xs btn-primary">
                                         <i class="fa fa-edit"></i> 编辑
                                     </a>
 
@@ -51,8 +51,11 @@
                                         <i class="fa fa-edit"></i> 地址
                                     </a>
 
-                                    <a href="{{ route('detail.index', $product->id) }}" class="btn btn-xs btn-info">
+                                    <a href="{{ route('detail.index', $product->id) }}" class="btn btn-xs btn-success">
                                         <i class="fa fa-edit"></i> 细节
+                                    </a>
+                                    <a href="{{ route('product.comments', $product->id) }}" class="btn btn-xs btn-primary">
+                                        <i class="fa fa-edit"></i> 评论
                                     </a>
                                 </td>
                             </tr>

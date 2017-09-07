@@ -16,6 +16,11 @@
                 <a href="{{ url('admin/badrecord') }}">{{ config('subscribesystem.badrecord') }}</a>
             </li>
         @endcan
+        @can('list-comment')
+            <li @if (Request::is('admin/comment*')) @endif>
+                <a href="{{ url('admin/comment') }}">{{ config('subscribesystem.comment') }}</a>
+            </li>
+        @endcan
        
     @endif
 </ul>
@@ -38,8 +43,7 @@
                 <li><a href="{{ url('admin/role') }}">角色</a></li>
                 <li><a href="{{ url('admin/permission') }}">权限</a></li>
                 <li><a href="{{ url('admin/explorer/alllist') }}">导入管理员等数据</a></li>
-                <li><a href="{{ url('admin/autogendetail') }}">自动产生场地细节数据</a></li>                 
-                <li><a href="{{ url('admin/comment') }}">评论</a></li>
+                <li><a href="{{ url('admin/autogendetail') }}">自动产生场地细节数据</a></li>
             </ul>
         
         </li> 

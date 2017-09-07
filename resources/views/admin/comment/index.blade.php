@@ -52,23 +52,23 @@
                                             {{ $comment->commentcontent }}
                                             </div>
                                             <div class="add-margin-bottom">
-                                                @if (count($comment->upimg)>0)
-                                                    @foreach ($comment->upimg as $img)
+                                                @if (count($comment->commentimgs)>0)
+                                                    @foreach ($comment->commentimgs as $img)
                                                         @if (!containsDescenders($img))
                                                             <img class="js-lightbox"
                                                             data-role="lightbox"
-                                                            data-source="{{ config('weblive.comment_image_path').$img }}"
-                                                            src="{{ config('weblive.comment_image_path').$img }}"
-                                                            data-group="{{ $comment->ucid }}"
+                                                            data-source="{{ config('subscribesystem.comment_path').$img }}"
+                                                            src="{{ config('subscribesystem.comment_path').$img }}"
+                                                            data-group="{{ $comment->id }}"
                                                             data-id="{{ $img }}"
-                                                            data-caption="{{ $comment->nickname }}"
-                                                            data-desc="{{ $comment->ucomment }}"
+                                                            data-caption="{{ $comment->customer()->customername }}"
+                                                            data-desc="{{ $comment->commentcontent }}"
                                                             alt="{{ $img }}"
                                                             width="100px" height="100px" />
                                                         @else
                                                             <img class="js-videobox"
                                                             data-role="videobox"
-                                                            data-source="{{ config('weblive.comment_image_path').$img }}"
+                                                            data-source="{{ config('subscribesystem.comment_path').$img }}"
                                                             src="{{ URL::asset('img/play.png') }}"
                                                             width="100px" height="100px" />
                                                         @endif
