@@ -330,7 +330,7 @@ class ProductDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function Destory($id, $did)
+    public function destory($id, $did)
     {
         $detail = ProductDetail::where('delflag',0)                                
                                 ->where('id', $did)
